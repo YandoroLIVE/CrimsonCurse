@@ -49,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (moveInput != Vector2.zero)
         {
+            // Check if he needs to turn
+
             TurnCheck(moveInput);
             Vector2 targetVelocity = Vector2.zero;
             if (InputManager.RunIsHeld)
@@ -59,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
             _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
             _rb.velocity = new Vector2(_moveVelocity.x, _rb.velocity.y);
         }
-        else if (moveInput != Vector2.zero)
+        else if (moveInput == Vector2.zero)
         {
             _moveVelocity = Vector2.Lerp(_moveVelocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
             _rb.velocity = new Vector2(_moveVelocity.x, _rb.velocity.y);
@@ -69,11 +71,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void TurnCheck(Vector2 moveInput)
     {
-        if (!_isFacingRight && moveInput.x < 0)
+        if (_isFacingRight && moveInput.x < 0)
         {
             Turn(false);
         }
-        else if (_isFacingRight && moveInput.x > 0)
+        else if (!_isFacingRight && moveInput.x > 0)
         {
             Turn(true);
         }
