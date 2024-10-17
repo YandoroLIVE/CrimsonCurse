@@ -6,7 +6,7 @@ public class S_GroundEnemy : MonoBehaviour
 {
     public float speed = 2f; // Geschwindigkeit des Gegners
     public int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
     public int damageToPlayer = 20; // Schaden, den der Gegner dem Spieler zufügt
     public float detectionRadius = 5f; // Radius, in dem der Gegner den Spieler erkennt
     public float attackRadius = 1.5f; // Radius, in dem der Gegner Schaden verursacht

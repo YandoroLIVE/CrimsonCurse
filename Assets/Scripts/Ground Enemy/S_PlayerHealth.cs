@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement; // Importiere das SceneManagement-Namespace
 public class S_PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
 
     private Renderer playerRenderer; // Renderer, um die Sichtbarkeit zu steuern
     private Collider2D playerCollider; // Collider, um die Angreifbarkeit zu steuern
