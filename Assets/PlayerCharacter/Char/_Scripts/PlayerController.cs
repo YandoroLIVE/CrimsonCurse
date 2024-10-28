@@ -7,14 +7,21 @@ namespace HeroController
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class PlayerController : MonoBehaviour, IPlayerController
     {
+        [SerializeField] private Transform characterSprite; // Referenz zum Child-GameObject mit dem Sprite
+        [SerializeField] private ParticleSystem jumpParticle;
+        [SerializeField] private ParticleSystem DashParticle;
+        [SerializeField] private ParticleSystem wallLeft;
+        [SerializeField] private ParticleSystem wallRight;
         // Importscriptable stats
-        [SerializeField] private float dashSpeed = 20f;
-        [SerializeField] private float dashDuration = 0.2f;
-        [SerializeField] private float dashCooldown = 1f;
-        private bool _canDash = true;
-        private bool _isDashing;
-        private float _dashTime;
-        private float _lastDashTime;
+        [SerializeField] private float dashSpeed = 15f;        // Dash-Geschwindigkeit
+        [SerializeField] private float dashDuration = 0.2f;    // Dauer des Dashs in Sekunden
+        [SerializeField] private float dashCooldown = 1f;      // Zeit, bevor ein neuer Dash möglich ist
+
+        private bool _canDash = true;                          // Kontrolliert, ob der Dash verfügbar ist
+        private bool _isDashing = false;                       // Kontrolliert, ob der Spieler gerade dashen
+        private float _dashTimeLeft;                           // Verbleibende Zeit für den aktuellen Dash
+        private Vector2 _dashDirection;
+
 
         [SerializeField] private LayerMask wallLayer; // LayerMask for walls
         [SerializeField] private float wallCheckDistance = 0.5f; // Distance to check for walls
@@ -58,55 +65,50 @@ namespace HeroController
             _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
         }
 
+
+
         private void Update()
         {
 
             _time += Time.deltaTime;
             GatherInput();
-
-            if (!_canDash && Time.time >= _lastDashTime + dashCooldown)
-            {
-                _canDash = true;
-            }
+            HandleDash(); // Dash-Logik hinzufügen
         }
 
         private void GatherInput()
         {
             _frameInput = new FrameInput
             {
+                Dash = Input.GetKeyDown(KeyCode.LeftShift),
                 JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space),
                 JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.Space),
-                Dash = Input.GetKeyDown(KeyCode.LeftShift),  // Capture the dash input here
                 Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
             };
 
             if (_frameInput.JumpDown)
             {
-                _timeSinceJumpPressed = 0f;  // Reset the jump buffer
+                _timeSinceJumpPressed = 0f;
             }
 
-            _timeSinceJumpPressed += Time.deltaTime;  // Track time since jump was pressed
+            _timeSinceJumpPressed += Time.deltaTime;
         }
+
+
 
 
 
         private void FixedUpdate()
         {
-            CheckCollisions();  // Check for ground, ceiling, and walls
+            CheckCollisions();
+            HandleDash(); // Dash-Logik hinzufügen
+            HandleJump();
+            HandleDirection();
+            HandleGravity();
 
-            if (_frameInput.Dash && _canDash)
-            {
-                HandleDash();  // Handle dash first, if dash is allowed
-            }
-            else
-            {
-                HandleJump();   // Then handle jumps (ground and wall)
-                HandleDirection();  // Handle horizontal movement
-                HandleGravity();  // Handle gravity
-            }
-
-            ApplyMovement();  // Apply the final velocity to the Rigidbody
+            ApplyMovement();
         }
+
+
 
 
 
@@ -118,6 +120,8 @@ namespace HeroController
         private void CheckCollisions()
         {
             Physics2D.queriesStartInColliders = false;
+
+
 
             // Ground and Ceiling Detection
             bool groundHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.down, _stats.GrounderDistance, ~_stats.PlayerLayer);
@@ -155,6 +159,7 @@ namespace HeroController
             if (!_grounded && groundHit)
             {
                 _grounded = true;
+                _canDash = true;  // Reset des Dash nach Bodenberührung
                 _coyoteUsable = true;
                 _bufferedJumpUsable = true;
                 _endedJumpEarly = false;
@@ -207,6 +212,7 @@ namespace HeroController
                 else if (_isTouchingWall && !_grounded)
                 {
                     ExecuteWallJump();  // Wall jump
+                    jumpParticle.Play();
                 }
 
                 _timeSinceJumpPressed = Mathf.Infinity;  // Reset the jump buffer once jump is consumed
@@ -217,6 +223,7 @@ namespace HeroController
 
         private void ExecuteJump()
         {
+            jumpParticle.Play();
             _endedJumpEarly = false;
             _bufferedJumpUsable = false;
             _coyoteUsable = false;
@@ -232,10 +239,6 @@ namespace HeroController
             // Apply wall jump velocity in the opposite direction of the wall
             float jumpDirectionX = -_wallDirectionX;  // Invert the wall direction to jump away
             _frameVelocity = new Vector2(jumpDirectionX * wallJumpDirection.x * wallJumpForce, wallJumpDirection.y * wallJumpForce);
-
-            // Reset the jump buffer and allow dash reset after wall jump if applicable
-            _canDash = true;
-            Jumped?.Invoke();
         }
 
 
@@ -248,6 +251,7 @@ namespace HeroController
 
         private void HandleDirection()
         {
+            // Handling der Bewegungsrichtung
             if (_frameInput.Move.x == 0)
             {
                 var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
@@ -256,7 +260,60 @@ namespace HeroController
             else
             {
                 _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _frameInput.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
+
+                // Sprite flippen, basierend auf der Bewegungsrichtung
+                if (_frameInput.Move.x > 0)
+                {
+                    characterSprite.localScale = new Vector3(0.3f, 0.3f, 0.3f); // Rechts
+                }
+                else if (_frameInput.Move.x < 0)
+                {
+                    characterSprite.localScale = new Vector3(-0.3f, 0.3f, 0.3f); // Links
+                }
             }
+        }
+
+
+        #endregion
+        #region Dash
+        private void HandleDash()
+        {
+            if (_frameInput.Dash && _canDash && !_isDashing)
+            {
+                StartDash();  // Starte den Dash
+            }
+
+            if (_isDashing)
+            {
+                _dashTimeLeft -= Time.fixedDeltaTime;  // Reduziere die verbleibende Dash-Zeit
+
+                if (_dashTimeLeft <= 0)
+                {
+                    EndDash();  // Beende den Dash, wenn die Zeit abgelaufen ist
+                }
+            }
+        }
+        private void StartDash()
+        {
+            _isDashing = true;
+            _canDash = false;
+            _dashTimeLeft = dashDuration;
+
+            // Bestimme die Richtung des Dash basierend auf der aktuellen Eingabe
+            _dashDirection = _frameInput.Move;
+            if (_dashDirection == Vector2.zero)
+            {
+                _dashDirection = new Vector2(_wallDirectionX, 0);  // Falls keine Eingabe, dashen in Richtung der Wand
+            }
+
+            _dashDirection.Normalize();
+            _frameVelocity = _dashDirection * dashSpeed;  // Setze die Geschwindigkeit des Dash
+        }
+
+        private void EndDash()
+        {
+            _isDashing = false;
+            _canDash = true;
         }
 
         #endregion
@@ -288,47 +345,21 @@ namespace HeroController
 
         #endregion
 
-        #region Dash
-        private void HandleDash()
+
+
+
+        private void ApplyMovement()
         {
-            if (Time.time < _dashTime + dashDuration)
+            if (!_isDashing)
             {
-                // Continue dashing in the direction the player was moving
-                _frameVelocity.x = _frameInput.Move.x * dashSpeed;
-                _frameVelocity.y = 0; // Optionally make dash horizontal only
+                _rb.velocity = _frameVelocity;  // Normale Bewegung
             }
             else
             {
-                // End the dash
-                _isDashing = false;
+                _rb.velocity = _dashDirection * dashSpeed;  // Dash-Bewegung
             }
         }
-        private void StartDash()
-        {
-            _isDashing = true;
-            _canDash = false;
-            _dashTime = Time.time;
-            _lastDashTime = Time.time;
 
-            // Optionally, zero out the y-velocity to prevent dash from being influenced by gravity
-            _frameVelocity.y = 0;
-        }
-
-
-        private void OnDrawGizmos()
-        {
-            // Draw raycast lines to visualize wall detection
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, transform.position + Vector3.right * wallCheckDistance);  // Right wall
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(transform.position, transform.position + Vector3.left * wallCheckDistance);   // Left wall
-        }
-
-
-        #endregion
-
-
-        private void ApplyMovement() => _rb.velocity = _frameVelocity;
 
 #if UNITY_EDITOR
         private void OnValidate()
