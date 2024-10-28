@@ -15,11 +15,11 @@ namespace HeroController
         // Importscriptable stats
         [SerializeField] private float dashSpeed = 15f;        // Dash-Geschwindigkeit
         [SerializeField] private float dashDuration = 0.2f;    // Dauer des Dashs in Sekunden
-        [SerializeField] private float dashCooldown = 1f;      // Zeit, bevor ein neuer Dash möglich ist
+        [SerializeField] private float dashCooldown = 1f;      // Zeit, bevor ein neuer Dash mï¿½glich ist
 
-        private bool _canDash = true;                          // Kontrolliert, ob der Dash verfügbar ist
+        private bool _canDash = true;                          // Kontrolliert, ob der Dash verfï¿½gbar ist
         private bool _isDashing = false;                       // Kontrolliert, ob der Spieler gerade dashen
-        private float _dashTimeLeft;                           // Verbleibende Zeit für den aktuellen Dash
+        private float _dashTimeLeft;                           // Verbleibende Zeit fï¿½r den aktuellen Dash
         private Vector2 _dashDirection;
 
 
@@ -72,7 +72,7 @@ namespace HeroController
 
             _time += Time.deltaTime;
             GatherInput();
-            HandleDash(); // Dash-Logik hinzufügen
+            HandleDash(); // Dash-Logik hinzufï¿½gen
         }
 
         private void GatherInput()
@@ -100,7 +100,7 @@ namespace HeroController
         private void FixedUpdate()
         {
             CheckCollisions();
-            HandleDash(); // Dash-Logik hinzufügen
+            HandleDash(); // Dash-Logik hinzufï¿½gen
             HandleJump();
             HandleDirection();
             HandleGravity();
@@ -159,7 +159,7 @@ namespace HeroController
             if (!_grounded && groundHit)
             {
                 _grounded = true;
-                _canDash = true;  // Reset des Dash nach Bodenberührung
+                _canDash = true;  // Reset des Dash nach Bodenberï¿½hrung
                 _coyoteUsable = true;
                 _bufferedJumpUsable = true;
                 _endedJumpEarly = false;
@@ -197,7 +197,7 @@ namespace HeroController
         private void HandleJump()
         {
             // Early jump end for variable jump heights
-            if (!_endedJumpEarly && !_grounded && !_frameInput.JumpHeld && _rb.velocity.y > 0)
+            if (!_endedJumpEarly && !_grounded && !_frameInput.JumpHeld && _rb.linearVelocity.y > 0)
             {
                 _endedJumpEarly = true;
             }
@@ -352,11 +352,11 @@ namespace HeroController
         {
             if (!_isDashing)
             {
-                _rb.velocity = _frameVelocity;  // Normale Bewegung
+                _rb.linearVelocity = _frameVelocity;  // Normale Bewegung
             }
             else
             {
-                _rb.velocity = _dashDirection * dashSpeed;  // Dash-Bewegung
+                _rb.linearVelocity = _dashDirection * dashSpeed;  // Dash-Bewegung
             }
         }
 
