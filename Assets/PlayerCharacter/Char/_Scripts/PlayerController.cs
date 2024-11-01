@@ -7,9 +7,6 @@ namespace HeroController
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class PlayerController : MonoBehaviour, IPlayerController
     {
-        [SerializeField] private Transform characterSprite; // Referenz zum Child-GameObject mit dem Sprite
-        [SerializeField] private ParticleSystem jumpParticle;
-        [SerializeField] private ParticleSystem DashParticle;
         [SerializeField] private ParticleSystem wallLeft;
         [SerializeField] private ParticleSystem wallRight;
         // Importscriptable stats
@@ -212,7 +209,6 @@ namespace HeroController
                 else if (_isTouchingWall && !_grounded)
                 {
                     ExecuteWallJump();  // Wall jump
-                    jumpParticle.Play();
                 }
 
                 _timeSinceJumpPressed = Mathf.Infinity;  // Reset the jump buffer once jump is consumed
@@ -223,7 +219,6 @@ namespace HeroController
 
         private void ExecuteJump()
         {
-            jumpParticle.Play();
             _endedJumpEarly = false;
             _bufferedJumpUsable = false;
             _coyoteUsable = false;
@@ -260,16 +255,6 @@ namespace HeroController
             else
             {
                 _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _frameInput.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
-
-                // Sprite flippen, basierend auf der Bewegungsrichtung
-                if (_frameInput.Move.x > 0)
-                {
-                    characterSprite.localScale = new Vector3(0.3f, 0.3f, 0.3f); // Rechts
-                }
-                else if (_frameInput.Move.x < 0)
-                {
-                    characterSprite.localScale = new Vector3(-0.3f, 0.3f, 0.3f); // Links
-                }
             }
         }
 
