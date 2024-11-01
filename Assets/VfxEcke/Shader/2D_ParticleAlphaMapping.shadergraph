@@ -40,9 +40,6 @@
             "m_Id": "b0eb805c2fd0404b9765cf31b537592e"
         },
         {
-            "m_Id": "ef6e1260e8da4c789b577f5c978eb097"
-        },
-        {
             "m_Id": "351b697e9a374ffcb670ce7fe349ab09"
         },
         {
@@ -346,9 +343,6 @@
         "m_Blocks": [
             {
                 "m_Id": "b0eb805c2fd0404b9765cf31b537592e"
-            },
-            {
-                "m_Id": "ef6e1260e8da4c789b577f5c978eb097"
             },
             {
                 "m_Id": "351b697e9a374ffcb670ce7fe349ab09"
@@ -2116,8 +2110,8 @@
     "m_ObjectId": "cf28622016a3439ab6e71df761b7abdc",
     "m_Title": "AlphaMappingMask",
     "m_Position": {
-        "x": -1434.0,
-        "y": -339.9999694824219
+        "x": -1434.0001220703125,
+        "y": -340.0
     }
 }
 
@@ -2397,40 +2391,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
-    "m_ObjectId": "ef6e1260e8da4c789b577f5c978eb097",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "SurfaceDescription.SpriteColor",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "f534a4a29b904e4baa31992e1be1b9be"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_DismissedVersion": 0,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_SerializedDescriptor": "SurfaceDescription.SpriteColor"
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "f122baf285454849ba68e551e1d99ca5",
     "m_Id": 4,
@@ -2456,31 +2416,6 @@
     "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.ColorRGBAMaterialSlot",
-    "m_ObjectId": "f534a4a29b904e4baa31992e1be1b9be",
-    "m_Id": 0,
-    "m_DisplayName": "SpriteColor",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "SpriteColor",
-    "m_StageCapability": 2,
-    "m_Value": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0,
-        "w": 1.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
     "m_Labels": []
 }
 
@@ -2559,6 +2494,9 @@
     "m_AlphaClip": false,
     "m_CastShadows": true,
     "m_ReceiveShadows": true,
+    "m_DisableTint": false,
+    "m_AdditionalMotionVectorMode": 0,
+    "m_AlembicMotionVectors": false,
     "m_SupportsLODCrossFade": false,
     "m_CustomEditorGUI": "",
     "m_SupportVFX": false
