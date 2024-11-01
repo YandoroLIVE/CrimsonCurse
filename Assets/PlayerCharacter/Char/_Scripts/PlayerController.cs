@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace HeroController
         private bool _isDashing = false;                       // Kontrolliert, ob der Spieler gerade dashen
         private float _dashTimeLeft;                           // Verbleibende Zeit f�r den aktuellen Dash
         private Vector2 _dashDirection;
-
+        private Coroutine _dashCooldownCoroutine;
 
         [SerializeField] private LayerMask wallLayer; // LayerMask for walls
         [SerializeField] private float wallCheckDistance = 0.5f; // Distance to check for walls
@@ -66,6 +67,7 @@ namespace HeroController
 
         private void Update()
         {
+            Debug.Log(_dashTimeLeft);
 
             _time += Time.deltaTime;
             GatherInput();
@@ -205,6 +207,7 @@ namespace HeroController
                 if (_grounded || CanUseCoyote)
                 {
                     ExecuteJump();  // Grounded or coyote jump
+                    
                 }
                 else if (_isTouchingWall && !_grounded)
                 {
@@ -265,40 +268,47 @@ namespace HeroController
         {
             if (_frameInput.Dash && _canDash && !_isDashing)
             {
-                StartDash();  // Starte den Dash
+                StartDash();
             }
 
             if (_isDashing)
             {
-                _dashTimeLeft -= Time.fixedDeltaTime;  // Reduziere die verbleibende Dash-Zeit
+                _dashTimeLeft -= Time.fixedDeltaTime;
 
                 if (_dashTimeLeft <= 0)
                 {
-                    EndDash();  // Beende den Dash, wenn die Zeit abgelaufen ist
+                    EndDash();
                 }
             }
         }
+
+
         private void StartDash()
         {
             _isDashing = true;
             _canDash = false;
             _dashTimeLeft = dashDuration;
 
-            // Bestimme die Richtung des Dash basierend auf der aktuellen Eingabe
-            _dashDirection = _frameInput.Move;
-            if (_dashDirection == Vector2.zero)
-            {
-                _dashDirection = new Vector2(_wallDirectionX, 0);  // Falls keine Eingabe, dashen in Richtung der Wand
-            }
-
+            _dashDirection = _frameInput.Move != Vector2.zero ? _frameInput.Move : Vector2.right;
             _dashDirection.Normalize();
-            _frameVelocity = _dashDirection * dashSpeed;  // Setze die Geschwindigkeit des Dash
+            _frameVelocity = _dashDirection * dashSpeed;
         }
+
+        private IEnumerator DashCooldownCoroutine()
+        {
+            yield return new WaitForSeconds(dashCooldown);
+            _canDash = true;
+        }
+
 
         private void EndDash()
         {
             _isDashing = false;
-            _canDash = true;
+            if (_dashCooldownCoroutine != null)
+            {
+                StopCoroutine(_dashCooldownCoroutine);
+            }
+            _dashCooldownCoroutine = StartCoroutine(DashCooldownCoroutine());
         }
 
         #endregion
