@@ -151,7 +151,7 @@ namespace HeroController
             _isWallSliding = _isTouchingWall && !_grounded && _frameVelocity.y < 0;
             if (_isWallSliding)
             {
-                _frameVelocity.y = -wallSlideSpeed;  // Apply wall sliding speed
+                _frameVelocity.y = -_stats.wallSlideSpeed;  // Apply wall sliding speed
             }
 
             // Ground Detection Logic
@@ -188,7 +188,7 @@ namespace HeroController
         private bool _coyoteUsable;
         private float _timeJumpWasPressed;
 
-        private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + _stats.JumpBuffer;
+        private bool HasBufferedJump => _bufferedJumpUsable && _time < _timeJumpWasPressed + _stats.jumpBufferTime;
         private bool CanUseCoyote => _coyoteUsable && !_grounded && _time < _frameLeftGrounded + _stats.CoyoteTime;
 
 
@@ -287,16 +287,16 @@ namespace HeroController
         {
             _isDashing = true;
             _canDash = false;
-            _dashTimeLeft = dashDuration;
+            _dashTimeLeft = _stats.dashDuration;
 
             _dashDirection = _frameInput.Move != Vector2.zero ? _frameInput.Move : Vector2.right;
             _dashDirection.Normalize();
-            _frameVelocity = _dashDirection * dashSpeed;
+            _frameVelocity = _dashDirection * _stats.dashSpeed;
         }
 
         private IEnumerator DashCooldownCoroutine()
         {
-            yield return new WaitForSeconds(dashCooldown);
+            yield return new WaitForSeconds(_stats.dashCooldown);
             _canDash = true;
         }
 
@@ -323,7 +323,7 @@ namespace HeroController
             }
             else if (_isWallSliding)
             {
-                _frameVelocity.y = Mathf.Max(_frameVelocity.y, -wallSlideSpeed);  // Apply wall slide speed
+                _frameVelocity.y = Mathf.Max(_frameVelocity.y, -_stats.wallSlideSpeed);  // Apply wall slide speed
             }
             else
             {
@@ -351,7 +351,7 @@ namespace HeroController
             }
             else
             {
-                _rb.linearVelocity = _dashDirection * dashSpeed;  // Dash-Bewegung
+                _rb.linearVelocity = _dashDirection * _stats.dashSpeed;  // Dash-Bewegung
             }
         }
 
