@@ -23,21 +23,18 @@ namespace Spriter2UnityDX.Editors {
 
 		public override void OnInspectorGUI ()
 		{
-			EditorGUI.BeginChangeCheck();
+			var changed = false;
 			var color = EditorGUILayout.ColorField ("Color", renderer.Color);
-			if (color != renderer.Color) {renderer.Color = color;}
+			if (color != renderer.Color) {renderer.Color = color; changed = true;}
 			var material = (Material)EditorGUILayout.ObjectField ("Material", renderer.Material, typeof(Material), false);
-			if (material != renderer.Material) {renderer.Material = material;}
+			if (material != renderer.Material) {renderer.Material = material; changed = true;}
 			var sortIndex = EditorGUILayout.Popup ("Sorting Layer", GetIndex (renderer.SortingLayerName), layerNames, GUILayout.ExpandWidth (true));
-			if (layerNames [sortIndex] != renderer.SortingLayerName) {renderer.SortingLayerName = layerNames[sortIndex];}
+			if (layerNames [sortIndex] != renderer.SortingLayerName) {renderer.SortingLayerName = layerNames[sortIndex]; changed = true;}
 			var sortingOrder = EditorGUILayout.IntField ("Order In Layer", renderer.SortingOrder);
-			if (sortingOrder != renderer.SortingOrder) {renderer.SortingOrder = sortingOrder;}
+			if (sortingOrder != renderer.SortingOrder) {renderer.SortingOrder = sortingOrder; changed = true;}
 			var applyZ = EditorGUILayout.Toggle ("Apply Spriter Z Order", renderer.ApplySpriterZOrder);
-			if (applyZ != renderer.ApplySpriterZOrder) {renderer.ApplySpriterZOrder = applyZ;}
-			if (EditorGUI.EndChangeCheck())
-			{
-				EditorUtility.SetDirty(renderer);
-			}
+			if (applyZ != renderer.ApplySpriterZOrder) {renderer.ApplySpriterZOrder = applyZ; changed = true;}
+			if (changed) EditorUtility.SetDirty(renderer);
 		}
 
 		private int GetIndex (string layerName) {
