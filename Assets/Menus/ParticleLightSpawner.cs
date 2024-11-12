@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal; // Wichtig f�r 2D Light
 
 public class ParticleLightSpawner : MonoBehaviour
 {
-    public ParticleSystem particleSystem;
+    public new ParticleSystem particleSystem;
     public Light2D lightPrefab; // Hier kann ein 2D-Licht als Prefab zugewiesen werden
     private List<Light2D> activeLights = new List<Light2D>();
 
