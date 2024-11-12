@@ -1,4 +1,7 @@
+using System.Numerics;
 using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
+
 
 namespace HeroController
 {
@@ -51,6 +54,29 @@ namespace HeroController
         public float CoyoteTime = .15f;
 
         [Tooltip("The amount of time we buffer a jump. This allows jump input before actually hitting the ground")]
-        public float JumpBuffer = .2f;
+        public float jumpBufferTime = .2f;
+
+        [Header("Walljump")] 
+        [Tooltip("the speed the player falls down")]
+        public float wallSlideSpeed = 2f;
+
+        [Tooltip("The strenghth the player will jump")]
+        public float wallJumpForce = 10f;
+
+        [Tooltip("Forces when the player jumps of the wall")]
+        public Vector2 wallJumpDirection = new Vector2(1f, 1.5f);
+
+        [Tooltip("Distance to check for walls")]
+        public float wallCheckDistance = 0.5f;
+
+        [Header("Dash")] [Tooltip("The speed of Players dash")]
+        public float dashSpeed = 15f;
+
+        [Tooltip("How long the player will be in the dash state")]
+        public float dashDuration = 0.2f;
+        
+        [Tooltip("Cooldown time of the dash")]
+        public float dashCooldown = 1f;
+
     }
 }
