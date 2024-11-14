@@ -7,6 +7,7 @@ public class OptionsMenu : MonoBehaviour
     public Dropdown resolutionDropdown;
     public Dropdown fullscreenDropdown;
     public Toggle vSyncToggle;
+    public GameObject mainMenu;
 
     private Resolution[] resolutions;
 
@@ -83,5 +84,11 @@ public class OptionsMenu : MonoBehaviour
             case 2: return FullScreenMode.MaximizedWindow;
             default: return FullScreenMode.Windowed;
         }
+    }
+
+    public void CancelButton()
+    {
+        mainMenu.SetActive(true);
+        gameObject.SetActive(false);
     }
 }
