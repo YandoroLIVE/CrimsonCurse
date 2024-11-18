@@ -29,7 +29,7 @@ public class S_GroundEnemy : MonoBehaviour
             // Prüfe, ob der Gegner nah genug am Spieler ist, um Schaden zu verursachen
             if (Vector3.Distance(transform.position, target.position) > attackRadius)
             {
-                MoveTowardsPlayer(); // Gegner bewegt sich in Richtung des Spielers
+                //MoveTowardsPlayer(); // Gegner bewegt sich in Richtung des Spielers (Auskommentiert)
             }
             else
             {
@@ -39,21 +39,21 @@ public class S_GroundEnemy : MonoBehaviour
     }
 
     // Funktion zur Bewegung in Richtung des Spielers
-    void MoveTowardsPlayer()
-    {
-        Debug.Log("Bewege mich zum Spieler"); // Debug-Log für Bewegung
-        // Bewegung in Richtung des Spielers
-        Vector3 direction = (target.position - transform.position).normalized;
-        transform.position += direction * speed * Time.deltaTime;
+    //void MoveTowardsPlayer() // Methode zum Bewegen zum Spieler (Auskommentiert)
+    //{
+    //    Debug.Log("Bewege mich zum Spieler"); // Debug-Log für Bewegung
+    //    // Bewegung in Richtung des Spielers
+    //    Vector3 direction = (target.position - transform.position).normalized;
+    //    transform.position += direction * speed * Time.deltaTime;
 
-        // Begrenze die Bewegung auf den Angriffsradius
-        float distanceToTarget = Vector3.Distance(transform.position, target.position);
-        if (distanceToTarget < attackRadius)
-        {
-            // Verschiebe den Gegner so, dass er genau am Rand des Angriffsbereichs bleibt
-            transform.position = target.position - direction * attackRadius;
-        }
-    }
+    //    // Begrenze die Bewegung auf den Angriffsradius
+    //    float distanceToTarget = Vector3.Distance(transform.position, target.position);
+    //    if (distanceToTarget < attackRadius)
+    //    {
+    //        // Verschiebe den Gegner so, dass er genau am Rand des Angriffsbereichs bleibt
+    //        transform.position = target.position - direction * attackRadius;
+    //    }
+    //}
 
     // Funktion zum Zufügen von Schaden
     public void TakeDamage(int damageAmount)
