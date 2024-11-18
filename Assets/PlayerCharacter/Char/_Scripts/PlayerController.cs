@@ -21,6 +21,7 @@ namespace HeroController
         private Vector2 _dashDirection;
         private Coroutine _dashCooldownCoroutine;
 
+
         [SerializeField] private LayerMask wallLayer; // LayerMask for walls
         [SerializeField] private float wallCheckDistance = 0.5f; // Distance to check for walls
         [SerializeField] private float wallSlideSpeed = 2f; // Speed when sliding down a wall
@@ -30,6 +31,8 @@ namespace HeroController
         private bool _isTouchingWall;
         private bool _isWallSliding;
         private int _wallDirectionX; // 1 for right wall, -1 for left wall
+        private int _lastWallJumpDirection = 0; // 1 für rechts, -1 für links, 0 für keinen Walljump
+
         [SerializeField] private float jumpBufferTime = 0.1f; // Time window to buffer jumps
         private float _timeSinceJumpPressed = Mathf.Infinity; // Time since the jump button was pressed
 
@@ -158,12 +161,17 @@ namespace HeroController
             if (!_grounded && groundHit)
             {
                 _grounded = true;
-                _canDash = true;  // Reset des Dash nach Bodenber�hrung
+                _canDash = true;  // Reset des Dash nach Bodenberührung
                 _coyoteUsable = true;
                 _bufferedJumpUsable = true;
                 _endedJumpEarly = false;
+
+                // Reset der zuletzt gesprungenen Wand
+                _lastWallJumpDirection = 0;
+
                 GroundedChanged?.Invoke(true, Mathf.Abs(_frameVelocity.y));
             }
+
             else if (_grounded && !groundHit)
             {
                 _grounded = false;
@@ -231,13 +239,23 @@ namespace HeroController
 
         private void ExecuteWallJump()
         {
+            // Verhindern, dass Spieler zweimal hintereinander von derselben Wand springt
+            if (_wallDirectionX == _lastWallJumpDirection)
+            {
+                return; // Verhindert den Walljump
+            }
+
             _endedJumpEarly = false;
             _isWallSliding = false;  // Stop wall sliding during the wall jump
+
+            // Speichere die Wandseite, von der gesprungen wurde
+            _lastWallJumpDirection = _wallDirectionX;
 
             // Apply wall jump velocity in the opposite direction of the wall
             float jumpDirectionX = -_wallDirectionX;  // Invert the wall direction to jump away
             _frameVelocity = new Vector2(jumpDirectionX * wallJumpDirection.x * wallJumpForce, wallJumpDirection.y * wallJumpForce);
         }
+
 
 
 
