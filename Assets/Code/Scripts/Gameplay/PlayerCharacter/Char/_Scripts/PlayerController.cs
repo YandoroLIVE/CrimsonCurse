@@ -8,6 +8,7 @@ namespace HeroController
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class PlayerController : MonoBehaviour, IPlayerController
     {
+        [SerializeField] private float wallJumpMoveLockDuration = 1f;
         [SerializeField] private ParticleSystem wallLeft;
         [SerializeField] private ParticleSystem wallRight;
         // Importscriptable stats
@@ -20,6 +21,8 @@ namespace HeroController
         private float _dashTimeLeft;                           // Verbleibende Zeit f�r den aktuellen Dash
         private Vector2 _dashDirection;
         private Coroutine _dashCooldownCoroutine;
+        private float _timeSinceWallJump;
+        private bool _isWallJumpLocked;
 
 
         [SerializeField] private LayerMask wallLayer; // LayerMask for walls
@@ -101,17 +104,23 @@ namespace HeroController
 
         private void FixedUpdate()
         {
-            CheckCollisions();
-            HandleDash(); // Dash-Logik hinzuf�gen
-            HandleJump();
-            HandleDirection();
-            HandleGravity();
+            if (_isWallJumpLocked)
+            {
+                _timeSinceWallJump += Time.fixedDeltaTime;
+                if (_timeSinceWallJump >= wallJumpMoveLockDuration)
+                {
+                    _isWallJumpLocked = false; // Hebe die Bewegungssperre auf
+                }
+            }
 
+            CheckCollisions();
+            HandleDash();
+            HandleJump();
+
+            if (!_isWallJumpLocked) HandleDirection(); // Bewegung nur erlauben, wenn die Sperre aufgehoben ist
+            HandleGravity();
             ApplyMovement();
         }
-
-
-
 
 
         #region Collisions
@@ -239,22 +248,21 @@ namespace HeroController
 
         private void ExecuteWallJump()
         {
-            // Verhindern, dass Spieler zweimal hintereinander von derselben Wand springt
-            if (_wallDirectionX == _lastWallJumpDirection)
-            {
-                return; // Verhindert den Walljump
-            }
+            if (_wallDirectionX == _lastWallJumpDirection) return; // Blockiere doppelten Walljump
 
             _endedJumpEarly = false;
-            _isWallSliding = false;  // Stop wall sliding during the wall jump
-
-            // Speichere die Wandseite, von der gesprungen wurde
+            _isWallSliding = false;
             _lastWallJumpDirection = _wallDirectionX;
 
-            // Apply wall jump velocity in the opposite direction of the wall
-            float jumpDirectionX = -_wallDirectionX;  // Invert the wall direction to jump away
+            // Setze die Bewegungssperre
+            _isWallJumpLocked = true;
+            _timeSinceWallJump = 0f;
+
+            // Walljump-Bewegung
+            float jumpDirectionX = -_wallDirectionX;
             _frameVelocity = new Vector2(jumpDirectionX * wallJumpDirection.x * wallJumpForce, wallJumpDirection.y * wallJumpForce);
         }
+
 
 
 
@@ -267,7 +275,11 @@ namespace HeroController
 
         private void HandleDirection()
         {
-            // Handling der Bewegungsrichtung
+            if (_isWallJumpLocked && Mathf.Sign(_frameInput.Move.x) == _lastWallJumpDirection)
+            {
+                return; // Blockiere Bewegung in Richtung der Wand, von der gesprungen wurde
+            }
+
             if (_frameInput.Move.x == 0)
             {
                 var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
@@ -278,6 +290,7 @@ namespace HeroController
                 _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _frameInput.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
             }
         }
+
 
 
         #endregion
@@ -307,7 +320,10 @@ namespace HeroController
             _canDash = false;
             _dashTimeLeft = _stats.dashDuration;
 
-            _dashDirection = _frameInput.Move != Vector2.zero ? _frameInput.Move : Vector2.right;
+            _dashDirection = _frameInput.Move.x != 0
+                ? new Vector2(Mathf.Sign(_frameInput.Move.x), 0)
+                : new Vector2(transform.localScale.x > 0 ? 1 : -1, 0);
+
             _dashDirection.Normalize();
             _frameVelocity = _dashDirection * _stats.dashSpeed;
         }
