@@ -20,14 +20,14 @@ public class LevelEndTrigger : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(nextSceneName))
         {
-            transitionAnim.SetTrigger("End");
-            yield return new WaitForSeconds(1);
+            //transitionAnim.SetTrigger("End");
+            yield return new WaitForSeconds(.1f);
             SceneManager.LoadScene(nextSceneName);
-            transitionAnim.SetTrigger("Start");
+            //transitionAnim.SetTrigger("Start");
         }
         else
         {
-            Debug.LogWarning("Kein Szenenname angegeben!");
+            Debug.LogWarning("Ke in Szenenname angegeben!");
         }
     }
 }
