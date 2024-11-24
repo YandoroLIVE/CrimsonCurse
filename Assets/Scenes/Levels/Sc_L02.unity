@@ -256,8 +256,13 @@ PrefabInstance:
       propertyPath: nextSceneName
       value: Sc_L03
       objectReference: {fileID: 0}
+    - target: {fileID: 8337855002005197612, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
+      propertyPath: transitionAnim
+      value: 
+      objectReference: {fileID: 1582743253}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1531505160824166745, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
@@ -6493,6 +6498,10 @@ PrefabInstance:
       propertyPath: nextSceneName
       value: Sc_L01
       objectReference: {fileID: 0}
+    - target: {fileID: 8337855002005197612, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
+      propertyPath: transitionAnim
+      value: 
+      objectReference: {fileID: 1582743253}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6501,6 +6510,11 @@ PrefabInstance:
 --- !u!4 &1582743252 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7045445874092172145, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
+  m_PrefabInstance: {fileID: 1582743251}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1582743253 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5920361533771307803, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
   m_PrefabInstance: {fileID: 1582743251}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1649595029

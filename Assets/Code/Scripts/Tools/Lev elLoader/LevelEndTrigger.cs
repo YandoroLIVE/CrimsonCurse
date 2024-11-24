@@ -20,10 +20,10 @@ public class LevelEndTrigger : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(nextSceneName))
         {
-            //transitionAnim.SetTrigger("End");
-            yield return new WaitForSeconds(.1f);
+            transitionAnim.SetTrigger("End");
+            yield return new WaitForSeconds(1f);
             SceneManager.LoadScene(nextSceneName);
-            //transitionAnim.SetTrigger("Start");
+            transitionAnim.SetTrigger("Start");
         }
         else
         {
