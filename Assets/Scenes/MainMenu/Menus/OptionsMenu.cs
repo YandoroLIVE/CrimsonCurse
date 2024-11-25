@@ -8,7 +8,7 @@ public class OptionsMenu : MonoBehaviour
     public Dropdown fullscreenDropdown;
     public Toggle vSyncToggle;
     public GameObject mainMenu;
-
+    public GameObject optionsMenu;
     private Resolution[] resolutions;
 
     void Start()
@@ -89,6 +89,6 @@ public class OptionsMenu : MonoBehaviour
     public void CancelButton()
     {
         mainMenu.SetActive(true);
-        gameObject.SetActive(false);
+        optionsMenu.SetActive(false);
     }
 }

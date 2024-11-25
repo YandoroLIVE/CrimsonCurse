@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 1874192666424001282}
   - component: {fileID: 3409804111135636520}
   - component: {fileID: 1709451335225921395}
-  - component: {fileID: 2493109097679145351}
+  - component: {fileID: 1902946799816293166}
+  - component: {fileID: -3089645825415717033}
   m_Layer: 0
   m_Name: Player Controller
   m_TagString: Player
@@ -179,8 +180,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   landingVFX: {fileID: 3075569594264493692}
   jumpingVFX: {fileID: 4554583891056918215}
-  dashToLeftVFX: {fileID: 0}
-  dashToRightVFX: {fileID: 0}
+  dashToLeftVFX: {fileID: 3386778715664614937}
+  dashToRightVFX: {fileID: 1145866625423061133}
   walkParticlesVFX: {fileID: 0}
   wallJumpMoveLockDuration: 0.2
   wallLeft: {fileID: 0}
@@ -209,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7f356685a3dd954082aaca06187b9e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2493109097679145351
+--- !u!114 &1902946799816293166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,11 +219,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 3038803841253255279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0d086614d99e6043b6f0f459c9400ab, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fc6315fdf78faf4d86d0c79c3f86a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  sceneToLoad: MainMenu
+--- !u!114 &-3089645825415717033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3038803841253255279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbdd5cb285cfd01499fd937f63befeed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 25
   attackRange: 1.5
-  attackDamage: 10
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -839,6 +855,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2086b1ed42e246e47bb18ea2a5e4dac4, type: 3}
+--- !u!198 &3386778715664614937 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3866787711023089237, guid: 2086b1ed42e246e47bb18ea2a5e4dac4, type: 3}
+  m_PrefabInstance: {fileID: 1921303815046004812}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8416910548399854937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7955336266457224469, guid: 2086b1ed42e246e47bb18ea2a5e4dac4, type: 3}
@@ -983,6 +1004,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2086b1ed42e246e47bb18ea2a5e4dac4, type: 3}
+--- !u!198 &1145866625423061133 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3866787711023089237, guid: 2086b1ed42e246e47bb18ea2a5e4dac4, type: 3}
+  m_PrefabInstance: {fileID: 4201710500665472728}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6064221552025969613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7955336266457224469, guid: 2086b1ed42e246e47bb18ea2a5e4dac4, type: 3}

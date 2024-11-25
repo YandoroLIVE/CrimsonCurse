@@ -167,16 +167,6 @@ Transform:
   - {fileID: 945506986}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!198 &164178319 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 3386778715664614937, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
-  m_PrefabInstance: {fileID: 1848574165}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &223817728 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1145866625423061133, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
-  m_PrefabInstance: {fileID: 1848574165}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &745820859
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6385,14 +6375,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Controller
       objectReference: {fileID: 0}
-    - target: {fileID: 3409804111135636520, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
-      propertyPath: dashToLeftVFX
-      value: 
-      objectReference: {fileID: 164178319}
-    - target: {fileID: 3409804111135636520, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
-      propertyPath: dashToRightVFX
-      value: 
-      objectReference: {fileID: 223817728}
     - target: {fileID: 3409804111135636520, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: characterSprite
       value: 
