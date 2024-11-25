@@ -273,11 +273,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0cb5bf4e60bc54b85943df1b9a2a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpDuration: 1
-  jumpDistance: 2
-  jumpHeight: 1
-  jumpVelocity: 10
-  fallVelocity: 5
+  jumpDuration: 0.2
+  jumpDistance: 3
+  jumpHeight: 3
+  jumpVelocity: 5
+  fallVelocity: 20
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -287,4 +287,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  landPauseDuration: 0.5
+  landPauseDuration: 0.8
