@@ -41,7 +41,7 @@ public class S_PlayerAttack : MonoBehaviour
     void Attack()
     {
         Debug.Log("Angriff ausgelöst!");
-
+        attackDamage.Play();
         // Gehe durch alle Gegner im Bereich und füge Schaden zu
         foreach (var enemyCollider in enemiesInRange)
         {

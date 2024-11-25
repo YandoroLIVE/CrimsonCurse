@@ -49,7 +49,7 @@ public class S_PlayerHealth : MonoBehaviour
         FixCameraAtPlayerPosition(transform.position);
 
         // Lade die nächste Szene
-        SceneManager.LoadScene(sceneToLoad); // Lade die Szene, die in sceneToLoad angegeben ist
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Lade die Szene, die in sceneToLoad angegeben ist
     }
 
     // Fixiere die Kamera an der Position des Spielers
