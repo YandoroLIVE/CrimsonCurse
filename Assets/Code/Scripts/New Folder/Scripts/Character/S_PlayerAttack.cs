@@ -8,11 +8,11 @@ public class S_PlayerAttack : MonoBehaviour
     public float attackRange = 1.5f; // Reichweite des Angriffs
     public LayerMask enemyLayer; // Layer für den Gegner
     private Collider2D[] enemiesInRange; // Array für Gegner im Angriffsbereich
-
+    public ParticleSystem attackDamage;
     void Update()
     {
         // Überprüfen, ob der Spieler die Angriffs-Taste drückt (hier auf die Taste "E" festgelegt)
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton2))
         {
             Attack(); // Spieler greift an
         }
