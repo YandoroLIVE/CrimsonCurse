@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: f1a17c36ea4001b41a76d95f9a33af05
+guid: 92ddc2989ccadb040abf228dc5bffc78
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 776159012199426927
-    second: BackRightFoot_0
+      213: 6813137486374013741
+    second: DynamicScratch_014_0
+  - first:
+      213: 9004857656042492597
+    second: DynamicScratch_014_1
+  - first:
+      213: 1034767537148818189
+    second: DynamicScratch_014_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,8 +55,8 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.533333, y: 0.746835}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -96,69 +102,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: VisionOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BackRightFoot_0
+      name: DynamicScratch_014_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1
-        width: 43
-        height: 68
+        x: 14
+        y: 175
+        width: 39
+        height: 194
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,8 +121,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f6b6d53628875ca00800000000000000
-      internalID: 776159012199426927
+      spriteID: d2b883142702d8e50800000000000000
+      internalID: 6813137486374013741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DynamicScratch_014_1
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 115
+        width: 93
+        height: 359
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b29e51145ea7fc70800000000000000
+      internalID: 9004857656042492597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DynamicScratch_014_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 182
+        width: 39
+        height: 201
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d037cd4b79b3c5e00800000000000000
+      internalID: 1034767537148818189
       vertices: []
       indices: 
       edges: []
@@ -187,7 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BackRightFoot_0: 776159012199426927
+      DynamicScratch_014_0: 6813137486374013741
+      DynamicScratch_014_1: 9004857656042492597
+      DynamicScratch_014_2: 1034767537148818189
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
