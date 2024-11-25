@@ -90,7 +90,7 @@ namespace HeroController
         {
             _frameInput = new FrameInput
             {
-                Dash = Input.GetKeyDown(KeyCode.LeftShift),
+                Dash = Input.GetKeyDown(KeyCode.LeftShift ) || Input.GetKeyDown(KeyCode.JoystickButton1),
                 JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space),
                 JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.Space),
                 Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
