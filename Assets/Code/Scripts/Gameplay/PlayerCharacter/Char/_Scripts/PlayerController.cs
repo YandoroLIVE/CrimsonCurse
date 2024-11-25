@@ -8,6 +8,12 @@ namespace HeroController
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class PlayerController : MonoBehaviour, IPlayerController
     {
+        [SerializeField] private ParticleSystem landingVFX;
+        [SerializeField] private ParticleSystem jumpingVFX;
+        [SerializeField] private ParticleSystem dashToLeftVFX;
+        [SerializeField] private ParticleSystem dashToRightVFX;
+        [SerializeField] private ParticleSystem walkParticlesVFX;
+
         [SerializeField] private float wallJumpMoveLockDuration = 1f;
         [SerializeField] private ParticleSystem wallLeft;
         [SerializeField] private ParticleSystem wallRight;
@@ -174,6 +180,8 @@ namespace HeroController
                 _coyoteUsable = true;
                 _bufferedJumpUsable = true;
                 _endedJumpEarly = false;
+                landingVFX.Play();
+
 
                 // Reset der zuletzt gesprungenen Wand
                 _lastWallJumpDirection = 0;
@@ -239,10 +247,12 @@ namespace HeroController
 
         private void ExecuteJump()
         {
+            
             _endedJumpEarly = false;
             _bufferedJumpUsable = false;
             _coyoteUsable = false;
             _frameVelocity.y = _stats.JumpPower;  // Standard jump force
+            jumpingVFX.Play();
             Jumped?.Invoke();
         }
 
@@ -288,8 +298,14 @@ namespace HeroController
             else
             {
                 _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _frameInput.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
+
+                // Drehe den Charakter basierend auf der Richtung
+                Vector3 scale = transform.localScale;
+                scale.x = Mathf.Sign(_frameInput.Move.x) * Mathf.Abs(scale.x); // Behalte die ursprüngliche Größe bei
+                transform.localScale = scale;
             }
         }
+
 
 
 
@@ -300,6 +316,7 @@ namespace HeroController
             if (_frameInput.Dash && _canDash && !_isDashing)
             {
                 StartDash();
+                PlayDashVFX();
             }
 
             if (_isDashing)
@@ -343,6 +360,11 @@ namespace HeroController
                 StopCoroutine(_dashCooldownCoroutine);
             }
             _dashCooldownCoroutine = StartCoroutine(DashCooldownCoroutine());
+        }
+
+        private void PlayDashVFX()
+        {
+            dashToRightVFX.Play();
         }
 
         #endregion
