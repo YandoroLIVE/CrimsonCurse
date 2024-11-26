@@ -1,13 +1,15 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject pauseMenuUI;
+    public GameObject pauseMenuUI; // Reference to the Pause Menu UI
     private bool isPaused = false;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) // ESC-Taste pausiert das Spiel
+        // Toggle pause menu on pressing the Escape key
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
                 Resume();
@@ -19,20 +21,26 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f; // Spielgeschwindigkeit normal
+        Time.timeScale = 1f; // Resume game time
         isPaused = false;
     }
 
     public void Pause()
     {
         pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f; // Spiel einfrieren
+        Time.timeScale = 0f; // Pause game time
         isPaused = true;
+    }
+
+    public void LoadMainMenu()
+    {
+        Time.timeScale = 1f; // Ensure game time resumes when switching scenes
+        SceneManager.LoadScene("MainMenu"); // Replace with your main menu scene name
     }
 
     public void QuitGame()
     {
         Debug.Log("Quitting game...");
-        Application.Quit(); // Funktioniert nur im Build
+        Application.Quit();
     }
 }
