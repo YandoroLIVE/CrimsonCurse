@@ -1,0 +1,176 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &722530749734532833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5934712708094990677}
+  - component: {fileID: 309603098853723702}
+  m_Layer: 0
+  m_Name: Forest Area Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5934712708094990677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722530749734532833}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 47.945194, y: -21.276367, z: 0}
+  m_LocalScale: {x: 88.4, y: 88.4, z: 88.4}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &309603098853723702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722530749734532833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 2
+  m_LightType: 1
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.33
+  m_LightVolumeIntensity: 1
+  m_LightVolumeEnabled: 0
+  m_ApplyToSortingLayers: 00000000ffe870595f717389e3756463
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 0
+  m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0.3
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: -0.35020003, y: 0.14985001, z: 0}
+    m_Extent: {x: 0.7837, y: 0.56295, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.2
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.32175237, y: 0.033219986, z: 0}
+  - {x: -0.22156642, y: 0.034497283, z: 0}
+  - {x: -0.22270374, y: 0.078293875, z: 0}
+  - {x: -0.15416524, y: 0.07862948, z: 0}
+  - {x: -0.15442911, y: 0.100600205, z: 0}
+  - {x: -0.11488339, y: 0.10137975, z: 0}
+  - {x: -0.11359269, y: 0.07908846, z: 0}
+  - {x: -0.024730397, y: 0.07941975, z: 0}
+  - {x: -0.02442082, y: 0.05386011, z: 0}
+  - {x: 0.10921921, y: 0.055117104, z: 0}
+  - {x: 0.10991573, y: 0.040216267, z: 0}
+  - {x: 0.018407486, y: 0.040597994, z: 0}
+  - {x: 0.019661935, y: -0.0051156287, z: 0}
+  - {x: -0.027451433, y: -0.0052243085, z: 0}
+  - {x: -0.028394837, y: -0.06090672, z: 0}
+  - {x: 0.039459266, y: -0.061744444, z: 0}
+  - {x: 0.040283825, y: -0.10661212, z: 0}
+  - {x: 0.105978005, y: -0.104850136, z: 0}
+  - {x: 0.10323095, y: -0.20606966, z: 0}
+  - {x: 0.19328155, y: -0.2080057, z: 0}
+  - {x: 0.19287486, y: -0.10872771, z: 0}
+  - {x: 0.23166534, y: -0.10836518, z: 0}
+  - {x: 0.23069838, y: -0.049796544, z: 0}
+  - {x: 0.116327964, y: -0.051669415, z: 0}
+  - {x: 0.11632801, y: -0.035214603, z: 0}
+  - {x: 0.16036199, y: -0.034287576, z: 0}
+  - {x: 0.16198428, y: 0.008819366, z: 0}
+  - {x: 0.23204896, y: 0.009927527, z: 0}
+  - {x: 0.23099457, y: 0.15269935, z: 0}
+  - {x: -0.10877327, y: 0.1528567, z: 0}
+  - {x: -0.109207906, y: 0.19017111, z: 0}
+  - {x: 0.006272045, y: 0.19055349, z: 0}
+  - {x: 0.005998155, y: 0.2348935, z: 0}
+  - {x: 0.23459315, y: 0.23209658, z: 0}
+  - {x: 0.23263238, y: 0.31192574, z: 0}
+  - {x: -0.019007185, y: 0.3095271, z: 0}
+  - {x: -0.01999931, y: 0.32744762, z: 0}
+  - {x: 0.003597873, y: 0.32727653, z: 0}
+  - {x: 0.0050308877, y: 0.35001174, z: 0}
+  - {x: 0.2286594, y: 0.35052314, z: 0}
+  - {x: 0.22920364, y: 0.4246759, z: 0}
+  - {x: 0.18359151, y: 0.4244232, z: 0}
+  - {x: 0.18540686, y: 0.51065135, z: 0}
+  - {x: 0.1108118, y: 0.5103497, z: 0}
+  - {x: 0.1108436, y: 0.4254128, z: 0}
+  - {x: -0.6551232, y: 0.42506745, z: 0}
+  - {x: -0.6571426, y: 0.51261866, z: 0}
+  - {x: -0.7264776, y: 0.51195854, z: 0}
+  - {x: -0.72579515, y: 0.42664433, z: 0}
+  - {x: -0.93133646, y: 0.42774755, z: 0}
+  - {x: -0.92917854, y: 0.0336976, z: 0}
+  - {x: -0.884608, y: 0.033519898, z: 0}
+  - {x: -0.88376546, y: 0.010327251, z: 0}
+  - {x: -0.8610774, y: 0.010632556, z: 0}
+  - {x: -0.8605825, y: -0.010949678, z: 0}
+  - {x: -0.81625926, y: -0.011227818, z: 0}
+  - {x: -0.8158934, y: -0.029984888, z: 0}
+  - {x: -0.92647797, y: -0.029087527, z: 0}
+  - {x: -0.9338554, y: -0.20945416, z: 0}
+  - {x: -0.8500571, y: -0.21256168, z: 0}
+  - {x: -0.8489329, y: -0.10313279, z: 0}
+  - {x: -0.7655591, y: -0.10460348, z: 0}
+  - {x: -0.7646177, y: -0.058274645, z: 0}
+  - {x: -0.7190707, y: -0.05868686, z: 0}
+  - {x: -0.71883464, y: 0.062244203, z: 0}
+  - {x: -0.8113196, y: 0.060627338, z: 0}
+  - {x: -0.8094666, y: 0.07786034, z: 0}
+  - {x: -0.7663706, y: 0.07873628, z: 0}
+  - {x: -0.76432997, y: 0.122495964, z: 0}
+  - {x: -0.7214216, y: 0.12239178, z: 0}
+  - {x: -0.7188346, y: 0.16863427, z: 0}
+  - {x: -0.69910884, y: 0.16863427, z: 0}
+  - {x: -0.6965518, y: 0.19184786, z: 0}
+  - {x: -0.6630169, y: 0.1911562, z: 0}
+  - {x: -0.65119183, y: 0.16578873, z: 0}
+  - {x: -0.49298835, y: 0.16612603, z: 0}
+  - {x: -0.49358892, y: 0.18978558, z: 0}
+  - {x: -0.43283734, y: 0.1886059, z: 0}
+  - {x: -0.43341273, y: 0.16919601, z: 0}
+  - {x: -0.22776304, y: 0.16879551, z: 0}
+  - {x: -0.22834934, y: 0.14613822, z: 0}
+  - {x: -0.18257418, y: 0.1461382, z: 0}
+  - {x: -0.18257415, y: 0.1294927, z: 0}
+  - {x: -0.42636183, y: 0.1291459, z: 0}
+  - {x: -0.42601505, y: 0.15342064, z: 0}
+  - {x: -0.5240628, y: 0.15420994, z: 0}
+  - {x: -0.5241703, y: 0.096876875, z: 0}
+  - {x: -0.477119, y: 0.09720847, z: 0}
+  - {x: -0.47872433, y: 0.056503017, z: 0}
+  - {x: -0.45629552, y: 0.055385623, z: 0}
+  - {x: -0.4550382, y: 0.034268036, z: 0}
+  - {x: -0.37967378, y: 0.03373357, z: 0}
+  - {x: -0.38111573, y: 0.055454776, z: 0}
+  - {x: -0.32019734, y: 0.05492801, z: 0}
