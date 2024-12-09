@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LifeCrystalManager : MonoBehaviour
+public class HealthUi : MonoBehaviour
 {
     [Header("Life Crystals")]
     public List<GameObject> lifeCrystals;
@@ -13,11 +13,11 @@ public class LifeCrystalManager : MonoBehaviour
         currentLife = lifeCrystals.Count;
     }
 
-    public void Update()
+    public void GetDamage()
     {
         if (currentLife > 0)
         {
-
+            currentLife--;
             lifeCrystals[currentLife].SetActive(false);
 
             if (currentLife == 0)
