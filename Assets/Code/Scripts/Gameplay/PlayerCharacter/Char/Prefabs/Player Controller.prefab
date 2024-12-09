@@ -309,6 +309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  healthUi: {fileID: 0}
   sceneToLoad: MainMenu
 --- !u!114 &-3089645825415717033
 MonoBehaviour:
@@ -1164,6 +1165,10 @@ PrefabInstance:
     - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4220308301161472815, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4220308301161472815, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: scalingMode
