@@ -1,88 +1,130 @@
-using System;
-using Unity.VisualScripting;
 using System.Collections;
 using UnityEngine;
 
-public class S_FlummiFluffIdle : MonoBehaviour
+public class S_FlummiFluff : MonoBehaviour
 {
     // Sprungparameter
     public float jumpDuration = 1.0f;   // Gesamtdauer des Sprungs
-    public float jumpDistance = 2.0f;    // Horizontale Distanz des Sprungs
-    public float jumpHeight = 1.0f;      // Maximale Höhe des Sprungs
+    public float jumpDistance = 2.0f;   // Horizontale Distanz des Sprungs
+    public float jumpHeight = 2.0f;     // Maximale Höhe des Sprungs
 
-    // Parameter für die Absprunggeschwindigkeit (ein Multiplikator für die Anfangsgeschwindigkeit)
-    public float jumpVelocity = 10.0f;   // Initiale Geschwindigkeit beim Absprung
+    // Zielobjekt (der Spieler)
+    public Transform player;
 
     // Parameter für die Fallgeschwindigkeit
-    public float fallVelocity = 5.0f;     // Geschwindigkeit des Falls
+    public float fallVelocity = 5.0f;
 
-    // Layer für die Bodenprüfung (z.B., "Wall")
+    // Layer für die Bodenprüfung (wir verwenden "Wall")
     public LayerMask groundLayer;
 
-    // Animation Curve für dynamischen Sprung
+    // Animation Curve für den dynamischen Sprung
     public AnimationCurve jumpCurve;
 
     private Vector3 startPosition;
     private bool isIdle = true;
+    private bool isAttacking = false;
 
     // Pause nach der Landung
     public float landPauseDuration = 0.5f;
 
+    // Geschwindigkeit der Annäherung an den Spieler (Bewegung zwischen Idle und Attack)
+    public float approachSpeed = 3.0f;
+
+    // Zum Tracking der Bewegungsrichtung des FlummiFluffs (links oder rechts)
+    private bool isMovingRight = true;
+
     private void Start()
     {
-        // Setze den Layer für die Bodenprüfung auf den Layer "Wall"
+        // Setze die Layer für die Bodenprüfung auf den Layer "Wall"
         groundLayer = LayerMask.GetMask("Wall");
 
-        // Standard-Animation Curve für den dynamischen Sprung setzen, falls nicht im Editor gesetzt
+        // Standard-Animation Curve setzen, falls nicht definiert
         if (jumpCurve == null || jumpCurve.keys.Length == 0)
         {
             jumpCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.2f, 1.2f), new Keyframe(0.5f, 1.0f), new Keyframe(1, 0));
         }
 
-        // Speichere die Anfangsposition des Gegners
+        // Speichere die Anfangsposition des FlummiFluffs
         startPosition = transform.position;
 
-        // Starte die Landungsroutine, bevor der Sprungzyklus beginnt
-        StartCoroutine(StartLandingRoutine());
+        // Beginne im Idle-State
+        StartCoroutine(IdleRoutine());
     }
 
-    private IEnumerator StartLandingRoutine()
-    {
-        // Landevorgang, wenn ein Boden erkannt wird
-        while (!IsGroundBelow())
-        {
-            // Bewege den Gegner nach unten
-            transform.position += Vector3.down * Time.deltaTime * fallVelocity;  // Verwende fallVelocity für die Bewegung nach unten
-
-            // Warte einen Frame und überprüfe erneut
-            yield return null;
-        }
-
-        // Stelle sicher, dass er auf dem Boden landet
-        transform.position = new Vector3(transform.position.x, GetGroundHeight(), transform.position.z);
-
-        // Starte nun den regulären Sprungzyklus
-        StartCoroutine(IdleJumpRoutine());
-    }
-
-    private IEnumerator IdleJumpRoutine()
+    private IEnumerator IdleRoutine()
     {
         while (isIdle)
         {
-            // Zielposition für den Sprung nach rechts berechnen
-            Vector3 targetPosition = startPosition + new Vector3(jumpDistance, 0, 0);
+            // Berechne die Richtung zum Spieler
+            Vector3 targetPosition = player.position;
+            bool playerIsOnRight = targetPosition.x > transform.position.x;
 
-            // Sprung in einem Bogen zur Zielposition
-            yield return StartCoroutine(JumpArc(targetPosition));
+            // Wenn der Spieler auf der rechten Seite ist, Bounce nach rechts, dann links, usw.
+            if (playerIsOnRight)
+            {
+                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(jumpDistance, 0, 0)));
+                yield return new WaitForSeconds(landPauseDuration);
 
-            // Kurze Pause nach der Landung
-            yield return new WaitForSeconds(landPauseDuration);
+                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(-jumpDistance, 0, 0)));
+                yield return new WaitForSeconds(landPauseDuration);
+            }
+            // Wenn der Spieler auf der linken Seite ist, Bounce nach links, dann rechts, usw.
+            else
+            {
+                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(-jumpDistance, 0, 0)));
+                yield return new WaitForSeconds(landPauseDuration);
 
-            // Sprung in einem Bogen zurück zur Startposition
-            yield return StartCoroutine(JumpArc(startPosition));
+                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(jumpDistance, 0, 0)));
+                yield return new WaitForSeconds(landPauseDuration);
+            }
+        }
+    }
 
-            // Kurze Pause nach der Landung
-            yield return new WaitForSeconds(landPauseDuration);
+    private IEnumerator AttackRoutine()
+    {
+        isIdle = false;
+        isAttacking = true;
+
+        // Bewegung zum Spieler (als Zwischenschritt zwischen Idle und Attack)
+        yield return StartCoroutine(MoveToPlayer());
+
+        // Solange der FlummiFluff angreift, springt er nach links und rechts
+        while (isAttacking)
+        {
+            // Berechne die Richtung zum Spieler
+            Vector3 targetPosition = player.position;
+            bool playerIsOnRight = targetPosition.x > transform.position.x;
+
+            // Wenn der Spieler auf der rechten Seite ist, Bounce nach rechts, dann links, usw.
+            if (playerIsOnRight)
+            {
+                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(jumpDistance, 0, 0)));
+                yield return new WaitForSeconds(landPauseDuration);
+
+                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(-jumpDistance, 0, 0)));
+                yield return new WaitForSeconds(landPauseDuration);
+            }
+            // Wenn der Spieler auf der linken Seite ist, Bounce nach links, dann rechts, usw.
+            else
+            {
+                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(-jumpDistance, 0, 0)));
+                yield return new WaitForSeconds(landPauseDuration);
+
+                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(jumpDistance, 0, 0)));
+                yield return new WaitForSeconds(landPauseDuration);
+            }
+        }
+    }
+
+    private IEnumerator MoveToPlayer()
+    {
+        // Annäherung an den Spieler (Bewegung vor dem Angriff)
+        Vector3 targetPosition = player.position;
+        while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
+        {
+            // Bewege den FlummiFluff in Richtung des Spielers
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, approachSpeed * Time.deltaTime);
+            yield return null;
         }
     }
 
@@ -92,73 +134,55 @@ public class S_FlummiFluffIdle : MonoBehaviour
         float timeElapsed = 0;
         bool groundDetected = false;
 
-        // Berechne die Endhöhe des Sprungs (Maximalhöhe)
-        float initialHeight = start.y;  // Anfangshöhe
-        float peakHeight = initialHeight + jumpHeight; // Höchster Punkt des Sprungs
-
-        // Sprungbewegung
         while (timeElapsed < jumpDuration)
         {
             float t = timeElapsed / jumpDuration;
             float curveValue = jumpCurve.Evaluate(t);
-            float height = curveValue * jumpHeight;  // Höhe des Sprungs wird von jumpHeight bestimmt
+            float height = curveValue * jumpHeight;
 
-            // Berechne die Zielposition mit dynamischer Höhe
             Vector3 targetWithHeight = Vector3.Lerp(start, targetPosition, t) + new Vector3(0, height, 0);
 
-            // Überprüfe, ob unter dem Gegner eine "Wall" ist
+            // Überprüfe, ob der FlummiFluff den Boden berührt
             if (IsGroundBelow() && !groundDetected)
             {
-                // Landet auf der Y-Position des Bodens
                 targetWithHeight.y = Mathf.Min(targetWithHeight.y, GetGroundHeight());
-
-                // Markiere den Boden als erreicht
                 groundDetected = true;
             }
 
             transform.position = targetWithHeight;
-
-            // Zeit um die Sprungbewegung zu berechnen
-            timeElapsed += Time.deltaTime; // Hier verwenden wir einfach die verstrichene Zeit
+            timeElapsed += Time.deltaTime;
             yield return null;
         }
 
-        // Sicherstellen, dass der Gegner an der exakten Zielposition landet
         transform.position = targetPosition;
     }
 
     private void Update()
     {
-        // Während der Rückkehr zum Boden die Fallgeschwindigkeit anwenden, wenn der Gegner nicht auf dem Boden ist
+        // Fällt, wenn kein Boden unter dem FlummiFluff erkannt wird
         if (!IsGroundBelow())
         {
             transform.position += Vector3.down * Time.deltaTime * fallVelocity;
+        }
+
+        // Wenn der FlummiFluff nahe genug am Spieler ist, beginnt der Angriff
+        if (Vector3.Distance(transform.position, player.position) < 5.0f && !isAttacking)
+        {
+            StartCoroutine(AttackRoutine());
         }
     }
 
     private bool IsGroundBelow()
     {
-        // Raycast nach unten, um den Boden (Layer "Wall") zu detektieren
-        return Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, groundLayer);
+        // Raycast nach unten, um den Boden zu überprüfen
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, groundLayer);
+        return hit.collider != null;
     }
 
     private float GetGroundHeight()
     {
-        // Führt einen Raycast durch, um die Y-Position des Bodens unter dem Gegner zu ermitteln
+        // Raycast, um die Höhe des Bodens unter dem FlummiFluff zu ermitteln
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, groundLayer);
         return hit.point.y;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
