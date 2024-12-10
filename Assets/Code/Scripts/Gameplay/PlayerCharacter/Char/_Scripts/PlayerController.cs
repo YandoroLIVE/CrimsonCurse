@@ -21,7 +21,8 @@ namespace HeroController
         [SerializeField] private float dashSpeed = 15f;        // Dash-Geschwindigkeit
         [SerializeField] private float dashDuration = 0.2f;    // Dauer des Dashs in Sekunden
         [SerializeField] private float dashCooldown = 1f;      // Zeit, bevor ein neuer Dash m�glich ist
-
+        public bool pickedUpDash = false;
+        public bool hasWallJump = false;
         private bool _canDash = true;                          // Kontrolliert, ob der Dash verf�gbar ist
         private bool _isDashing = false;                       // Kontrolliert, ob der Spieler gerade dashen
         private float _dashTimeLeft;                           // Verbleibende Zeit f�r den aktuellen Dash
@@ -313,7 +314,7 @@ namespace HeroController
         #region Dash
         private void HandleDash()
         {
-            if (_frameInput.Dash && _canDash && !_isDashing)
+            if (_frameInput.Dash && _canDash && !_isDashing && pickedUpDash)
             {
                 StartDash();
                 PlayDashVFX();
