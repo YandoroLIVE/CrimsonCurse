@@ -127,8 +127,12 @@ public class S_FlummiFluff : MonoBehaviour
                 nextTargetPosition = player.position + new Vector3(jumpDistance, 0, 0); // Ziel rechts vom Spieler
             }
 
-            // Sprung zur nächsten Zielposition
-            yield return StartCoroutine(JumpArc(nextTargetPosition));
+            // Dynamische Anpassung der Sprungdauer je nach Entfernung zum Ziel
+            float distanceToTarget = Vector3.Distance(transform.position, nextTargetPosition);
+            float adjustedJumpDuration = Mathf.Clamp(distanceToTarget / moveSpeed, 1.0f, 2.0f); // Die Dauer des Sprungs wird an die Distanz angepasst
+
+            // Sprung zur nächsten Zielposition, aber vorher Kollisionsprüfung
+            yield return StartCoroutine(JumpArc(nextTargetPosition, adjustedJumpDuration));
 
             // Kurze Pause nach der Landung
             yield return new WaitForSeconds(landPauseDuration);
@@ -138,7 +142,7 @@ public class S_FlummiFluff : MonoBehaviour
         }
     }
 
-    private IEnumerator JumpArc(Vector3 targetPosition)
+    private IEnumerator JumpArc(Vector3 targetPosition, float jumpDuration = 1.0f)
     {
         Vector3 start = transform.position;
         float timeElapsed = 0;
@@ -159,6 +163,13 @@ public class S_FlummiFluff : MonoBehaviour
             // Berechne die horizontale Bewegung (zwischen Start- und Zielposition)
             Vector3 targetWithHeight = Vector3.Lerp(start, targetPosition, t) + new Vector3(0, height, 0);
 
+            // Kollisionsabfrage: Verhindere das Hängenbleiben im Player Collider
+            if (IsPlayerColliderNearby(targetWithHeight))
+            {
+                // Wenn Kollision erkannt wird, passe die Zielposition nach oben an
+                targetWithHeight.y = Mathf.Max(targetWithHeight.y, transform.position.y + 1); // Stelle sicher, dass er drüber springt
+            }
+
             if (IsGroundBelow() && !groundDetected)
             {
                 targetWithHeight.y = Mathf.Min(targetWithHeight.y, GetGroundHeight());
@@ -172,6 +183,18 @@ public class S_FlummiFluff : MonoBehaviour
 
         // Stelle sicher, dass der FlummiFluff exakt an der Zielposition landet
         transform.position = targetPosition;
+    }
+
+    // Kollisionsabfrage: Überprüft, ob der FlummiFluff mit dem Player kollidiert
+    private bool IsPlayerColliderNearby(Vector3 targetPosition)
+    {
+        Collider2D playerCollider = player.GetComponent<Collider2D>();
+        if (playerCollider != null)
+        {
+            // Prüfen, ob der FlummiFluff sich dem Player-Collider nähert
+            return playerCollider.bounds.Contains(targetPosition);
+        }
+        return false;
     }
 
     private bool IsGroundBelow()
