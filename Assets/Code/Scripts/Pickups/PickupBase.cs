@@ -5,14 +5,16 @@ namespace HeroController
     public class PickupBase : MonoBehaviour
     {
         public PlayerController player;
-        private void OnTriggerEnter(Collision2D collision)
+
+        void OnTriggerEnter2D(Collider2D other)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            // Überprüfen, ob der Spieler das Pickup berührt
+            if (other.CompareTag("Player"))
             {
+                player.pickedUpDash = true;
+                // Das Pickup-Objekt zerstören
                 Destroy(gameObject);
             }
-        
         }
     }
 }
-
