@@ -7,7 +7,7 @@ public class S_PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
-    public int healthRegenOnKill = 10; // Menge an Gesundheit, die bei einem Kill regeneriert wird
+    public int healthRegenOnKill = 25; // Menge an Gesundheit, die bei einem Kill regeneriert wird
 
     private Renderer playerRenderer; // Renderer, um die Sichtbarkeit zu steuern
     private Collider2D playerCollider; // Collider, um die Angreifbarkeit zu steuern
