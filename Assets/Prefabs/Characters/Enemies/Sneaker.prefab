@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8440039178857738722}
   - component: {fileID: 4088355639682866000}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Triangle 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3995022921276380795}
-  m_Layer: 0
+  - component: {fileID: 7187327963840819896}
+  - component: {fileID: 5141916670986193832}
+  m_Layer: 7
   m_Name: Sneaker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,6 +122,49 @@ Transform:
   - {fileID: 8440039178857738722}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7187327963840819896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630051014140984515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81b974e5e49c43a449e94f58eb6aa7ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRadius: 5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  moveSpeed: 2
+  idleSpeed: 1
+  attackDamage: 10
+  attackSpeed: 1
+  maxHP: 50
+  playerTransform: {fileID: 0}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &5141916670986193832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630051014140984515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8e5705bb5498f4ba6a9f119005acb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  maxHealth: 1
+  currentHealth: 0
+  damageToPlayer: 1
+  detectionRadius: 5
+  attackRadius: 1.5
 --- !u!1 &7318691605833006632
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8386119305326031082}
   - component: {fileID: 8233728871217351382}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Triangle 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
