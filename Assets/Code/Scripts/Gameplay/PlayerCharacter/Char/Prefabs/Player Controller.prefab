@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2265467863525825011}
   - component: {fileID: 205703013056821471}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Global Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3241830901513601394}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Background & Details
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 1709451335225921395}
   - component: {fileID: 1902946799816293166}
   - component: {fileID: -3089645825415717033}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player Controller
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -307,6 +307,8 @@ MonoBehaviour:
   dashSpeed: 25
   dashDuration: 1.25
   dashCooldown: 1
+  pickedUpDash: 0
+  hasWallJump: 0
   wallLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -376,7 +378,7 @@ GameObject:
   - component: {fileID: 425549044463468506}
   - component: {fileID: 3610466647767405806}
   - component: {fileID: 5051484996570379105}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -392,7 +394,7 @@ Transform:
   m_GameObject: {fileID: 3444097860367738832}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.229999, y: -3.5900002, z: -10}
+  m_LocalPosition: {x: 0.00000023841858, y: 0.00000023841858, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -558,7 +560,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9148862752839238811}
   - component: {fileID: 2893566362874930249}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -646,7 +648,7 @@ GameObject:
   - component: {fileID: 4005090578499525825}
   - component: {fileID: 4236705005771162431}
   - component: {fileID: 7466304959728562347}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CinemachineCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -752,7 +754,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4826021563510522431}
   - component: {fileID: 7350503545055187747}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -841,7 +843,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6790530342508509190}
   - component: {fileID: 6375569645435427148}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -927,6 +929,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: JumpImpactVFX
       objectReference: {fileID: 0}
+    - target: {fileID: 2567235348635957014, guid: 95bf4549041836946b0db12d8d6f97c2, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5166555158907190339, guid: 95bf4549041836946b0db12d8d6f97c2, type: 3}
       propertyPath: m_LocalScale.x
       value: 4.5570827
@@ -1005,6 +1011,10 @@ PrefabInstance:
     - target: {fileID: 3610816140286327764, guid: 2086b1ed42e246e47bb18ea2a5e4dac4, type: 3}
       propertyPath: m_Name
       value: DashFlameTail (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3610816140286327764, guid: 2086b1ed42e246e47bb18ea2a5e4dac4, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3866787711023089237, guid: 2086b1ed42e246e47bb18ea2a5e4dac4, type: 3}
       propertyPath: looping
@@ -1085,6 +1095,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WalkingDustParticleVFX
       objectReference: {fileID: 0}
+    - target: {fileID: 5745363085867010031, guid: 22000e9a7f544ce4c9d10edcc88a72ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6411920629673673142, guid: 22000e9a7f544ce4c9d10edcc88a72ae, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.54038
@@ -1158,6 +1172,10 @@ PrefabInstance:
     - target: {fileID: 3610816140286327764, guid: 2086b1ed42e246e47bb18ea2a5e4dac4, type: 3}
       propertyPath: m_Name
       value: DashFlameTail
+      objectReference: {fileID: 0}
+    - target: {fileID: 3610816140286327764, guid: 2086b1ed42e246e47bb18ea2a5e4dac4, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3866787711023089237, guid: 2086b1ed42e246e47bb18ea2a5e4dac4, type: 3}
       propertyPath: looping
@@ -1233,6 +1251,10 @@ PrefabInstance:
     - target: {fileID: 2851900604485130885, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_Name
       value: PlayerAttackVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 2851900604485130885, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_LocalScale.x
@@ -1373,6 +1395,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: JumpVFX
       objectReference: {fileID: 0}
+    - target: {fileID: 4996328753594746613, guid: e6c86c2a19a88114182e798c251c4c11, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8423193169422873480, guid: e6c86c2a19a88114182e798c251c4c11, type: 3}
       propertyPath: playOnAwake
       value: 0
@@ -1467,6 +1493,10 @@ PrefabInstance:
     - target: {fileID: 6762451066910256881, guid: dd7e8afb77a727640bf15ea6a8e09739, type: 3}
       propertyPath: m_Name
       value: PlayerIdleTailLoopVfx
+      objectReference: {fileID: 0}
+    - target: {fileID: 6762451066910256881, guid: dd7e8afb77a727640bf15ea6a8e09739, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
