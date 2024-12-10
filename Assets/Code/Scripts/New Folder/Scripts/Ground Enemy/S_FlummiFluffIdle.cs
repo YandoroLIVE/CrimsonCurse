@@ -3,146 +3,173 @@ using UnityEngine;
 
 public class S_FlummiFluff : MonoBehaviour
 {
-    // Sprungparameter
-    public float jumpDuration = 1.0f;   // Gesamtdauer des Sprungs
-    public float jumpDistance = 2.0f;   // Horizontale Distanz des Sprungs
-    public float jumpHeight = 2.0f;     // Maximale Höhe des Sprungs
+    public Transform player;                    // Referenz auf den Player
+    public float jumpDuration = 1.0f;           // Sprungdauer
+    public float jumpDistance = 2.0f;           // Sprungdistanz
+    public float jumpHeight = 1.0f;             // Sprunghöhe
+    public float jumpVelocity = 10.0f;          // Anfangsgeschwindigkeit beim Absprung
+    public float fallVelocity = 5.0f;           // Fallgeschwindigkeit
+    public LayerMask groundLayer;               // Layer für den Boden
+    public AnimationCurve jumpCurve;            // Animationskurve für den Sprung
+    public float moveSpeed = 3.0f;              // Bewegungs-Geschwindigkeit
+    public float detectionRadius = 5.0f;        // Erkennungsradius für den Spieler
 
-    // Zielobjekt (der Spieler)
-    public Transform player;
+    private Vector3 startPosition;              // Startposition des FlummiFluffs
+    private bool isIdle = true;                 // Flag, ob der FlummiFluff im Idle-State ist
+    private bool isAttacking = false;           // Flag, ob der FlummiFluff im Attack-State ist
+    private bool isPlayerInRange = false;       // Flag, ob der Spieler im Erkennungsradius ist
 
-    // Parameter für die Fallgeschwindigkeit
-    public float fallVelocity = 5.0f;
-
-    // Layer für die Bodenprüfung (wir verwenden "Wall")
-    public LayerMask groundLayer;
-
-    // Animation Curve für den dynamischen Sprung
-    public AnimationCurve jumpCurve;
-
-    private Vector3 startPosition;
-    private bool isIdle = true;
-    private bool isAttacking = false;
-
-    // Pause nach der Landung
-    public float landPauseDuration = 0.5f;
-
-    // Geschwindigkeit der Annäherung an den Spieler (Bewegung zwischen Idle und Attack)
-    public float approachSpeed = 3.0f;
-
-    // Zum Tracking der Bewegungsrichtung des FlummiFluffs (links oder rechts)
-    private bool isMovingRight = true;
+    public float landPauseDuration = 0.5f;      // Pause nach der Landung
 
     private void Start()
     {
-        // Setze die Layer für die Bodenprüfung auf den Layer "Wall"
+        // Überprüfe, ob der Player zugewiesen wurde
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player")?.transform;
+        }
+
+        // Überprüfe, ob der Player gefunden wurde
+        if (player == null)
+        {
+            Debug.LogError("Player Transform nicht gefunden!");
+            return;
+        }
+
         groundLayer = LayerMask.GetMask("Wall");
 
-        // Standard-Animation Curve setzen, falls nicht definiert
+        // Falls die Animationskurve nicht im Editor gesetzt wurde, eine Standardkurve definieren
         if (jumpCurve == null || jumpCurve.keys.Length == 0)
         {
             jumpCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.2f, 1.2f), new Keyframe(0.5f, 1.0f), new Keyframe(1, 0));
         }
 
-        // Speichere die Anfangsposition des FlummiFluffs
         startPosition = transform.position;
 
-        // Beginne im Idle-State
-        StartCoroutine(IdleRoutine());
+        // Starte den Idle-Sprungzyklus
+        StartCoroutine(IdleJumpRoutine());
     }
 
-    private IEnumerator IdleRoutine()
+    private void Update()
+    {
+        // Überprüfe, ob der Spieler im Detection Radius ist
+        if (Vector3.Distance(transform.position, player.position) <= detectionRadius && !isAttacking)
+        {
+            if (!isPlayerInRange)
+            {
+                isPlayerInRange = true;
+                // Wenn der Spieler erkannt wird und der FlummiFluff im Idle-Zustand ist, wechseln wir in den Attack-State
+                if (isIdle)
+                {
+                    isIdle = false;
+                    StopCoroutine(IdleJumpRoutine()); // Stoppe den Idle-Sprungzyklus
+                    StartCoroutine(AttackPattern());   // Starte den Angriff
+                }
+            }
+        }
+        else if (Vector3.Distance(transform.position, player.position) > detectionRadius && isPlayerInRange)
+        {
+            if (isAttacking)
+            {
+                isPlayerInRange = false;
+                isAttacking = false;
+                StopCoroutine(AttackPattern()); // Stoppe den Angriff
+                isIdle = true;
+                StartCoroutine(IdleJumpRoutine()); // Zurück zum Idle-State
+            }
+        }
+
+        // Während der Rückkehr zum Boden die Fallgeschwindigkeit anwenden, wenn der Gegner nicht auf dem Boden ist
+        if (!IsGroundBelow())
+        {
+            transform.position += Vector3.down * Time.deltaTime * fallVelocity;
+        }
+    }
+
+    private IEnumerator IdleJumpRoutine()
     {
         while (isIdle)
         {
-            // Berechne die Richtung zum Spieler
-            Vector3 targetPosition = player.position;
-            bool playerIsOnRight = targetPosition.x > transform.position.x;
+            // Zielposition für den Sprung nach rechts berechnen
+            Vector3 targetPosition = startPosition + new Vector3(jumpDistance, 0, 0);
 
-            // Wenn der Spieler auf der rechten Seite ist, Bounce nach rechts, dann links, usw.
-            if (playerIsOnRight)
-            {
-                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(jumpDistance, 0, 0)));
-                yield return new WaitForSeconds(landPauseDuration);
+            // Sprung in einem Bogen zur Zielposition
+            yield return StartCoroutine(JumpArc(targetPosition));
 
-                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(-jumpDistance, 0, 0)));
-                yield return new WaitForSeconds(landPauseDuration);
-            }
-            // Wenn der Spieler auf der linken Seite ist, Bounce nach links, dann rechts, usw.
-            else
-            {
-                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(-jumpDistance, 0, 0)));
-                yield return new WaitForSeconds(landPauseDuration);
+            // Kurze Pause nach der Landung
+            yield return new WaitForSeconds(landPauseDuration);
 
-                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(jumpDistance, 0, 0)));
-                yield return new WaitForSeconds(landPauseDuration);
-            }
+            // Sprung in einem Bogen zurück zur Startposition
+            yield return StartCoroutine(JumpArc(startPosition));
+
+            // Kurze Pause nach der Landung
+            yield return new WaitForSeconds(landPauseDuration);
         }
     }
 
-    private IEnumerator AttackRoutine()
+    private IEnumerator AttackPattern()
     {
-        isIdle = false;
         isAttacking = true;
 
-        // Bewegung zum Spieler (als Zwischenschritt zwischen Idle und Attack)
-        yield return StartCoroutine(MoveToPlayer());
+        Vector3 nextTargetPosition;
+        bool moveToLeft = true;
 
-        // Solange der FlummiFluff angreift, springt er nach links und rechts
+        // Endlosschleife für den Angriff
         while (isAttacking)
         {
-            // Berechne die Richtung zum Spieler
-            Vector3 targetPosition = player.position;
-            bool playerIsOnRight = targetPosition.x > transform.position.x;
-
-            // Wenn der Spieler auf der rechten Seite ist, Bounce nach rechts, dann links, usw.
-            if (playerIsOnRight)
+            // Bestimme die Zielposition je nach Seite des Spielers
+            if (moveToLeft)
             {
-                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(jumpDistance, 0, 0)));
-                yield return new WaitForSeconds(landPauseDuration);
-
-                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(-jumpDistance, 0, 0)));
-                yield return new WaitForSeconds(landPauseDuration);
+                nextTargetPosition = player.position + new Vector3(-jumpDistance, 0, 0); // Ziel links vom Spieler
             }
-            // Wenn der Spieler auf der linken Seite ist, Bounce nach links, dann rechts, usw.
             else
             {
-                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(-jumpDistance, 0, 0)));
-                yield return new WaitForSeconds(landPauseDuration);
-
-                yield return StartCoroutine(JumpArc(targetPosition + new Vector3(jumpDistance, 0, 0)));
-                yield return new WaitForSeconds(landPauseDuration);
+                nextTargetPosition = player.position + new Vector3(jumpDistance, 0, 0); // Ziel rechts vom Spieler
             }
+
+            // Dynamische Anpassung der Sprungdauer je nach Entfernung zum Ziel
+            float distanceToTarget = Vector3.Distance(transform.position, nextTargetPosition);
+            float adjustedJumpDuration = Mathf.Clamp(distanceToTarget / moveSpeed, 1.0f, 2.0f); // Die Dauer des Sprungs wird an die Distanz angepasst
+
+            // Sprung zur nächsten Zielposition, aber vorher Kollisionsprüfung
+            yield return StartCoroutine(JumpArc(nextTargetPosition, adjustedJumpDuration));
+
+            // Kurze Pause nach der Landung
+            yield return new WaitForSeconds(landPauseDuration);
+
+            // Wechsel die Richtung für den nächsten Sprung
+            moveToLeft = !moveToLeft;
         }
     }
 
-    private IEnumerator MoveToPlayer()
-    {
-        // Annäherung an den Spieler (Bewegung vor dem Angriff)
-        Vector3 targetPosition = player.position;
-        while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
-        {
-            // Bewege den FlummiFluff in Richtung des Spielers
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, approachSpeed * Time.deltaTime);
-            yield return null;
-        }
-    }
-
-    private IEnumerator JumpArc(Vector3 targetPosition)
+    private IEnumerator JumpArc(Vector3 targetPosition, float jumpDuration = 1.0f)
     {
         Vector3 start = transform.position;
         float timeElapsed = 0;
         bool groundDetected = false;
+        float initialHeight = start.y;
+        float peakHeight = initialHeight + jumpHeight;
 
+        // Berechne die horizontale Bewegung des FlummiFluffs
+        float horizontalDistance = Vector3.Distance(start, targetPosition);
+
+        // Simuliere eine parabolische Bewegung
         while (timeElapsed < jumpDuration)
         {
             float t = timeElapsed / jumpDuration;
             float curveValue = jumpCurve.Evaluate(t);
-            float height = curveValue * jumpHeight;
+            float height = curveValue * jumpHeight;  // Höhe des Sprungs wird von der Animationskurve bestimmt
 
+            // Berechne die horizontale Bewegung (zwischen Start- und Zielposition)
             Vector3 targetWithHeight = Vector3.Lerp(start, targetPosition, t) + new Vector3(0, height, 0);
 
-            // Überprüfe, ob der FlummiFluff den Boden berührt
+            // Kollisionsabfrage: Verhindere das Hängenbleiben im Player Collider
+            if (IsPlayerColliderNearby(targetWithHeight))
+            {
+                // Wenn Kollision erkannt wird, passe die Zielposition nach oben an
+                targetWithHeight.y = Mathf.Max(targetWithHeight.y, transform.position.y + 1); // Stelle sicher, dass er drüber springt
+            }
+
             if (IsGroundBelow() && !groundDetected)
             {
                 targetWithHeight.y = Mathf.Min(targetWithHeight.y, GetGroundHeight());
@@ -154,34 +181,29 @@ public class S_FlummiFluff : MonoBehaviour
             yield return null;
         }
 
+        // Stelle sicher, dass der FlummiFluff exakt an der Zielposition landet
         transform.position = targetPosition;
     }
 
-    private void Update()
+    // Kollisionsabfrage: Überprüft, ob der FlummiFluff mit dem Player kollidiert
+    private bool IsPlayerColliderNearby(Vector3 targetPosition)
     {
-        // Fällt, wenn kein Boden unter dem FlummiFluff erkannt wird
-        if (!IsGroundBelow())
+        Collider2D playerCollider = player.GetComponent<Collider2D>();
+        if (playerCollider != null)
         {
-            transform.position += Vector3.down * Time.deltaTime * fallVelocity;
+            // Prüfen, ob der FlummiFluff sich dem Player-Collider nähert
+            return playerCollider.bounds.Contains(targetPosition);
         }
-
-        // Wenn der FlummiFluff nahe genug am Spieler ist, beginnt der Angriff
-        if (Vector3.Distance(transform.position, player.position) < 5.0f && !isAttacking)
-        {
-            StartCoroutine(AttackRoutine());
-        }
+        return false;
     }
 
     private bool IsGroundBelow()
     {
-        // Raycast nach unten, um den Boden zu überprüfen
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, groundLayer);
-        return hit.collider != null;
+        return Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, groundLayer);
     }
 
     private float GetGroundHeight()
     {
-        // Raycast, um die Höhe des Bodens unter dem FlummiFluff zu ermitteln
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, groundLayer);
         return hit.point.y;
     }
