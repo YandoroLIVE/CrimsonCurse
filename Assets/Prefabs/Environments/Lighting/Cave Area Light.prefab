@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5451499578754202519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7702589902734927065}
+  - component: {fileID: 154233406147952126}
+  m_Layer: 0
+  m_Name: Cave Area Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7702589902734927065
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5451499578754202519}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 47.945194, y: -21.276367, z: 0}
+  m_LocalScale: {x: 88.4, y: 88.4, z: 88.4}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &154233406147952126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5451499578754202519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 2
+  m_LightType: 1
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.33
+  m_LightVolumeIntensity: 1
+  m_LightVolumeEnabled: 0
+  m_ApplyToSortingLayers: 00000000ffe870595f717389e3756463
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 0
+  m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0.3
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: -0.28649998, y: 0.124, z: 0}
+    m_Extent: {x: 0.8505, y: 0.5074, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.2
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.28490534, y: -0.10801648, z: 0}
+  - {x: -0.19940159, y: -0.10634898, z: 0}
+  - {x: -0.19655643, y: -0.059692793, z: 0}
+  - {x: -0.1550418, y: -0.05994064, z: 0}
+  - {x: -0.15552697, y: -0.016796824, z: 0}
+  - {x: -0.13133587, y: -0.016206797, z: 0}
+  - {x: -0.13296777, y: 0.1213442, z: 0}
+  - {x: 0.06139451, y: 0.123533174, z: 0}
+  - {x: 0.05923916, y: -0.06893435, z: 0}
+  - {x: 0.08339737, y: -0.06665181, z: 0}
+  - {x: 0.081598334, y: -0.09372177, z: 0}
+  - {x: 0.11199988, y: -0.08892149, z: 0}
+  - {x: 0.11413934, y: -0.106662594, z: 0}
+  - {x: 0.361642, y: -0.10809667, z: 0}
+  - {x: 0.3635957, y: -0.025269767, z: 0}
+  - {x: 0.18504982, y: -0.025778515, z: 0}
+  - {x: 0.18588138, y: 0.03172261, z: 0}
+  - {x: 0.22849819, y: 0.031696007, z: 0}
+  - {x: 0.22869635, y: 0.050503716, z: 0}
+  - {x: 0.23437576, y: 0.42872015, z: 0}
+  - {x: -0.9374687, y: 0.4320126, z: 0}
+  - {x: -0.9357472, y: 0.3374531, z: 0}
+  - {x: -0.7757914, y: 0.3383056, z: 0}
+  - {x: -0.780136, y: 0.12448541, z: 0}
+  - {x: -0.60695004, y: 0.120404504, z: 0}
+  - {x: -0.6012378, y: 0.34232655, z: 0}
+  - {x: -0.46098515, y: 0.34085697, z: 0}
+  - {x: -0.45884082, y: 0.29474753, z: 0}
+  - {x: -0.3922795, y: 0.29546154, z: 0}
+  - {x: -0.39252958, y: 0.25272417, z: 0}
+  - {x: -0.18294255, y: 0.25468305, z: 0}
+  - {x: -0.18397546, y: 0.17762126, z: 0}
+  - {x: -0.38797998, y: 0.17921796, z: 0}
+  - {x: -0.38824534, y: 0.030930651, z: 0}
+  - {x: -0.29473105, y: 0.03234429, z: 0}
+  - {x: -0.29450855, y: -0.004766113, z: 0}
+  - {x: -0.38753226, y: -0.0042750356, z: 0}
+  - {x: -0.39138618, y: -0.1820885, z: 0}
+  - {x: -0.29051948, y: -0.18306673, z: 0}

@@ -13,9 +13,9 @@ public class S_PlayerHealth : MonoBehaviour
 
     private Camera mainCamera; // Referenz zur Hauptkamera
 
+    public HealthUi healthUi;
     // Füge eine öffentliche Variable hinzu, um den Namen der nächsten Szene zu speichern
     public string sceneToLoad; // Name der Szene, die geladen werden soll
-
     void Start()
     {
         currentHealth = maxHealth;
@@ -29,7 +29,10 @@ public class S_PlayerHealth : MonoBehaviour
     {
         currentHealth -= damageAmount;
         Debug.Log("Spieler nimmt " + damageAmount + " Schaden. Aktuelle Gesundheit: " + currentHealth);
-
+        if (healthUi != null)
+        {
+            healthUi.GetDamage();
+        }
         if (currentHealth <= 0)
         {
             Die();
