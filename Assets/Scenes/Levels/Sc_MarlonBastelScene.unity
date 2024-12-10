@@ -477,6 +477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 100
+  healthUi: {fileID: 0}
   sceneToLoad: 
 --- !u!50 &683860686
 Rigidbody2D:
@@ -1416,6 +1417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 200
   currentHealth: 0
+  healthUi: {fileID: 0}
   sceneToLoad: SampleScene
 --- !u!70 &1484128673
 CapsuleCollider2D:
@@ -1471,6 +1473,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  attackDamage: {fileID: 0}
 --- !u!1 &1759932155
 GameObject:
   m_ObjectHideFlags: 0
@@ -2657,11 +2660,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6559521373508856515, guid: fdd9680bd76250a4a980e0f5c6e695ab, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.07
+      value: 14.73
       objectReference: {fileID: 0}
     - target: {fileID: 6559521373508856515, guid: fdd9680bd76250a4a980e0f5c6e695ab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -18.32
+      value: -4.27
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
