@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7756255563983184920}
   - component: {fileID: 1701808399042544392}
   - component: {fileID: 1831221979830617121}
-  - component: {fileID: 3562889322154812338}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -50,7 +49,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -117,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.12
+      scalar: 7.49
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4834,20 +4833,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &3562889322154812338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3111519592050327707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2751b1fb905eb24a8f4dccadbfbc0dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particleSystem: {fileID: 1701808399042544392}
-  lightPrefab: {fileID: 5434526595933102084, guid: 34e2f5b9d24ed234485f357c64575041, type: 3}
 --- !u!1 &5676959342584658237
 GameObject:
   m_ObjectHideFlags: 0
@@ -5100,8 +5085,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.00024998188, y: -0.000100016594, z: 0}
-    m_Extent: {x: 2.47045, y: 2.4709, z: 0}
+    m_Center: {x: -0.07684994, y: 4.2231503, z: 0}
+    m_Extent: {x: 4.65445, y: 6.69415, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -5114,8 +5099,8 @@ MonoBehaviour:
   m_ShapePath:
   - {x: -0.5, y: -0.5, z: 0}
   - {x: 0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: 0.5, z: 0}
-  - {x: -0.5, y: 0.5, z: 0}
+  - {x: 2.6091733, y: 8.909866, z: 0}
+  - {x: -2.7606533, y: 8.94696, z: 0}
 --- !u!1 &8150273691914421484
 GameObject:
   m_ObjectHideFlags: 0
