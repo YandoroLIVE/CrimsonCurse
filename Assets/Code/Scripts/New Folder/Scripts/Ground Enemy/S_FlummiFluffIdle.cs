@@ -84,7 +84,7 @@ public class S_FlummiFluff : MonoBehaviour
             }
 
             // Sprung auf den Spieler
-            triggeredOnPlayer = false; // Reset, bevor der Sprung beginnt
+             // Reset, bevor der Sprung beginnt
             lastJumpTarget = player.position; // Merke Zielposition
             yield return StartCoroutine(JumpArc(player.position));
 
@@ -98,18 +98,21 @@ public class S_FlummiFluff : MonoBehaviour
                 float distanceToPlayerAttack = Vector3.Distance(transform.position, player.position); // Umbenannt für die Attack-Logik
                 float jumpStrength = Mathf.Lerp(3.0f, 7.0f, 1.0f - Mathf.Clamp01(distanceToPlayerAttack / detectionRadius)); // Mehr Kraft, je näher der FlummiFluff kommt
 
+                //direction.x = distanceToPlayerAttack <= 3 ? -direction.x : direction.x;
+                //Debug.Log("executed");
                 Vector3 targetPosition = transform.position + direction * jumpStrength; // Etwas weiter in dieselbe Richtung
-
+                Debug.Log(direction * jumpStrength);
                 // Finde die Bodenposition, falls möglich
                 RaycastHit2D groundHit = Physics2D.Raycast(targetPosition, Vector2.down, Mathf.Infinity, groundLayer);
                 if (groundHit.collider != null)
                 {
                     targetPosition = groundHit.point; // Ziel ist der Boden
                 }
-
+                triggeredOnPlayer = false;
                 // Sofortiger Sprung in die neue Richtung
                 yield return StartCoroutine(JumpArc(targetPosition));
                 continue; // Direkt zum nächsten Sprung
+
             }
 
             yield return new WaitForSeconds(landPauseDuration);
@@ -159,7 +162,8 @@ public class S_FlummiFluff : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        Debug.Log(other.gameObject.tag);
+        if (other.gameObject.tag == "Player")
         {
             Debug.Log("FlummiFluff ist auf dem Spieler gelandet!");
             triggeredOnPlayer = true; // Setze das Flag, um das Delay zu überspringen
