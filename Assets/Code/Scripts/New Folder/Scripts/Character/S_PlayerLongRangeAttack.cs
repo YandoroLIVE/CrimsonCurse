@@ -31,7 +31,15 @@ public class S_PlayerLongRangeAttack : MonoBehaviour
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.linearVelocity = firePoint.right * projectileSpeed; // Setzt die Geschwindigkeit des Projektils
+            if(transform.localScale.x > 0)
+            {
+                rb.linearVelocity = firePoint.right * projectileSpeed;
+            }
+            else
+            {
+                rb.linearVelocity = firePoint.right * -projectileSpeed;
+            }
+             // Setzt die Geschwindigkeit des Projektils
         }
     }
 }
