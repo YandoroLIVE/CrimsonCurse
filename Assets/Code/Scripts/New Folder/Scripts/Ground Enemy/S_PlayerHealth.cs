@@ -7,6 +7,7 @@ public class S_PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
+    public int healthRegenOnKill = 25; // Menge an Gesundheit, die bei einem Kill regeneriert wird
 
     private Renderer playerRenderer; // Renderer, um die Sichtbarkeit zu steuern
     private Collider2D playerCollider; // Collider, um die Angreifbarkeit zu steuern
@@ -14,8 +15,10 @@ public class S_PlayerHealth : MonoBehaviour
     private Camera mainCamera; // Referenz zur Hauptkamera
 
     public HealthUi healthUi;
+
     // Füge eine öffentliche Variable hinzu, um den Namen der nächsten Szene zu speichern
     public string sceneToLoad; // Name der Szene, die geladen werden soll
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -53,6 +56,17 @@ public class S_PlayerHealth : MonoBehaviour
 
         // Lade die nächste Szene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Lade die Szene, die in sceneToLoad angegeben ist
+    }
+
+    // Spieler regeneriert Gesundheit nach einem Gegner-Kill
+    public void RegenerateHealthOnKill()
+    {
+        currentHealth += healthRegenOnKill;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth; // Gesundheit kann nicht über das Maximum hinaus gehen
+        }
+        Debug.Log("Spieler regeneriert " + healthRegenOnKill + " Gesundheit. Aktuelle Gesundheit: " + currentHealth);
     }
 
     // Fixiere die Kamera an der Position des Spielers

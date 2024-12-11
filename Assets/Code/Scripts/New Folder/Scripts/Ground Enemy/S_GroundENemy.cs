@@ -38,23 +38,6 @@ public class S_GroundEnemy : MonoBehaviour
         }
     }
 
-    // Funktion zur Bewegung in Richtung des Spielers
-    //void MoveTowardsPlayer() // Methode zum Bewegen zum Spieler (Auskommentiert)
-    //{
-    //    Debug.Log("Bewege mich zum Spieler"); // Debug-Log für Bewegung
-    //    // Bewegung in Richtung des Spielers
-    //    Vector3 direction = (target.position - transform.position).normalized;
-    //    transform.position += direction * speed * Time.deltaTime;
-
-    //    // Begrenze die Bewegung auf den Angriffsradius
-    //    float distanceToTarget = Vector3.Distance(transform.position, target.position);
-    //    if (distanceToTarget < attackRadius)
-    //    {
-    //        // Verschiebe den Gegner so, dass er genau am Rand des Angriffsbereichs bleibt
-    //        transform.position = target.position - direction * attackRadius;
-    //    }
-    //}
-
     // Funktion zum Zufügen von Schaden
     public void TakeDamage(int damageAmount)
     {
@@ -90,6 +73,14 @@ public class S_GroundEnemy : MonoBehaviour
     void Die()
     {
         Debug.Log("Gegner ist gestorben.");
+
+        // Spieler heilt sich beim Töten des Gegners
+        S_PlayerHealth playerHealth = target.GetComponent<S_PlayerHealth>();
+        if (playerHealth != null)
+        {
+            playerHealth.RegenerateHealthOnKill();
+        }
+
         Destroy(gameObject); // Entferne den Gegner aus der Szene
     }
 }
