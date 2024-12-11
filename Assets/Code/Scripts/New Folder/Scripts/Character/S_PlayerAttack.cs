@@ -6,43 +6,34 @@ public class S_PlayerAttack : MonoBehaviour
 {
     public int damage = 25; // Schaden, den der Spieler anrichtet
     public float attackRange = 1.5f; // Reichweite des Angriffs
-    public LayerMask enemyLayer; // Layer für den Gegner
-    private Collider2D[] enemiesInRange; // Array für Gegner im Angriffsbereich
+    public LayerMask enemyLayer; // Layer fï¿½r den Gegner
+    private Collider2D[] enemiesInRange; // Array fï¿½r Gegner im Angriffsbereich
     public ParticleSystem attackDamage;
     void Update()
     {
-        // Überprüfen, ob der Spieler die Angriffs-Taste drückt (hier auf die Taste "E" festgelegt)
+        // ï¿½berprï¿½fen, ob der Spieler die Angriffs-Taste drï¿½ckt (hier auf die Taste "E" festgelegt)
         if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton2))
         {
             Attack(); // Spieler greift an
         }
 
-        // Überprüfe, ob Gegner im Angriffsbereich sind
+        // ï¿½berprï¿½fe, ob Gegner im Angriffsbereich sind
         CheckForEnemiesInRange();
     }
 
-    // Methode zur Überprüfung von Gegnern im Angriffsbereich
+    // Methode zur ï¿½berprï¿½fung von Gegnern im Angriffsbereich
     private void CheckForEnemiesInRange()
     {
         // Alle Gegner im Bereich abfragen
         enemiesInRange = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
-
-        if (enemiesInRange.Length > 0)
-        {
-            Debug.Log("Gegner im Angriffsbereich erkannt!");
-        }
-        else
-        {
-            Debug.Log("Kein Gegner im Angriffsbereich.");
-        }
     }
 
     // Angriffs-Methode
     void Attack()
     {
-        Debug.Log("Angriff ausgelöst!");
+        Debug.Log("Angriff ausgelï¿½st!");
         attackDamage.Play();
-        // Gehe durch alle Gegner im Bereich und füge Schaden zu
+        // Gehe durch alle Gegner im Bereich und fï¿½ge Schaden zu
         foreach (var enemyCollider in enemiesInRange)
         {
             S_GroundEnemy enemy = enemyCollider.GetComponent<S_GroundEnemy>();
