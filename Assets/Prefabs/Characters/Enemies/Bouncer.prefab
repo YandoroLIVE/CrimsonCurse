@@ -158,7 +158,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.035753608, y: -0.035518646}
+  m_Offset: {x: 0.035753727, y: -0.022816896}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -168,7 +168,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 4.9284925, y: 4.0710363}
+  m_Size: {x: 4.9284925, y: 4.0456333}
   m_EdgeRadius: 0
 --- !u!50 &5094648321076303207
 Rigidbody2D:
@@ -209,11 +209,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8e5705bb5498f4ba6a9f119005acb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 1
   maxHealth: 500
   currentHealth: 0
   damageToPlayer: 20
-  detectionRadius: 5.07
+  detectionRadius: 20.42
   attackRadius: 2
 --- !u!61 &824746554354289339
 BoxCollider2D:
@@ -249,7 +249,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.010813117}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -259,7 +259,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 5, y: 4}
+  m_Size: {x: 5, y: 4.0216265}
   m_EdgeRadius: 0
 --- !u!114 &3352022285967716127
 MonoBehaviour:
@@ -273,18 +273,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0cb5bf4e60bc54b85943df1b9a2a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   jumpDuration: 0.2
   jumpDistance: 3
-  jumpHeight: 3
-  jumpVelocity: 5
-  fallVelocity: 20
+  jumpHeight: 5
+  jumpVelocity: 4
+  fallVelocity: 4
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   jumpCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.50157034
+      value: 1.1105831
+      inSlope: 0.102874786
+      outSlope: 0.102874786
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: -0.0028800964
+      inSlope: -2.3352823
+      outSlope: -2.3352823
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.059233427
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  moveSpeed: 1
+  detectionRadius: 3
   landPauseDuration: 0.8
