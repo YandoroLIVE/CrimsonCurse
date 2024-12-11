@@ -210,9 +210,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  maxHealth: 500
+  maxHealth: 3
   currentHealth: 0
-  damageToPlayer: 20
+  damageToPlayer: 1
   detectionRadius: 20.42
   attackRadius: 2
 --- !u!61 &824746554354289339
@@ -275,13 +275,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   jumpDuration: 0.2
-  jumpDistance: 3
-  jumpHeight: 5
-  jumpVelocity: 4
-  fallVelocity: 4
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
+  jumpHeightFactor: 1
+  detectionRadius: 3
+  attackRangeMax: 7
+  landPauseDuration: 0.8
   jumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -315,6 +312,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  moveSpeed: 1
-  detectionRadius: 3
-  landPauseDuration: 0.8
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  idleLeftOffset: {x: -2, y: 0, z: 0}
+  idleRightOffset: {x: 2, y: 0, z: 0}
