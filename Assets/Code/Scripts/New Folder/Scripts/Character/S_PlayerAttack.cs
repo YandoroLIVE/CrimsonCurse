@@ -42,10 +42,10 @@ public class S_PlayerAttack : MonoBehaviour
         // Gehe durch alle Gegner im Bereich und f�ge Schaden zu
         foreach (var enemyCollider in enemiesInRange)
         {
-            S_GroundEnemy enemy = enemyCollider.GetComponent<S_GroundEnemy>();
+            IHurtable enemy = enemyCollider.GetComponent<IHurtable>();
             if (enemy != null)
             {
-                enemy.TakeDamage(damage);
+                enemy.Hurt(damage);
                 Debug.Log("Gegner nimmt " + damage + " Schaden.");
                 DisplayDamage(damage); // Zeigt den verursachten Schaden an
             }

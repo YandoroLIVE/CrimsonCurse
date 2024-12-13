@@ -4,7 +4,7 @@ using UnityEngine.Rendering.Universal;
 
 public class EnemyPurify : MonoBehaviour
 {
-    [SerializeField] MonoBehaviour _targetEnemy;
+    private BaseEnemy _targetEnemy;
     [SerializeField] ParticleSystem _purifyVFX;
     [SerializeField] ParticleSystem _stunnedVFX;
     public float maxStunLength;
@@ -12,6 +12,7 @@ public class EnemyPurify : MonoBehaviour
     [SerializeField] Collider2D _InteractableTrigger;
     public float dissapearTime = 2f;
     bool canInteract;
+    bool purified;
     void Awake()
     {
         this.enabled = false;
@@ -19,14 +20,14 @@ public class EnemyPurify : MonoBehaviour
     void Update()
     {
         currentStunDuration += Time.deltaTime;
-        Debug.Log(currentStunDuration);
         if(currentStunDuration >= maxStunLength) 
         {
             UnStun();
         }
 
-        else if (canInteract && Input.GetKey(KeyCode.E)) 
+        else if (canInteract && Input.GetKey(KeyCode.Q) && !purified) 
         {
+            purified = true;
             Purify();
         }
     }
@@ -42,7 +43,7 @@ public class EnemyPurify : MonoBehaviour
     }
 
 
-    public void Purify() 
+    private void Purify() 
     {
         _stunnedVFX.Stop();
         _stunnedVFX.Clear();
@@ -66,17 +67,20 @@ public class EnemyPurify : MonoBehaviour
         currentStunDuration = 0;
         this.enabled = false;
         _targetEnemy.enabled = true;
+        _targetEnemy.Heal();
         _stunnedVFX.Clear();
         _stunnedVFX.Stop();
     }
 
 
-    public void SetStunned()
+    public void SetStunned(BaseEnemy enemyObject)
     {
+        if(_targetEnemy == null) 
+        {
+            _targetEnemy = enemyObject;
+        }
         this.enabled = true;
         _targetEnemy.enabled = false;
         _stunnedVFX.Play();
-
-
     }
 }
