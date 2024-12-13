@@ -3,21 +3,24 @@ using UnityEngine;
 
 public class S_FlummiFluff : MonoBehaviour
 {
-    public Transform player;                   // Referenz auf den Player
-    public float jumpDuration = 1.0f;          // Sprungdauer
-    public float jumpHeightFactor = 1.0f;      // Faktor für die Sprunghöhe (dynamisch)
-    public float detectionRadius = 5.0f;       // Erkennungsradius für den Spieler
-    public float attackRangeMax = 7.0f;        // Maximale Angriffsreichweite
-    public float landPauseDuration = 0.3f;     // Pause nach der Landung
-    public AnimationCurve jumpCurve;           // Animationskurve für den Sprung
-    public LayerMask groundLayer;              // Layer für den Boden (jetzt "Wall")
-    public Vector3 idleLeftOffset = Vector3.left * 2.0f; // Idle-Sprung nach links
-    public Vector3 idleRightOffset = Vector3.right * 2.0f; // Idle-Sprung nach rechts
+    public Transform player;                    // Referenz auf den Player
+    public float jumpDuration = 1.0f;           // Sprungdauer
+    public float jumpHeightFactor = 1.0f;       // Faktor für die Sprunghöhe
+    public float detectionRadius = 5.0f;        // Erkennungsradius für den Spieler
+    public float attackRangeMax = 7.0f;         // Maximale Angriffsreichweite
+    public AnimationCurve jumpCurve;            // Animationskurve für den Sprung
+    public LayerMask groundLayer;               // Layer für den Boden (z. B. "Wall")
+    public float idleJumpDistance = 2.0f;       // Distanz für Idle-Sprünge
+    public float groundCheckRadius = 0.2f;      // Radius für die Bodenprüfung
+    public Transform groundCheck;               // Transform, das den Bodenprüfpunkt darstellt
 
-    private Rigidbody2D rb;                    // Rigidbody2D für die physikalische Bewegung
-    private bool isIdle = true;                // Flag für den Idle-Zustand
-    private bool triggeredOnPlayer = false;    // Flag, um den direkten Sprung nach Kontakt zu steuern
-    private Vector3 lastJumpTarget;            // Speichert die letzte Sprungzielposition
+    private Rigidbody2D rb;                     // Rigidbody2D für die physikalische Bewegung
+    private Vector3 currentTarget;              // Aktuelles Sprungziel
+    private Vector3 startPosition;              // Startposition des aktuellen Sprungs
+    private float jumpStartTime;                // Zeit, zu der der Sprung begonnen hat
+    private bool isJumping = false;             // Flag für Sprungstatus
+    private string currentState = "Idle";       // Aktueller Zustand (Idle, Attack)
+    private bool jumpToLeft = true;             // Richtung des nächsten Idle-Sprungs
 
     private void Start()
     {
@@ -28,145 +31,156 @@ public class S_FlummiFluff : MonoBehaviour
             player = GameObject.FindWithTag("Player")?.transform;
         }
 
-        if (player == null)
-        {
-            Debug.LogError("Player Transform nicht gefunden!");
-            return;
-        }
-
         if (jumpCurve == null || jumpCurve.keys.Length == 0)
         {
             jumpCurve = AnimationCurve.EaseInOut(0, 0, 1, 0.8f);
         }
 
-        StartCoroutine(IdleJumpPattern());
+        SetIdleTarget();
     }
 
-    private IEnumerator IdleJumpPattern()
+    private void Update()
     {
-        Vector3 startPosition = transform.position;
+        // Prüfe, ob der FlummiFluff auf dem Boden ist
+        bool isGrounded = CheckGrounded();
 
-        while (isIdle)
+        if (isGrounded)
         {
-            // Springe abwechselnd nach links und rechts
-            Vector3 leftTarget = startPosition + idleLeftOffset;
-            Vector3 rightTarget = startPosition + idleRightOffset;
+            Debug.Log("Boden gefunden!");
+        }
+        else
+        {
+            Debug.Log("Kein Boden gefunden.");
+        }
 
-            yield return StartCoroutine(JumpArc(leftTarget));
-            yield return new WaitForSeconds(landPauseDuration);
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            yield return StartCoroutine(JumpArc(rightTarget));
-            yield return new WaitForSeconds(landPauseDuration);
+        switch (currentState)
+        {
+            case "Idle":
+                if (isGrounded)
+                    HandleIdleState(distanceToPlayer);
+                break;
 
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            case "Attack":
+                if (isGrounded)
+                    HandleAttackState(distanceToPlayer);
+                break;
+        }
 
-            if (distanceToPlayer <= detectionRadius && distanceToPlayer <= attackRangeMax)
-            {
-                isIdle = false;
-                StartCoroutine(AttackPattern());
-                yield break;
-            }
+        if (isJumping)
+        {
+            ProcessJump();
         }
     }
 
-    private IEnumerator AttackPattern()
+    private void HandleIdleState(float distanceToPlayer)
     {
-        while (true)
+        // Wechsel in den Attack-Zustand, wenn der Spieler nah genug ist
+        if (distanceToPlayer <= detectionRadius && distanceToPlayer <= attackRangeMax)
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            currentState = "Attack";
+            currentTarget = player.position;
+            StartJump();
+        }
 
-            // Wenn Spieler außerhalb der Reichweite ist, zum Idle-Modus zurückkehren
-            if (distanceToPlayer > detectionRadius || distanceToPlayer > attackRangeMax)
-            {
-                isIdle = true;
-                StartCoroutine(IdleJumpPattern());
-                yield break;
-            }
-
-            // Sprung auf den Spieler
-             // Reset, bevor der Sprung beginnt
-            lastJumpTarget = player.position; // Merke Zielposition
-            yield return StartCoroutine(JumpArc(player.position));
-
-            // Wenn der Trigger auf den Player gehittet wurde, sofort weiter springen
-            if (triggeredOnPlayer)
-            {
-                // Berechne eine neue Richtung für den nächsten Sprung
-                Vector3 direction = (player.position - transform.position).normalized;
-
-                // Berechne den Abstand und passe die Sprungkraft an
-                float distanceToPlayerAttack = Vector3.Distance(transform.position, player.position); // Umbenannt für die Attack-Logik
-                float jumpStrength = Mathf.Lerp(3.0f, 7.0f, 1.0f - Mathf.Clamp01(distanceToPlayerAttack / detectionRadius)); // Mehr Kraft, je näher der FlummiFluff kommt
-
-                //direction.x = distanceToPlayerAttack <= 3 ? -direction.x : direction.x;
-                //Debug.Log("executed");
-                Vector3 targetPosition = transform.position + direction * jumpStrength; // Etwas weiter in dieselbe Richtung
-                Debug.Log(direction * jumpStrength);
-                // Finde die Bodenposition, falls möglich
-                RaycastHit2D groundHit = Physics2D.Raycast(targetPosition, Vector2.down, Mathf.Infinity, groundLayer);
-                if (groundHit.collider != null)
-                {
-                    targetPosition = groundHit.point; // Ziel ist der Boden
-                }
-                triggeredOnPlayer = false;
-                // Sofortiger Sprung in die neue Richtung
-                yield return StartCoroutine(JumpArc(targetPosition));
-                continue; // Direkt zum nächsten Sprung
-
-            }
-
-            yield return new WaitForSeconds(landPauseDuration);
+        // Wenn kein Sprung läuft, Ziel wechseln (hin und her)
+        if (!isJumping)
+        {
+            SetIdleTarget();
+            StartJump();
         }
     }
 
-    private IEnumerator JumpArc(Vector3 targetPosition)
+    private void HandleAttackState(float distanceToPlayer)
     {
-        Vector3 start = transform.position;
-        float horizontalDistance = Vector3.Distance(new Vector3(start.x, 0, 0), new Vector3(targetPosition.x, 0, 0));
-        float timeElapsed = 0;
-
-        float dynamicJumpHeight = horizontalDistance * jumpHeightFactor;
-
-        rb.gravityScale = 0; // Schwerkraft während des Sprungs ausschalten
-
-        while (timeElapsed < jumpDuration)
+        // Zurück in den Idle-Zustand, wenn der Spieler außer Reichweite ist
+        if (distanceToPlayer > detectionRadius || distanceToPlayer > attackRangeMax)
         {
-            timeElapsed += Time.deltaTime;
-
-            float t = timeElapsed / jumpDuration;
-
-            float height = jumpCurve.Evaluate(t) * dynamicJumpHeight;
-
-            Vector3 newPosition = Vector3.Lerp(start, targetPosition, t);
-            newPosition.y += height;
-
-            rb.MovePosition(newPosition);
-
-            yield return null;
+            currentState = "Idle";
+            SetIdleTarget();
+            StartJump();
+            return;
         }
 
-        // Am Ende des Sprungs den Zielpunkt erreichen
-        rb.MovePosition(targetPosition);
-
-        // Schwerkraft wieder einschalten
-        rb.gravityScale = 1;
-
-        // Zusätzliche Überprüfung, ob der Gegner den Boden berührt
-        RaycastHit2D groundHit = Physics2D.Raycast(transform.position, Vector2.down, 1f, groundLayer);
-        if (groundHit.collider != null)
+        if (!isJumping)
         {
-            Debug.Log("FlummiFluff hat den Boden berührt.");
+            // Springe auf den Spieler
+            currentTarget = player.position;
+            StartJump();
         }
     }
 
-
-    private void OnTriggerEnter2D(Collider2D other)
+    private void StartJump()
     {
-        Debug.Log(other.gameObject.tag);
-        if (other.gameObject.tag == "Player")
+        startPosition = transform.position;
+        jumpStartTime = Time.time;
+        isJumping = true;
+    }
+
+    private void ProcessJump()
+    {
+        float timeElapsed = Time.time - jumpStartTime;
+        float t = timeElapsed / jumpDuration;
+
+        if (t >= 1.0f)
         {
-            Debug.Log("FlummiFluff ist auf dem Spieler gelandet!");
-            triggeredOnPlayer = true; // Setze das Flag, um das Delay zu überspringen
+            // Sprung beendet
+            transform.position = currentTarget;
+            isJumping = false;
+            return;
+        }
+
+        // Berechne Position basierend auf der Zeit
+        float height = jumpCurve.Evaluate(t) * (Vector3.Distance(startPosition, currentTarget) * jumpHeightFactor);
+        Vector3 newPosition = Vector3.Lerp(startPosition, currentTarget, t);
+        newPosition.y += height;
+
+        rb.MovePosition(newPosition);
+    }
+
+    private void SetIdleTarget()
+    {
+        // Ziel für Idle-Sprung wechseln
+        if (jumpToLeft)
+        {
+            currentTarget = transform.position + Vector3.left * idleJumpDistance;
+        }
+        else
+        {
+            currentTarget = transform.position + Vector3.right * idleJumpDistance;
+        }
+
+        jumpToLeft = !jumpToLeft; // Richtung wechseln
+    }
+
+    private bool CheckGrounded()
+    {
+        // Prüfe, ob der FlummiFluff den Boden berührt
+        Collider2D groundCollider = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        // Debugging: Zeichne den Ground Check im Editor
+        Debug.DrawRay(groundCheck.position, Vector2.down * groundCheckRadius, groundCollider != null ? Color.green : Color.red);
+
+        // Debug.Log Ausgabe für Bodenprüfung
+        if (groundCollider != null)
+        {
+            Debug.Log($"Boden erkannt: {groundCollider.gameObject.name}");
+
+            currentTarget.y = Mathf.Min(currentTarget.y, groundCheck.position.y);
+        }
+
+        return groundCollider != null;
+    }
+
+
+    private void OnDrawGizmosSelected()
+    {
+        // Zeichne den Ground Check Radius im Editor
+        if (groundCheck != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
     }
 }
