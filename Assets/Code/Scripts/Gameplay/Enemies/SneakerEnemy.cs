@@ -35,7 +35,6 @@ public class SneakerEnemy : BaseEnemy
 
     public override void Move()
     {
-        Debug.Log(currentTargetPoint);
         if (attackRadius.GetPlayer() != null)
         {
             if (_Player.rigidbody2D == null || _Player.transform == null || _Player.health == null)
