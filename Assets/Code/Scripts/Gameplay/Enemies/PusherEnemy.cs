@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 
 public class PusherEnemy : BaseEnemy
@@ -11,6 +13,7 @@ public class PusherEnemy : BaseEnemy
     [SerializeField] float _PushDelay;
     [SerializeField] float _Damage;
     [SerializeField] EnemyPurify purifycationHandler;
+    [SerializeField] IsPlayerInTrigger _AttackTrigger;
     private bool playerinRange = false;
     private (Rigidbody2D rigidbody2D,S_PlayerHealth health) _Player = (null,null);
     public float attackCooldown;
@@ -44,6 +47,7 @@ public class PusherEnemy : BaseEnemy
 
     private void Awake()
     {
+        Heal();        
         if (purifycationHandler == null) 
         {
             GetComponentInChildren<EnemyPurify>();
@@ -52,24 +56,24 @@ public class PusherEnemy : BaseEnemy
         timer = Time.time;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //Debug.Log("Collision");
-        if (_Player.rigidbody2D == null || _Player.health == null)
-        {
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    //Debug.Log("Collision");
+    //    if (_Player.rigidbody2D == null || _Player.health == null)
+    //    {
 
-            _Player.rigidbody2D = collision.gameObject.GetComponent<Rigidbody2D>();
-            _Player.health = collision.gameObject.GetComponent<S_PlayerHealth>();
-            //standardDrag = _Player.linearDamping;
-        }
+    //        _Player.rigidbody2D = collision.gameObject.GetComponent<Rigidbody2D>();
+    //        _Player.health = collision.gameObject.GetComponent<S_PlayerHealth>();
+    //        //standardDrag = _Player.linearDamping;
+    //    }
 
-        playerinRange = true;
+    //    playerinRange = true;
         
-    }
-    public void OnTriggerExit2D(Collider2D collision)
-    {
-        playerinRange = false;
-    }
+    //}
+    //public void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    playerinRange = false;
+    //}
 
     public override void Move()
     {
@@ -78,12 +82,24 @@ public class PusherEnemy : BaseEnemy
 
     public override void Attack() 
     {
-        if(playerinRange && timer+attackCooldown <= Time.time) 
+
+        if (_AttackTrigger.IsPlayerInBox())
         {
-            timer = Time.time;
-            Playeffects();
-            StartCoroutine(DelayPush());
-        }   
+            if (_Player.rigidbody2D == null || _Player.health == null)
+            {
+                Collider2D collision = _AttackTrigger.GetPlayer();
+                Debug.Log(collision);
+                _Player.rigidbody2D = collision.gameObject.GetComponent<Rigidbody2D>();
+                _Player.health = collision.gameObject.GetComponent<S_PlayerHealth>();
+                //standardDrag = _Player.linearDamping;
+            }
+            if (timer+attackCooldown <= Time.time) 
+            {
+                timer = Time.time;
+                Playeffects();
+                StartCoroutine(DelayPush());
+            }
+        }
     }
 
     public override void Update()
