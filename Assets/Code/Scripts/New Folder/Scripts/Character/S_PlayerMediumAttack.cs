@@ -6,6 +6,7 @@ public class S_PlayerMediumAttack : MonoBehaviour
 {
     public int damage = 40; // Schaden für den Medium Attack
     public float attackRange = 3f; // Reichweite für den Medium Attack
+    public float attackHeight = 2f;
     public LayerMask enemyLayer; // Layer für den Gegner
     private Collider2D[] enemiesInRange; // Array für Gegner im Angriffsbereich
     public ParticleSystem attackDamage;
@@ -26,7 +27,9 @@ public class S_PlayerMediumAttack : MonoBehaviour
     private void CheckForEnemiesInRange()
     {
         // Alle Gegner im Bereich abfragen
-        enemiesInRange = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
+        Vector2 pos = transform.position;
+        pos.x = pos.x + (attackRange / 2 * transform.localScale.x);
+        enemiesInRange = Physics2D.OverlapBoxAll(pos, new Vector2(attackRange,attackHeight),0, enemyLayer);
 
         if (enemiesInRange.Length > 0)
         {
@@ -46,10 +49,10 @@ public class S_PlayerMediumAttack : MonoBehaviour
         // Gehe durch alle Gegner im Bereich und füge Schaden zu
         foreach (var enemyCollider in enemiesInRange)
         {
-            S_GroundEnemy enemy = enemyCollider.GetComponent<S_GroundEnemy>();
+            IHurtable enemy = enemyCollider.GetComponent<IHurtable>();
             if (enemy != null)
             {
-                enemy.TakeDamage(damage);
+                enemy.Hurt(damage);
                 Debug.Log("Gegner nimmt " + damage + " Schaden im Medium-Angriff.");
                 DisplayDamage(damage); // Zeigt den verursachten Schaden an
             }
@@ -65,7 +68,9 @@ public class S_PlayerMediumAttack : MonoBehaviour
     // Optional: Zeichne den Angriffsbereich zur Visualisierung
     private void OnDrawGizmosSelected()
     {
+        Vector2 pos = transform.position;
+        pos.x = pos.x + (attackRange / 2 * transform.localScale.x);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireCube(pos, new Vector2(attackRange,attackHeight));
     }
 }
