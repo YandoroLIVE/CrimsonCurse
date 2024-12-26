@@ -22,7 +22,7 @@ public class PusherEnemy : BaseEnemy
     private void Push(Rigidbody2D target)
     {
         target.linearDamping = 0;
-        Vector2 pushforce = (_PushDirection.normalized * _PushStrength * Time.deltaTime);
+        Vector2 pushforce = (_PushDirection.normalized * _PushStrength * Time.fixedDeltaTime);
         //Debug.Log(pushforce);
         target.AddForce(pushforce);
         
