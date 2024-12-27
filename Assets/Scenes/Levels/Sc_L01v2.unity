@@ -157,9 +157,9 @@ Transform:
   m_GameObject: {fileID: 30588636}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -3.4, y: -0.58, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1824307597}
   - {fileID: 973344153}
@@ -718,7 +718,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.24, y: 0.01, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 30588638}
@@ -18302,7 +18302,7 @@ Transform:
   m_GameObject: {fileID: 975110319}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.397638, y: -10.199265, z: -0.1273766}
+  m_LocalPosition: {x: 15.22, y: -7.21, z: -0.1273766}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19090,11 +19090,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4770194614540401366, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.49
+      value: -6.26
       objectReference: {fileID: 0}
     - target: {fileID: 4770194614540401366, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.59
+      value: -5.38
       objectReference: {fileID: 0}
     - target: {fileID: 4770194614540401366, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.z
@@ -19194,6 +19194,10 @@ PrefabInstance:
     - target: {fileID: 64169346141097968, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
       propertyPath: m_ShapePath.Array.data[4].y
       value: -0.6485744
+      objectReference: {fileID: 0}
+    - target: {fileID: 2311766403508036022, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 255
       objectReference: {fileID: 0}
     - target: {fileID: 3778320271011121655, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
       propertyPath: m_Name
@@ -19715,7 +19719,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.4
 --- !u!1 &2554020249407456527
 GameObject:
   m_ObjectHideFlags: 0
@@ -19745,7 +19748,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.7
 --- !u!1 &3708881775043664149
 GameObject:
   m_ObjectHideFlags: 0
@@ -20652,7 +20654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970d8b1422919d34382720606febd978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxCamera: {fileID: 927602256}
 --- !u!4 &5939757019786822476
 Transform:
   m_ObjectHideFlags: 0
@@ -20885,7 +20886,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.1
 --- !u!4 &8531704501751025205
 Transform:
   m_ObjectHideFlags: 0
