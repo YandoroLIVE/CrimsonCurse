@@ -12,8 +12,6 @@ public class CrystalProjectileEnemy : BaseEnemy
     private float attackTimer;
     [SerializeField] private float wanderMaxTime;
     [SerializeField] private float speed;
-    [SerializeField] private float sneakSpeedFactor = 1f;
-    [SerializeField] private Vector2 lookedAtSpeedFactor = Vector2.zero;
     [SerializeField] private LayerMask wallLayer;
     IsPlayerInTrigger attackRadius;
     private float idleTimer;
@@ -53,37 +51,19 @@ public class CrystalProjectileEnemy : BaseEnemy
             if (attackRadius.IsPlayerInBox())
             {
                 //target Player
-                if (!IsBeingLookedAt())
+                //Move closer
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1f, wallLayer);
+                if (hit.collider == null)
                 {
-                    //Move closer   
-
-                    RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1f, wallLayer);
-                    if (hit.collider == null)
-                    {
-                        currentTargetPoint = _Player.transform.position;
-                        //if (HasReachedPoint()) { currentTargetPoint = this.transform.position; }
-
-                    }
-                    else
-                    {
-                        currentTargetPoint = originPoint;
-
-                    }
-
-                    direction = (currentTargetPoint - transform.position).normalized;
-                    transform.position += (Vector3)direction * speed * sneakSpeedFactor * Time.deltaTime;
-                }
-                else
-                {
-                    //Move Back
-                    currentTargetPoint = originPoint;
-                    direction = (currentTargetPoint - transform.position).normalized;
-                    transform.position += (Vector3)(direction * speed * lookedAtSpeedFactor * Time.deltaTime);
-                }
-
+                    currentTargetPoint = _Player.transform.position;
+                }   
+                direction = (currentTargetPoint - transform.position).normalized;
+                transform.position += (Vector3)(direction * speed * Time.deltaTime);
+                
+                return;
             }
         }
-
+        
         
 
         //idle movement
@@ -94,7 +74,7 @@ public class CrystalProjectileEnemy : BaseEnemy
 
         }
         direction = (currentTargetPoint - transform.position).normalized;
-        transform.position += (Vector3)(direction * speed * lookedAtSpeedFactor * Time.deltaTime);
+        transform.position += (Vector3)(direction * speed * Time.deltaTime);
         //Move to Point
 
 
@@ -103,6 +83,11 @@ public class CrystalProjectileEnemy : BaseEnemy
     public void SetOwner(HeadPhase headPhase) 
     {
         owner = headPhase;
+    }
+
+    public void SetOrigin(Vector3 newOrigin) 
+    {
+        originPoint = newOrigin;
     }
 
     public override void Attack()
@@ -117,6 +102,7 @@ public class CrystalProjectileEnemy : BaseEnemy
 
     public override void ReachedZeroHitpoints()
     {
+        owner.CrystalDestroyed(this);
         gameObject.SetActive(false);
 
     }
@@ -166,7 +152,7 @@ public class CrystalProjectileEnemy : BaseEnemy
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(originPoint, Vector3.one * wanderRange * 2);
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(currentTargetPoint, POINTMERCYAREA);
     }
 
