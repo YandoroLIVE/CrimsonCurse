@@ -12,6 +12,11 @@ public class UpgradeHandler : MonoBehaviour
 
     public static UpgradeHandler GetInstance() 
     {
+        if(_Instance == null) 
+        {
+            Debug.Log("No Upgrade Handler in scene");
+            return null;
+        }
         return _Instance;
     }
 
@@ -66,7 +71,13 @@ public class UpgradeHandler : MonoBehaviour
         if (_Player == null) 
         {
             _Player = FindFirstObjectByType<PlayerController>();
+            if (_Player == null)
+            {
+                Debug.Log("Player not found");
+                return;
+            }
         }
+        
         _Player.pickedUpDash = _PickedUpDash;
         _Player.hasWallJump = _PickedUpWalljump;
 

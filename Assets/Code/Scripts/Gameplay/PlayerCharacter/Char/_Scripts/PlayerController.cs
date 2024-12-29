@@ -72,7 +72,11 @@ namespace HeroController
         {
             _rb = GetComponent<Rigidbody2D>();
             _col = GetComponent<CapsuleCollider2D>();
-            UpgradeHandler.GetInstance().UpdateStatus();    
+            UpgradeHandler tmp = UpgradeHandler.GetInstance();   
+            if(tmp != null) 
+            {
+                tmp.UpdateStatus();
+            }
             _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
         }
 
