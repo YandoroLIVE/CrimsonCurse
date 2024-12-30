@@ -8,6 +8,7 @@ public class HeadPhase : BossPhase
     [SerializeField] private CrystalProjectileEnemy crystalProjectileEnemyPrefab;
     [SerializeField] private List<Vector3> crystalSpawnPositons;
     public float crystalRespawnTime = 5f;
+    public float crystalDamage = 5f;
     private List<float> crystalDownTimers;
     private List<int> disabledCrystals;
     List<CrystalProjectileEnemy> crystalObjects;
@@ -25,6 +26,7 @@ public class HeadPhase : BossPhase
             CrystalProjectileEnemy tmp = Instantiate<CrystalProjectileEnemy>(crystalProjectileEnemyPrefab, crystalSpawnPositons[i], Quaternion.identity,this.transform);
             tmp.SetOwner(this);
             tmp.SetOrigin(crystalSpawnPositons[i]);
+            tmp.damage = crystalDamage;
             crystalObjects.Add(tmp);
             crystalDownTimers.Add(i);
             

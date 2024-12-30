@@ -6,7 +6,7 @@ public class CrystalProjectileEnemy : BaseEnemy
     private HeadPhase owner;
     private const float POINTMERCYAREA = 0.25f;
     [SerializeField] private float hitRange;
-    [SerializeField] private float damage;
+    [SerializeField] public float damage;
     [SerializeField] private int wanderRange;
     [SerializeField] private float attackCooldown;
     private float attackTimer;

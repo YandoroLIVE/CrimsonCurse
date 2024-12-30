@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -11,6 +12,11 @@ public class Boss : MonoBehaviour
 
     public void Awake()
     {
+        foreach (Transform child in transform) 
+        {
+            child.gameObject.SetActive(false);
+        }
+        phaseTransitions.First().gameObject.SetActive(true);
     }
 
     public void Update()

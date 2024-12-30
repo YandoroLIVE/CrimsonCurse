@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class BossPhase : MonoBehaviour, IHurtable
 {
-    public bool isDone = false;
+    [HideInInspector] public bool isDone = false;
     [SerializeField] private float phaseHealth = 25;
     float health;
     public virtual bool IsFinished() 
@@ -14,6 +14,15 @@ public abstract class BossPhase : MonoBehaviour, IHurtable
         }
         return tmp;
     }
+    public float GetHealth() 
+    {
+        return health;
+    }
+
+    public float GetMaxHealth() 
+    {
+        return phaseHealth;
+    }
 
     public virtual void Hurt(float damage)
     {
@@ -21,7 +30,6 @@ public abstract class BossPhase : MonoBehaviour, IHurtable
         if (health <= 0f)
         {
             EndPhase();
-            //Next Phase
         }
     }
 
