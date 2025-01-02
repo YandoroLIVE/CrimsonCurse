@@ -5163,11 +5163,11 @@ PrefabInstance:
     - target: {fileID: 2404088668374436577, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: 'phaseTransitions.Array.data[0]'
       value: 
-      objectReference: {fileID: 561257651}
+      objectReference: {fileID: 1598351594}
     - target: {fileID: 2404088668374436577, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: 'phaseTransitions.Array.data[1]'
       value: 
-      objectReference: {fileID: 1598351594}
+      objectReference: {fileID: 561257651}
     - target: {fileID: 2404088668374436577, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: 'phaseTransitions.Array.data[2]'
       value: 
@@ -5205,6 +5205,10 @@ PrefabInstance:
       value: 1.43
       objectReference: {fileID: 0}
     - target: {fileID: 3675621906442894515, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: Phases.Array.data[1].attacks.Array.data[0].warnTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675621906442894515, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: Phases.Array.data[0].attacks.Array.data[0].attackDamage
       value: 1
       objectReference: {fileID: 0}
@@ -5215,6 +5219,10 @@ PrefabInstance:
     - target: {fileID: 3675621906442894515, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: Phases.Array.data[2].attacks.Array.data[0].attackDamage
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675621906442894515, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: Phases.Array.data[1].attacks.Array.data[0].attackInterval
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4410383010098435270, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: m_Name
@@ -18582,7 +18590,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1480117475
 Transform:
   m_ObjectHideFlags: 0
@@ -18627,7 +18635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1580601136
 Transform:
   m_ObjectHideFlags: 0
