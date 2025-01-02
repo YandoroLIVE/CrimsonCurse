@@ -1,9 +1,16 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 public class WingPhase : BossPhase
 {
     [SerializeField] public List<PhaseAttacks> Phases;
+    private List<WingAttack> attacksOne;
+    private List<WingAttack> attacksTwo;
     private List<WingAttack> currentAttacks;
+    float attackSwitchCooldown;
+    bool switiching = false;
+    bool attackOneActive = true;
+
     private int currentPhaseID = -1;
 
 
@@ -27,6 +34,8 @@ public class WingPhase : BossPhase
     }
     public void Awake()
     {
+        attacksOne = new List<WingAttack>();
+        attacksTwo = new List<WingAttack>();
         currentAttacks = new List<WingAttack>();
         SetAllAttacksInactive();
         TransitionPhase();
@@ -40,6 +49,8 @@ public class WingPhase : BossPhase
     {
         currentPhaseID++;
         SetAllAttacksInactive();
+        attacksOne.Clear();
+        attacksTwo.Clear();
         currentAttacks.Clear();
         if (currentPhaseID >= Phases.Count) 
         {
@@ -50,8 +61,9 @@ public class WingPhase : BossPhase
         {
             foreach(WingAttack attack in attackLists.attackWithoutOffset) 
             {
-                currentAttacks.Add(attack);
+                attacksOne.Add(attack);
                 attack.attackInterval = attackLists.attackInterval;
+                attackSwitchCooldown = attackLists.attackInterval + attackLists.attackDuration;
                 attack.attackDuration = attackLists.attackDuration;
                 attack.warnduration = attackLists.warnTime;
                 attack._Damage = attackLists.attackDamage;
@@ -59,30 +71,66 @@ public class WingPhase : BossPhase
             }
             foreach (WingAttack attack in attackLists.attackWithOffset)
             {
-                currentAttacks.Add(attack);
+                attacksTwo.Add(attack);
                 attack.attackInterval = attackLists.attackInterval;
                 attack.attackDuration = attackLists.attackDuration;
                 attack.warnduration = attackLists.warnTime;
-                attack.timer = attackLists.timerOffset;
+                //attack.timer = attackLists.timerOffset;
                 attack._Damage = attackLists.attackDamage;
                 attack.gameObject.SetActive(true);
 
             }
         }
+        currentAttacks = attacksOne;
+        attackOneActive = true;
+    }
+    void InstanstSwapAttack()
+    {
+        if (attackOneActive)
+        {
+            currentAttacks = attacksTwo;
+            attackOneActive = false;
+        }
+        else
+        {
+            currentAttacks = attacksOne;
+            attackOneActive = true;
+        }
     }
 
-
+    IEnumerator SwapAttackLists()
+    {
+        switiching = true;
+        yield return new WaitForSeconds(attackSwitchCooldown);
+        if (attackOneActive) 
+        {
+            currentAttacks = attacksTwo;
+            attackOneActive = false;
+        }
+        else 
+        {
+            currentAttacks = attacksOne;
+            attackOneActive = true;
+        }
+        switiching = false;
+    }
     public void Loop(float delta)
     {
         if (currentAttacks.Count == 0)
         {
             Debug.Log("current Attacks empty. An error accured or Phase is over");
+            InstanstSwapAttack();
             return;
         }
         foreach(WingAttack attack in currentAttacks) 
         {
             attack.Cycle(delta);
         }
+        if (!switiching)
+        {
+            StartCoroutine(SwapAttackLists());
+        }
+
     }
 
     public void Update()
