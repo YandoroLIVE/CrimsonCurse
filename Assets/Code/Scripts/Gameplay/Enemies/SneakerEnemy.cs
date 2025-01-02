@@ -1,5 +1,4 @@
-using Mono.Cecil.Cil;
-using Unity.Hierarchy;
+
 using UnityEngine;
 
 public class SneakerEnemy : BaseEnemy
