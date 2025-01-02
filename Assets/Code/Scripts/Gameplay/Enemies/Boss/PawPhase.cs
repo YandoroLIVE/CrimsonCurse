@@ -67,6 +67,7 @@ public class PawPhase : BossPhase
             vulnerable = true;
             if (attackTimer > attackCooldown)
             {
+                attackTimer = 0;
                 vulnerable = false;
                 leftPaw.SetReachedposition(false);
                 rightPaw.SetReachedposition(false);
