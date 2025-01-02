@@ -1,5 +1,3 @@
-using Unity.IO.LowLevel.Unsafe;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public abstract class BaseEnemy : MonoBehaviour, IHurtable
