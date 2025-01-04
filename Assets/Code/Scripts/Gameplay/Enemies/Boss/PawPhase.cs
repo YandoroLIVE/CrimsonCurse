@@ -1,7 +1,7 @@
-using Sirenix.OdinValidator.Editor;
+
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+
 
 public class PawPhase : BossPhase
 {
@@ -68,6 +68,7 @@ public class PawPhase : BossPhase
             vulnerable = true;
             if (attackTimer > attackCooldown)
             {
+                attackTimer = 0;
                 vulnerable = false;
                 leftPaw.SetReachedposition(false);
                 rightPaw.SetReachedposition(false);
