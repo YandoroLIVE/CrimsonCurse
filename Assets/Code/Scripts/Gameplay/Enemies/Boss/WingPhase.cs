@@ -40,8 +40,9 @@ public class WingPhase : BossPhase
         SetAllAttacksInactive();
         TransitionPhase();
     }
-    public void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         ResetPhase();
     }
 
