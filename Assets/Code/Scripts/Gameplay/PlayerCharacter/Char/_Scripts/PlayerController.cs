@@ -239,7 +239,7 @@ namespace HeroController
                     ExecuteJump();  // Grounded or coyote jump
                     
                 }
-                else if (_isTouchingWall && !_grounded)
+                else if (_isTouchingWall && !_grounded && hasWallJump)
                 {
                     ExecuteWallJump();  // Wall jump
                 }
