@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 
 public class Boss : MonoBehaviour
 {
     bool isBeaten = false;
+    string winSceneName = "WinScene";
     private int currentPhaseCounter = 0;
     [SerializeField] private List<BossPhase> phaseTransitions;
 
@@ -34,6 +36,7 @@ public class Boss : MonoBehaviour
         {
             //Boss is defeated
             Debug.Log("Boss is Defeated");
+            SceneManager.LoadScene(winSceneName);
             isBeaten = true;
         }
         else 
