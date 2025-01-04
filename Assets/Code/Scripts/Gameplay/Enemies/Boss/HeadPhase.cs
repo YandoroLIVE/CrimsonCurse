@@ -92,8 +92,9 @@ public class HeadPhase : BossPhase
             crystal.gameObject.SetActive(true);
         }
     }
-    public void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         ResetPhase();
     }
 }
