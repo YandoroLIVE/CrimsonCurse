@@ -36,7 +36,7 @@ public class EscapeToMainMenu : MonoBehaviour
         // Überprüfe, ob die Szene existiert
         if (!string.IsNullOrEmpty(mainMenuSceneName))
         {
-            SceneManager.LoadScene(mainMenuSceneName);
+            //SceneManager.LoadScene(mainMenuSceneName);
         }
         else
         {
