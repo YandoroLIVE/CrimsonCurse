@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,6 +14,7 @@ public class FlummiFluffEnemy : BaseEnemy
     private Rigidbody2D rigid;
     private bool aggro = false;
     private bool attacked = false;
+    private Animator animator;
     private float jumpTimer = 0f;
     private float attackTimer = 0f;
     public float jumpCooldown = 2f;
@@ -20,6 +22,7 @@ public class FlummiFluffEnemy : BaseEnemy
     public float attackRange = 2f;
     public float attackCooldown = 5f;
     public float damage = 2f;
+    public GameObject purifyPrefab;
     [SerializeField] private EnemyPurify purifyHandler;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Vector2 jumpXIdleRange;
@@ -27,7 +30,7 @@ public class FlummiFluffEnemy : BaseEnemy
     (Transform transform, Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null, null);
     public override void Start()
     {
-        
+        animator = GetComponent<Animator>();
         origin = transform.position;
         aggroRange = GetComponentInChildren<IsPlayerInTrigger>();
         rigid = GetComponent<Rigidbody2D>();
@@ -123,10 +126,12 @@ public class FlummiFluffEnemy : BaseEnemy
     private bool IsGrounded() 
     {
         bool onGround= false;
+        animator.SetBool("IsJumping", true);
 
         if(Physics2D.Raycast(transform.position,Vector2.down,1,groundLayer) != false) 
         {
             onGround = true;
+            animator.SetBool("IsJumping", false);
         }
         return onGround;
     }
@@ -134,6 +139,7 @@ public class FlummiFluffEnemy : BaseEnemy
     public override void ReachedZeroHitpoints()
     {
         purifyHandler.SetStunned(this);
+        Instantiate(purifyPrefab, this.transform.position, Quaternion.identity);
     }
 
     public override void Attack()

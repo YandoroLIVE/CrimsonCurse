@@ -108,7 +108,7 @@ public class S_FFBehaviourTree : MonoBehaviour
     }
 }
 
-// Beispiel für die Player-Klasse (zum Testen)
+// Beispiel fÃ¼r die Player-Klasse (zum Testen)
 public class Player : MonoBehaviour
 {
     public static Player Instance;
