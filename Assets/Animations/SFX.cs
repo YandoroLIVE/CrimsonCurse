@@ -62,7 +62,7 @@ public class SFX
 
     private void SelectSFX()
     {
-        UnityEditor.Selection.activeObject = sfxToPlay;
+        //UnityEditor.Selection.activeObject = sfxToPlay;
     }
 
     //Get's list of SFX from manager, used in the inspector

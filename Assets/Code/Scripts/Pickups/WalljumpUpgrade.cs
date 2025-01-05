@@ -12,6 +12,6 @@ public class WalljumpUpgrade : UpgradePickup
     public override void OnPickup()
     {
         UpgradeHandler.ActivateWallJump();
-        this.gameObject.SetActive(false);
+        this.sprite.SetActive(false);
     }
 }

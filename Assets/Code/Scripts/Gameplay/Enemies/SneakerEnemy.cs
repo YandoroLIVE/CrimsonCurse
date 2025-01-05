@@ -1,5 +1,4 @@
-using Mono.Cecil.Cil;
-using Unity.Hierarchy;
+
 using UnityEngine;
 
 public class SneakerEnemy : BaseEnemy
@@ -100,6 +99,7 @@ public class SneakerEnemy : BaseEnemy
         if (distanceToPlayer <= hitRange && attackTimer >= attackCooldown)
         {
             //attack
+            attackTimer = 0;
             _Player.health.TakeDamage((int)damage);
         }
     }

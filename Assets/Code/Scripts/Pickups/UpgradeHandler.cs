@@ -1,14 +1,18 @@
 using HeroController;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpgradeHandler : MonoBehaviour
 {
     private PlayerController _Player;
     private static UpgradeHandler _Instance;
     private bool _PickedUpDash = false;
+    [SerializeField] private GameObject _DashIcon;
     private bool _PickedUpWalljump = false;
+    [SerializeField] private GameObject _WalljumpIcon;
     private bool _PickedUpLongrange = false;
+    [SerializeField] private GameObject _LongrangeIcon;
 
     public static UpgradeHandler GetInstance() 
     {
@@ -57,7 +61,7 @@ public class UpgradeHandler : MonoBehaviour
         }
         else if (_Instance != this)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 
@@ -79,7 +83,10 @@ public class UpgradeHandler : MonoBehaviour
         }
         
         _Player.pickedUpDash = _PickedUpDash;
+        _DashIcon.SetActive(_PickedUpDash);
         _Player.hasWallJump = _PickedUpWalljump;
+        _WalljumpIcon.SetActive(_PickedUpWalljump);
+        _LongrangeIcon.SetActive(_PickedUpLongrange);
 
         if (!_PickedUpLongrange)
         {
