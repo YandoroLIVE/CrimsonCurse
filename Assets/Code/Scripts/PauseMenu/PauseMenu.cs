@@ -6,6 +6,11 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI; // Reference to the Pause Menu UI
     private bool isPaused = false;
 
+    private void Start()
+    {
+        Resume();
+    }
+
     void Update()
     {
         // Toggle pause menu on pressing the Escape key
