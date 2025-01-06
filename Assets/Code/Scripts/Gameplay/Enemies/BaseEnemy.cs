@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class BaseEnemy : MonoBehaviour, IHurtable
 {
     public float maxHealth;
-    private float currentHealth;
+    public float currentHealth;
     private bool stunned = false;
     public virtual void Start()
     {
