@@ -1,10 +1,12 @@
 using HeroController;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UpgradeHandler : MonoBehaviour
 {
+    bool inMenu = false;
     private PlayerController _Player;
     private static UpgradeHandler _Instance;
     private bool _PickedUpDash = false;
@@ -63,11 +65,19 @@ public class UpgradeHandler : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            _PickedUpDash = false;
+            _PickedUpLongrange = false;
+            _PickedUpWalljump = false;
+        }
+
+        UpdateStatus();
     }
 
     private void Start()
     {
-        UpdateStatus();
+        
     }
 
     public void UpdateStatus()
