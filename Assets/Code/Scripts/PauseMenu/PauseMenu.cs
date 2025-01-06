@@ -1,10 +1,11 @@
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    [SerializeField] GameObject evenSystem;
     private PauseMenu _instance;
     private bool inMenu = false;
     public GameObject pauseMenuUI; // Reference to the Pause Menu UI
@@ -12,15 +13,14 @@ public class PauseMenu : MonoBehaviour
 
     private void Awake()
     {
+        
         if (_instance == null) 
         {
             _instance = this;
             DontDestroyOnLoad(this);
             Resume();
-            if (SceneManager.GetActiveScene().buildIndex == 0)
-            {
-                this.enabled = false;
-            }
+            SceneManager.activeSceneChanged += OnNewSceneLoaded;
+            
         }
         else if(_instance != this) 
         {
@@ -31,9 +31,26 @@ public class PauseMenu : MonoBehaviour
 
         
     }
-    private void Start()
+    private void OnNewSceneLoaded(Scene current, Scene next)
     {
-       
+        if (FindAnyObjectByType<EventSystem>() == null)
+        {
+            Instantiate(evenSystem);
+        }
+        if (next.buildIndex == 0)
+        {
+            this.enabled = false;
+            Time.timeScale = 1f;
+            isPaused = false;
+            pauseMenuUI.SetActive(false);
+        }
+        else 
+        {
+            this.enabled = true;
+            Time.timeScale = 1f; // Ensure game time resumes when switching scenes
+            isPaused = false;
+            pauseMenuUI.SetActive(false);
+        }
     }
 
     void Update()

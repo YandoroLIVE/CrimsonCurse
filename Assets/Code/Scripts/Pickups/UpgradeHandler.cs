@@ -65,19 +65,20 @@ public class UpgradeHandler : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        if (SceneManager.GetActiveScene().buildIndex == 0)
+        SceneManager.activeSceneChanged += ResetValues;
+
+        UpdateStatus();
+    }
+
+    private void ResetValues(Scene current, Scene next)
+    {
+        if (next.buildIndex == 0)
         {
             _PickedUpDash = false;
             _PickedUpLongrange = false;
             _PickedUpWalljump = false;
         }
-
         UpdateStatus();
-    }
-
-    private void Start()
-    {
-        
     }
 
     public void UpdateStatus()
