@@ -57,15 +57,16 @@ public class S_PlayerHealth : MonoBehaviour
 
         //// Lade die nächste Szene
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Lade die Szene, die in sceneToLoad angegeben ist
-        if(Safepoint.GetCurrentSafepoint() != null) 
-        {
-            SafepointObject.LoadCurrentSafepoint();
-        }
+        //if(Safepoint.GetCurrentSafepoint() != null) 
+        //{
+        //    SafepointObject.LoadCurrentSafepoint();
+        //}
 
-        else 
-        {
-            SceneManager.LoadScene(SceneManager.GetSceneByBuildIndex(FIRST_LEVEL_BUILD_INDEX).name);
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //else 
+        //{
+            //SceneManager.LoadScene(SceneManager.GetSceneByBuildIndex(FIRST_LEVEL_BUILD_INDEX).name);
+        //}
     }
 
     // Spieler regeneriert Gesundheit nach einem Gegner-Kill
