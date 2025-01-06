@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject evenSystem;
-    private PauseMenu _instance;
+    private static PauseMenu _Instance;
     private bool inMenu = false;
     public GameObject pauseMenuUI; // Reference to the Pause Menu UI
     private bool isPaused = false;
@@ -14,17 +14,18 @@ public class PauseMenu : MonoBehaviour
     private void Awake()
     {
         
-        if (_instance == null) 
+        if (_Instance == null) 
         {
-            _instance = this;
+            _Instance = this;
             DontDestroyOnLoad(this);
             Resume();
             SceneManager.activeSceneChanged += OnNewSceneLoaded;
             
         }
-        else if(_instance != this) 
+        else if(_Instance != this) 
         {
-            Destroy(this.gameObject);
+            DestroyImmediate(this);
+            Destroy(this);
         }
         else { Resume(); };
 
@@ -39,14 +40,14 @@ public class PauseMenu : MonoBehaviour
         }
         if (next.buildIndex == 0)
         {
-            this.enabled = false;
+            inMenu = true;
             Time.timeScale = 1f;
             isPaused = false;
             pauseMenuUI.SetActive(false);
         }
         else 
         {
-            this.enabled = true;
+            inMenu = false;
             Time.timeScale = 1f; // Ensure game time resumes when switching scenes
             isPaused = false;
             pauseMenuUI.SetActive(false);
