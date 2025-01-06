@@ -14,9 +14,9 @@ public class FlummiFluffEnemy : BaseEnemy
     private Rigidbody2D rigid;
     private bool aggro = false;
     private bool attacked = false;
-    private Animator animator;
     private float jumpTimer = 0f;
     private float attackTimer = 0f;
+    public Animator animator;
     public float jumpCooldown = 2f;
     public float jumpSpeed = 3f;
     public float attackRange = 2f;
@@ -30,7 +30,6 @@ public class FlummiFluffEnemy : BaseEnemy
     (Transform transform, Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null, null);
     public override void Start()
     {
-        animator = GetComponent<Animator>();
         origin = transform.position;
         aggroRange = GetComponentInChildren<IsPlayerInTrigger>();
         rigid = GetComponent<Rigidbody2D>();
