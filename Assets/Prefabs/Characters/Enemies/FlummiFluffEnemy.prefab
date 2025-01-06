@@ -128,9 +128,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _purifyVFX: {fileID: 3435381873404196994}
   _stunnedVFX: {fileID: 6929504173331010803}
+  _animator: {fileID: 5146345799764889243}
   maxStunLength: 5
   _InteractableTrigger: {fileID: 7148613848151730178}
-  dissapearTime: 2
+  dissapearTime: 4
 --- !u!61 &7148613848151730178
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -401,7 +402,6 @@ MonoBehaviour:
   attackRange: 2
   attackCooldown: 5
   damage: 2
-  purifyPrefab: {fileID: 3927492006396174049, guid: 99abc1c16f1c0d24e932d4807667d2ab, type: 3}
   purifyHandler: {fileID: 1379783707271185127}
   groundLayer:
     serializedVersion: 2
