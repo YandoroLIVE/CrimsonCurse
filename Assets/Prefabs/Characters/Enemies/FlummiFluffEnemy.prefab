@@ -128,9 +128,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _purifyVFX: {fileID: 3435381873404196994}
   _stunnedVFX: {fileID: 6929504173331010803}
+  _animator: {fileID: 5146345799764889243}
   maxStunLength: 5
   _InteractableTrigger: {fileID: 7148613848151730178}
-  dissapearTime: 2
+  dissapearTime: 4
 --- !u!61 &7148613848151730178
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -204,9 +205,9 @@ Transform:
   m_GameObject: {fileID: 3660570968142543788}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.09, y: 0.31, z: 0}
-  m_LocalScale: {x: 0.39498052, y: 0.39498052, z: 0.39498052}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0.09, y: 0.43, z: 0}
+  m_LocalScale: {x: 0.72, y: 0.72, z: 0.72}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5131885664879863443}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -318,7 +319,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5512355812553363353}
   - {fileID: 865020459639179090}
@@ -401,7 +402,6 @@ MonoBehaviour:
   attackRange: 2
   attackCooldown: 5
   damage: 2
-  purifyPrefab: {fileID: 3927492006396174049, guid: 99abc1c16f1c0d24e932d4807667d2ab, type: 3}
   purifyHandler: {fileID: 1379783707271185127}
   groundLayer:
     serializedVersion: 2
@@ -469,7 +469,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.21133333}
+  m_Offset: {x: 0, y: 0.11027622}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.28866667}
@@ -479,7 +479,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 1.2021141}
   m_EdgeRadius: 0
 --- !u!1001 &550153209314141219
 PrefabInstance:

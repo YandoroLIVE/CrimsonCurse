@@ -621,6 +621,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791ffa1cbc8c7c7488866d66bfd4bb43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textAppearLength: 2
+  textObject: {fileID: 0}
+  sprite: {fileID: 0}
+  textToDisplay: 
 --- !u!58 &1088903586
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1300,6 +1304,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecb0d52d14633a84db3a7d2fbc1090e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textAppearLength: 2
+  textObject: {fileID: 0}
+  sprite: {fileID: 0}
+  textToDisplay: 
 --- !u!1 &1305270547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,6 +1874,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e334eabd401f9264699e4290bacb620a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textAppearLength: 2
+  textObject: {fileID: 0}
+  sprite: {fileID: 0}
+  textToDisplay: 
 --- !u!212 &1471599168
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2426,9 +2438,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fcea0b0b11a034489cc443d0254550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _PickedUpDash: 0
-  _PickedUpWalljump: 0
-  _PickedUpLongrange: 0
+  _DashIcon: {fileID: 0}
+  _WalljumpIcon: {fileID: 0}
+  _LongrangeIcon: {fileID: 0}
 --- !u!4 &2003844188
 Transform:
   m_ObjectHideFlags: 0
@@ -2519,7 +2531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3927492006396174049, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5131885664879863443, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: m_LocalPosition.x

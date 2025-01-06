@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _purifyVFX: {fileID: 4391946300553256159}
   _stunnedVFX: {fileID: 7462182280841293560}
+  _animator: {fileID: 0}
   maxStunLength: 5
   _InteractableTrigger: {fileID: 3493615801913556953}
   dissapearTime: 2
@@ -127,8 +128,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.79, y: 0.79, z: 0.79}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2260408983846052623}
   - {fileID: 7075287171572486399}
