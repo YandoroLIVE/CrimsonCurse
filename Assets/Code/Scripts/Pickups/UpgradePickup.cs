@@ -1,5 +1,4 @@
-using HeroController;
-using NUnit.Framework;
+
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -14,8 +13,6 @@ public abstract class UpgradePickup : MonoBehaviour
     
     IEnumerator DisplayText() 
     {
-        Debug.Log(textObject.GetComponent<TextMeshPro>());
-        Debug.Log(textObject.GetComponent<TextMeshProUGUI>());
         textObject.GetComponent<TextMeshPro>().text = textToDisplay;
         textObject.SetActive(true);
         yield return new WaitForSeconds(textAppearLength);

@@ -1,8 +1,6 @@
 using HeroController;
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class UpgradeHandler : MonoBehaviour
 {
@@ -60,14 +58,15 @@ public class UpgradeHandler : MonoBehaviour
         {
             _Instance = this;
             DontDestroyOnLoad(this);
+            SceneManager.activeSceneChanged += ResetValues;
+
+            UpdateStatus();
         }
         else if (_Instance != this)
         {
             Destroy(this.gameObject);
         }
-        SceneManager.activeSceneChanged += ResetValues;
-
-        UpdateStatus();
+        
     }
 
     private void ResetValues(Scene current, Scene next)
