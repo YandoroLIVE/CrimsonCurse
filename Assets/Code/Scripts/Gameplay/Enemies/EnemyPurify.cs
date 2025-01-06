@@ -50,7 +50,10 @@ public class EnemyPurify : MonoBehaviour
         _stunnedVFX.Clear();
         this.enabled = false;
         _purifyVFX.Play();
-        _animator.SetBool("Purify",true);
+        if (_animator != null) 
+        { 
+            _animator.SetBool("Purify",true);
+        }
         // Play animation for purification
         StartCoroutine(Dissapear(dissapearTime));
     
