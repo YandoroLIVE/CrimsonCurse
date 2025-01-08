@@ -1,29 +1,45 @@
+using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class S_Projectile : MonoBehaviour
 {
-    public int damage = 20; // Schaden des Projektils
-    public float lifetime = 5f; // Lebenszeit des Projektils
-    public GameObject explsionVFX;
-    private void Start()
+    public int _Damage;
+    public float _Lifetime;
+    public Rigidbody2D rigidBody2D;
+    public ParticleSystem expolsionVFX;
+    public ParticleSystem ActiveVFX;
+    public void Init(int damage, float lifetime)
     {
-        Destroy(gameObject, lifetime); // Zerstört das Projektil nach der angegebenen Lebenszeit
+        _Damage = damage;
+        _Lifetime = lifetime;
+    }
+
+    private void OnImpact(Collider2D collsion) 
+    {
+        collsion.GetComponent<IHurtable>().Hurt(_Damage);
+        ActiveVFX.Clear();
+        rigidBody2D.linearVelocity = Vector2.zero;
+        expolsionVFX.Play();
+        StartCoroutine( DisableAfterLifeTime( expolsionVFX.main.startLifetime.constantMax ) );
+        
+    }
+
+    IEnumerator DisableAfterLifeTime(float time) 
+    {
+        yield return new WaitForSeconds(time);
+        expolsionVFX.Clear();
+        gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        ActiveVFX.Play();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision);
-        // Überprüfen, ob das Projektil mit einem Gegner kollidiert
-        IHurtable enemy = collision.gameObject.GetComponent<IHurtable>();
-        if (enemy != null)
-        {
-            
-            enemy.Hurt(damage); // Schaden an den Gegner anwenden
-            Debug.Log("Projektil verursacht " + damage + " Schaden.");
-            Instantiate(explsionVFX, transform.position, transform.rotation).transform.localScale = new Vector3(.2f, .2f, .2f);
-            Destroy(gameObject); // Zerstört das Projektil nach der Kollision
-        }
+        OnImpact(collision);
     }
 }

@@ -1,45 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class S_PlayerLongRangeAttack : MonoBehaviour
 {
-    public GameObject projectilePrefab; // Prefab für das Projektil
-    public Transform firePoint; // Der Punkt, an dem das Projektil abgefeuert wird
-    public float projectileSpeed = 10f; // Geschwindigkeit des Projektils
-    public float attackCooldown = 0.5f; // Abkühlzeit zwischen den Angriffen
-    private float lastAttackTime = 0f; // Zeitpunkt des letzten Angriffs
+    [SerializeField] private S_Projectile projectilePrefab;
+    [SerializeField] Vector3 firePoint;
+    public float projectileSpeed = 10f;
+    public float projectileLifeTime = 10f;
+    public int damage = 100;
+    public float attackCooldown = 0.5f;
+    private float attackTimer;
+    List<S_Projectile> projectiles = new List<S_Projectile>();
 
     void Update()
     {
-        // Überprüfen, ob der Spieler die Long-Range-Angriffs-Taste drückt (hier auf "R" festgelegt)
+        attackTimer += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.JoystickButton3))
         {
-            if (Time.time >= lastAttackTime + attackCooldown)
+            if (attackTimer >= attackCooldown)
             {
-                LongRangeAttack(); // Spieler führt den Long-Range-Angriff aus
-                lastAttackTime = Time.time; // Zeitstempel für den letzten Angriff
+                attackTimer = 0;
+                LongRangeAttack();
+                
             }
         }
     }
 
-    // Methode für den Long-Range-Angriff
     void LongRangeAttack()
     {
-        Debug.Log("Long-Range-Angriff ausgelöst!");
-        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
-        if (rb != null)
+        bool needMoreProjectiles = true;
+        foreach (S_Projectile shot in projectiles)
         {
-            if(transform.localScale.x > 0)
+            if (!shot.gameObject.activeInHierarchy)
             {
-                rb.linearVelocity = firePoint.right * projectileSpeed;
+                needMoreProjectiles = false;
+                ResetShot(shot);
+                break;
+
             }
-            else
-            {
-                rb.linearVelocity = firePoint.right * -projectileSpeed;
-            }
-             // Setzt die Geschwindigkeit des Projektils
+
         }
+        if (needMoreProjectiles)
+        {
+            S_Projectile shot = Instantiate(projectilePrefab);
+            ResetShot(shot);
+            projectiles.Add(shot);
+
+        }
+    }
+
+    private void ResetShot(S_Projectile shot)
+    {
+        shot.Init(damage, projectileLifeTime);
+        shot.transform.position = this.transform.position + (firePoint * Mathf.Sign(this.transform.localScale.x));
+        shot.gameObject.SetActive(true);
+        shot.rigidBody2D.linearVelocityX = projectileSpeed * Mathf.Sign(this.transform.localScale.x);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(this.transform.position + (firePoint * Mathf.Sign(this.transform.localScale.x)), 0.125f);
     }
 }
