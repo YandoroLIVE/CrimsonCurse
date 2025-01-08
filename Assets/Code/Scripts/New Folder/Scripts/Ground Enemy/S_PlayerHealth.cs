@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.SceneManagement; // Importiere das SceneManagement-Namespace
 
+
 public class S_PlayerHealth : MonoBehaviour
 {
+    const int FIRST_LEVEL_BUILD_INDEX = 1;
     public int maxHealth = 100;
     public int currentHealth;
     public int healthRegenOnKill = 25; // Menge an Gesundheit, die bei einem Kill regeneriert wird
@@ -45,17 +46,27 @@ public class S_PlayerHealth : MonoBehaviour
     // Spieler stirbt
     void Die()
     {
-        Debug.Log("Spieler ist gestorben.");
+        //Debug.Log("Spieler ist gestorben.");
 
-        // Teleportiere den Spieler außerhalb des Sichtbereichs
-        transform.position = new Vector3(1000, 1000, 0); // Ändere die Position zum Verschwinden
-        playerCollider.enabled = false; // Deaktiviert den Collider, um Angriffe zu verhindern
+        //// Teleportiere den Spieler außerhalb des Sichtbereichs
+        //transform.position = new Vector3(1000, 1000, 0); // Ändere die Position zum Verschwinden
+        //playerCollider.enabled = false; // Deaktiviert den Collider, um Angriffe zu verhindern
 
-        // Fixiere die Kamera an der aktuellen Spielerposition
-        FixCameraAtPlayerPosition(transform.position);
+        //// Fixiere die Kamera an der aktuellen Spielerposition
+        //FixCameraAtPlayerPosition(transform.position);
 
-        // Lade die nächste Szene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Lade die Szene, die in sceneToLoad angegeben ist
+        //// Lade die nächste Szene
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Lade die Szene, die in sceneToLoad angegeben ist
+        //if(Safepoint.GetCurrentSafepoint() != null) 
+        //{
+        //    SafepointObject.LoadCurrentSafepoint();
+        //}
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //else 
+        //{
+            //SceneManager.LoadScene(SceneManager.GetSceneByBuildIndex(FIRST_LEVEL_BUILD_INDEX).name);
+        //}
     }
 
     // Spieler regeneriert Gesundheit nach einem Gegner-Kill

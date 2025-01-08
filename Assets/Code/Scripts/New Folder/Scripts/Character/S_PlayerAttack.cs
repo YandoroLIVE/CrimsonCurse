@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
+
 
 public class S_PlayerAttack : MonoBehaviour
 {
     public int damage = 25; // Schaden, den der Spieler anrichtet
     public float attackRange = 1.5f; // Reichweite des Angriffs
+    public float attackHeight = 1.5f;
     public LayerMask enemyLayer; // Layer f�r den Gegner
     private Collider2D[] enemiesInRange; // Array f�r Gegner im Angriffsbereich
     public ParticleSystem attackDamage;
@@ -25,8 +26,12 @@ public class S_PlayerAttack : MonoBehaviour
     private void CheckForEnemiesInRange()
     {
         // Alle Gegner im Bereich abfragen
-        enemiesInRange = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
+        //enemiesInRange = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
+        Vector2 pos = transform.position;
+        pos.x = pos.x + (attackRange / 2 * transform.localScale.x);
+        enemiesInRange = Physics2D.OverlapBoxAll(pos, new Vector2(attackRange, attackHeight), 0, enemyLayer);
     }
+
 
     // Angriffs-Methode
     void Attack()
@@ -36,10 +41,10 @@ public class S_PlayerAttack : MonoBehaviour
         // Gehe durch alle Gegner im Bereich und f�ge Schaden zu
         foreach (var enemyCollider in enemiesInRange)
         {
-            S_GroundEnemy enemy = enemyCollider.GetComponent<S_GroundEnemy>();
+            IHurtable enemy = enemyCollider.GetComponent<IHurtable>();
             if (enemy != null)
             {
-                enemy.TakeDamage(damage);
+                enemy.Hurt(damage);
                 Debug.Log("Gegner nimmt " + damage + " Schaden.");
                 DisplayDamage(damage); // Zeigt den verursachten Schaden an
             }
@@ -55,7 +60,9 @@ public class S_PlayerAttack : MonoBehaviour
     // Optional: Zeichne den Angriffsbereich zur Visualisierung
     private void OnDrawGizmosSelected()
     {
+        Vector2 pos = transform.position;
+        pos.x = pos.x + (attackRange / 2 * transform.localScale.x);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireCube(pos, new Vector2(attackRange, attackHeight));
     }
 }

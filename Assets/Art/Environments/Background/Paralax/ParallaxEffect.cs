@@ -16,6 +16,10 @@ public class ParallaxEffect : MonoBehaviour
     private void Update()
     {
         // Berechnet die Bewegung der Kamera seit dem letzten Frame
+        if (cameraTransform == null) 
+        {
+            cameraTransform = Camera.main.transform;
+        }
         Vector3 cameraMovement = cameraTransform.position - lastCameraPosition;
 
         // Bewegt die Ebene in Abhängigkeit von der Kamerabewegung

@@ -72,7 +72,11 @@ namespace HeroController
         {
             _rb = GetComponent<Rigidbody2D>();
             _col = GetComponent<CapsuleCollider2D>();
-
+            UpgradeHandler tmp = UpgradeHandler.GetInstance();   
+            if(tmp != null) 
+            {
+                tmp.UpdateStatus();
+            }
             _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
         }
 
@@ -235,7 +239,7 @@ namespace HeroController
                     ExecuteJump();  // Grounded or coyote jump
                     
                 }
-                else if (_isTouchingWall && !_grounded)
+                else if (_isTouchingWall && !_grounded && hasWallJump)
                 {
                     ExecuteWallJump();  // Wall jump
                 }
