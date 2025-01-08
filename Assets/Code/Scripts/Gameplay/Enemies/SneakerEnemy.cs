@@ -70,9 +70,14 @@ public class SneakerEnemy : BaseEnemy
                 else
                 {
                     //Move Back
-                    currentTargetPoint = originPoint;
+                    //currentTargetPoint = originPoint;
+                    //direction = (currentTargetPoint - transform.position).normalized;
+                    //transform.position += (Vector3)direction * speed * lookedAtSpeedFactor * Time.deltaTime;
+
+                   
                     direction = (currentTargetPoint - transform.position).normalized;
-                    transform.position += (Vector3)direction * speed * lookedAtSpeedFactor * Time.deltaTime;
+                    transform.position += (Vector3)direction * speed * sneakSpeedFactor * 0.5f * Time.deltaTime;
+
                 }
 
             }
