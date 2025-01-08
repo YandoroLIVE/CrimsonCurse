@@ -1,8 +1,4 @@
-using System.Collections;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class FlummiFluffEnemy : BaseEnemy
 {
@@ -15,6 +11,7 @@ public class FlummiFluffEnemy : BaseEnemy
     private bool attacked = false;
     private float jumpTimer = 0f;
     private float attackTimer = 0f;
+    public Animator animator;
     public float jumpCooldown = 2f;
     public float jumpSpeed = 3f;
     public float attackRange = 2f;
@@ -27,7 +24,6 @@ public class FlummiFluffEnemy : BaseEnemy
     (Transform transform, Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null, null);
     public override void Start()
     {
-        
         origin = transform.position;
         aggroRange = GetComponentInChildren<IsPlayerInTrigger>();
         rigid = GetComponent<Rigidbody2D>();
@@ -109,6 +105,9 @@ public class FlummiFluffEnemy : BaseEnemy
         float gravity = Mathf.Abs(Physics2D.gravity.y);
         float velocityY = (distancY + 0.5f * gravity * Mathf.Pow(timeOfFlight, 2)) / timeOfFlight;
         float velocityX = distancX / timeOfFlight;
+        float xScale = Mathf.Abs(animator.transform.localScale.x) * Mathf.Sign(-velocityX);
+        Debug.Log(xScale);
+        animator.transform.localScale = new Vector3(xScale, animator.transform.localScale.y, animator.transform.localScale.z);
         Vector2 velocity = new Vector2(velocityX, velocityY);
         rigid.linearVelocity = velocity;  
         jumpTimer = Time.time + jumpCooldown;  
@@ -127,6 +126,7 @@ public class FlummiFluffEnemy : BaseEnemy
         if(Physics2D.Raycast(transform.position,Vector2.down,1,groundLayer) != false) 
         {
             onGround = true;
+            
         }
         return onGround;
     }
@@ -164,12 +164,21 @@ public class FlummiFluffEnemy : BaseEnemy
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(new Vector3(currentTarget.x,currentTarget.y,this.transform.position.z), POINTMERCYAREA/2);
+        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0,-1,1));
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision != null) 
         {
+            animator.SetBool("IsJumping", false);
             rigid.linearVelocity = Vector2.zero; // makes sure enemy dosent glide on the ground
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision != null) 
+        {
+            animator.SetBool("IsJumping", true);
         }
     }
 }

@@ -13,6 +13,6 @@ public class DashUpgrade : UpgradePickup
     public override void OnPickup()
     {
         UpgradeHandler.ActivateDash();
-        this.gameObject.SetActive(false);
+        this.sprite.SetActive(false);
     }
 }

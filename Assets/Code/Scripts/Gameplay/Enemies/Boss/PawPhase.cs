@@ -53,8 +53,9 @@ public class PawPhase : BossPhase
         rightPaw.gameObject.SetActive(false);
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         ResetPhase();
         leftPaw.gameObject.SetActive(true);
         rightPaw.gameObject.SetActive(true);

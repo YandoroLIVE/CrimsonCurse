@@ -12,6 +12,6 @@ public class LongRangeUpgrade : UpgradePickup
     public override void OnPickup()
     {
         UpgradeHandler.ActivateLongrange();
-        this.gameObject.SetActive(false);
+        this.sprite.SetActive(false);
     }
 }

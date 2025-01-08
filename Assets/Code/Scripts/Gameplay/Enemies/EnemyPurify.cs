@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class EnemyPurify : MonoBehaviour
 {
     private BaseEnemy _targetEnemy;
     [SerializeField] ParticleSystem _purifyVFX;
     [SerializeField] ParticleSystem _stunnedVFX;
+    [SerializeField] Animator _animator;
     public float maxStunLength;
     private float currentStunDuration;
     [SerializeField] Collider2D _InteractableTrigger;
@@ -49,6 +49,10 @@ public class EnemyPurify : MonoBehaviour
         _stunnedVFX.Clear();
         this.enabled = false;
         _purifyVFX.Play();
+        if (_animator != null) 
+        { 
+            _animator.SetBool("Purify",true);
+        }
         // Play animation for purification
         StartCoroutine(Dissapear(dissapearTime));
     

@@ -14,10 +14,12 @@ public class S_Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(collision);
         // Überprüfen, ob das Projektil mit einem Gegner kollidiert
         IHurtable enemy = collision.gameObject.GetComponent<IHurtable>();
         if (enemy != null)
         {
+            
             enemy.Hurt(damage); // Schaden an den Gegner anwenden
             Debug.Log("Projektil verursacht " + damage + " Schaden.");
             Instantiate(explsionVFX, transform.position, transform.rotation).transform.localScale = new Vector3(.2f, .2f, .2f);

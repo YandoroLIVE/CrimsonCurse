@@ -1,3 +1,4 @@
+using HeroController;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class ParallaxBackground : MonoBehaviour
     void Start()
     {
         if (parallaxCamera == null)
-            parallaxCamera = Camera.main.GetComponent<ParallaxCamera>();
+            parallaxCamera = FindFirstObjectByType<PlayerController>().GetComponent<ParallaxCamera>();
 
         if (parallaxCamera != null)
             parallaxCamera.onCameraTranslate += Move;

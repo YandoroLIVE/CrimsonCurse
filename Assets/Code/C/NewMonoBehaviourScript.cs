@@ -6,7 +6,21 @@ public class EscapeToMainMenu : MonoBehaviour
 {
     // Name der Hauptmenü-Szene
     [SerializeField] private string mainMenuSceneName = "MainMenu";
+    static EscapeToMainMenu _instance;
 
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else if (_instance != this) 
+        {
+            Destroy(this);
+        }
+    }
     void Update()
     {
         // Überprüfe, ob die Escape-Taste gedrückt wurde
@@ -22,7 +36,7 @@ public class EscapeToMainMenu : MonoBehaviour
         // Überprüfe, ob die Szene existiert
         if (!string.IsNullOrEmpty(mainMenuSceneName))
         {
-            SceneManager.LoadScene(mainMenuSceneName);
+            //SceneManager.LoadScene(mainMenuSceneName);
         }
         else
         {
