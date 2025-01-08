@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -40,7 +41,11 @@ public class Safepoint
     }
 
     public static Safepoint GetCurrentSafepoint() 
-    { 
+    {
+        if (_CurrentSafepointID >= _safepoints.Count) 
+        {
+            return null;
+        }
         return _safepoints[_CurrentSafepointID]; 
     }
 
