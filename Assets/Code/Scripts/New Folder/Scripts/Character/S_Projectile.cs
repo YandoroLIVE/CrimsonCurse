@@ -20,6 +20,7 @@ public class S_Projectile : MonoBehaviour
     {
         collsion.GetComponent<IHurtable>().Hurt(_Damage);
         ActiveVFX.Clear();
+        ActiveVFX.Stop();
         rigidBody2D.linearVelocity = Vector2.zero;
         expolsionVFX.Play();
         StartCoroutine( DisableAfterLifeTime( expolsionVFX.main.startLifetime.constantMax ) );
