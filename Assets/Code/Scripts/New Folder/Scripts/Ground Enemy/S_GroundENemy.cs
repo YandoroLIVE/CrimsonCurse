@@ -78,7 +78,7 @@ public class S_GroundEnemy : MonoBehaviour
         S_PlayerHealth playerHealth = target.GetComponent<S_PlayerHealth>();
         if (playerHealth != null)
         {
-            playerHealth.RegenerateHealthOnKill();
+            //playerHealth.RegenerateHealthOnKill();
         }
 
         Destroy(gameObject); // Entferne den Gegner aus der Szene
