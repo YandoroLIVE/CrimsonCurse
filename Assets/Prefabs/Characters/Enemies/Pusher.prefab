@@ -287,14 +287,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
+  currentHealth: 0
   _AttackVFX: {fileID: 6365906815259452814}
-  _PushDirection: {x: 1, y: 0}
   _PushStrength: 30000
-  _PushDelay: 0
   _Damage: 5
+  attackCooldown: 0.25
+  projectileLifetime: 0
   purifycationHandler: {fileID: 1131992386463636248}
   _AttackTrigger: {fileID: 8280869701249818412}
-  attackCooldown: 0.25
+  _ProjectilePrefab: {fileID: 5191747447720885443, guid: e0243169252c9e2468bd99e1b9b420ce, type: 3}
 --- !u!61 &2694215275897440879
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -357,7 +358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8530908583356890037
 Transform:
   m_ObjectHideFlags: 0
@@ -466,6 +467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _purifyVFX: {fileID: 2092056963100263195}
   _stunnedVFX: {fileID: 7330315060267579264}
+  _animator: {fileID: 0}
   maxStunLength: 5
   _InteractableTrigger: {fileID: 881441782556126186}
   dissapearTime: 2
@@ -581,6 +583,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7460215227478356176, guid: 9e30a2f25dcbf0c43a5638b22bcf5639, type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7460215227478356176, guid: 9e30a2f25dcbf0c43a5638b22bcf5639, type: 3}
+      propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
