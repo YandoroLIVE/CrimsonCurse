@@ -3,30 +3,21 @@ using System.Collections;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-
+[System.Serializable]
 public class PusherEnemy : BaseEnemy
 {
-    private const int PUSH_AMOUNT = 20;
     [SerializeField] ParticleSystem _AttackVFX;
-    [SerializeField] Vector2 _PushDirection;
     [SerializeField] float _PushStrength;
-    [SerializeField] float _PushDelay;
     [SerializeField] float _Damage;
+    public float attackCooldown;
+    public float projectileSpeed;
     [SerializeField] EnemyPurify purifycationHandler;
     [SerializeField] IsPlayerInTrigger _AttackTrigger;
-    private bool playerinRange = false;
+    [SerializeField] PusherProjectile _ProjectilePrefab;
+    private List<PusherProjectile> projectiles = new List<PusherProjectile>();
     private (Rigidbody2D rigidbody2D,S_PlayerHealth health) _Player = (null,null);
-    public float attackCooldown;
     private float timer;
-    //private float standardDrag;
-    private void Push(Rigidbody2D target)
-    {
-        target.linearDamping = 0;
-        Vector2 pushforce = (_PushDirection.normalized * _PushStrength * Time.fixedDeltaTime);
-        //Debug.Log(pushforce);
-        target.AddForce(pushforce);
-        
-    }
+    private Vector2 lookDirection = new Vector2(0, -1); //Default position pusher looks at
 
 
     private void Playeffects()
@@ -35,15 +26,7 @@ public class PusherEnemy : BaseEnemy
         // play shooting animation
     }
 
-    IEnumerator DelayPush()
-    {
-        for (int i = 0; i < PUSH_AMOUNT; i++) { 
-            yield return new WaitForSeconds(_PushDelay);
-            Push(_Player.rigidbody2D);
-        }
-
-        _Player.health.TakeDamage(((int)_Damage));
-    }
+   
 
     private void Awake()
     {
@@ -55,25 +38,6 @@ public class PusherEnemy : BaseEnemy
 
         timer = Time.time;
     }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    //Debug.Log("Collision");
-    //    if (_Player.rigidbody2D == null || _Player.health == null)
-    //    {
-
-    //        _Player.rigidbody2D = collision.gameObject.GetComponent<Rigidbody2D>();
-    //        _Player.health = collision.gameObject.GetComponent<S_PlayerHealth>();
-    //        //standardDrag = _Player.linearDamping;
-    //    }
-
-    //    playerinRange = true;
-        
-    //}
-    //public void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    playerinRange = false;
-    //}
 
     public override void Move()
     {
@@ -88,16 +52,15 @@ public class PusherEnemy : BaseEnemy
             if (_Player.rigidbody2D == null || _Player.health == null)
             {
                 Collider2D collision = _AttackTrigger.GetPlayer();
-                Debug.Log(collision);
                 _Player.rigidbody2D = collision.gameObject.GetComponent<Rigidbody2D>();
                 _Player.health = collision.gameObject.GetComponent<S_PlayerHealth>();
-                //standardDrag = _Player.linearDamping;
             }
             if (timer+attackCooldown <= Time.time) 
             {
                 timer = Time.time;
-                Playeffects();
-                StartCoroutine(DelayPush());
+                Shoot();
+                //Playeffects();
+                //StartCoroutine(DelayPush());
             }
         }
     }
@@ -111,4 +74,41 @@ public class PusherEnemy : BaseEnemy
     {
         purifycationHandler.SetStunned(this);
     }
+    private void Shoot() 
+    {
+        bool needMoreProjectiles = true;
+        foreach(PusherProjectile shot in projectiles) 
+        {
+            if (!shot.gameObject.activeInHierarchy) 
+            {
+                needMoreProjectiles = false;
+                shot.transform.position = transform.position;
+                float rotationAngle = transform.eulerAngles.z;
+                shot.SetVelocity(RotateVector2(lookDirection, rotationAngle), projectileSpeed);
+                shot.gameObject.SetActive(true);
+                break;
+                
+            }
+        
+        }
+        if (needMoreProjectiles) 
+        {
+            PusherProjectile shot = Instantiate(_ProjectilePrefab,transform);
+            shot.Init(_Player, _PushStrength,_Damage);
+            shot.gameObject.SetActive(true);
+            projectiles.Add(shot);
+
+        }
+    }
+
+    private Vector2 RotateVector2(Vector2 vector,float delta)
+    {
+        delta *= Mathf.Deg2Rad;
+        Debug.Log(delta);
+        return new Vector2(
+            vector.x * Mathf.Cos(delta) - vector.y * Mathf.Sin(delta),
+            vector.x * Mathf.Sin(delta) + vector.y * Mathf.Cos(delta)
+    );
+    }
 }
+
