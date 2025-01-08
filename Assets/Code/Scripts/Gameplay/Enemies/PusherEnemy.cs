@@ -6,7 +6,6 @@ using System.Collections.Generic;
 [System.Serializable]
 public class PusherEnemy : BaseEnemy
 {
-    [SerializeField] ParticleSystem _AttackVFX;
     [SerializeField] float _PushStrength;
     [SerializeField] float _Damage;
     public float attackCooldown;
@@ -22,7 +21,6 @@ public class PusherEnemy : BaseEnemy
 
     private void Playeffects()
     {
-        _AttackVFX.Play();
         // play shooting animation
     }
 
@@ -83,6 +81,7 @@ public class PusherEnemy : BaseEnemy
             {
                 needMoreProjectiles = false;
                 shot.transform.position = transform.position;
+                shot.Init(_Player, _PushStrength, _Damage);
                 float rotationAngle = transform.eulerAngles.z;
                 shot.SetVelocity(RotateVector2(lookDirection, rotationAngle), projectileSpeed);
                 shot.gameObject.SetActive(true);
@@ -104,7 +103,6 @@ public class PusherEnemy : BaseEnemy
     private Vector2 RotateVector2(Vector2 vector,float delta)
     {
         delta *= Mathf.Deg2Rad;
-        Debug.Log(delta);
         return new Vector2(
             vector.x * Mathf.Cos(delta) - vector.y * Mathf.Sin(delta),
             vector.x * Mathf.Sin(delta) + vector.y * Mathf.Cos(delta)

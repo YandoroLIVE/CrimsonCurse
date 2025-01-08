@@ -51,6 +51,7 @@ public class PusherProjectile : MonoBehaviour
         {
             _Player.rigidBody.AddRelativeForce(_PushDirection*_PushStrength);
             _Player.health.TakeDamage((int)_Damage);
+            Debug.Log(_Damage);
         }
     }
 }
