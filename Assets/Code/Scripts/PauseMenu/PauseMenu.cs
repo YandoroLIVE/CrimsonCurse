@@ -24,8 +24,7 @@ public class PauseMenu : MonoBehaviour
         }
         else if(_Instance != this) 
         {
-            DestroyImmediate(this);
-            Destroy(this);
+            Destroy(gameObject);
         }
         else { Resume(); };
 
