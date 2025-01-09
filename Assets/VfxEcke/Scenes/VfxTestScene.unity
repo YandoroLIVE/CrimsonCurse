@@ -282,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4770194614540401366, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.67
+      value: -6.78
       objectReference: {fileID: 0}
     - target: {fileID: 4770194614540401366, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.y
@@ -849,14 +849,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b10f5d16ae823444dae00b9e8c54530d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AttackVFX: {fileID: 1415504803}
-  _BounceDirection: {x: 1, y: 0}
-  _PushStrength: 500000
-  _PushDelay: 0.125
-  animationCooldown: 0.25
-  timer: 0
-  standardDrag: 0
-  _Player: {fileID: 0}
 --- !u!61 &1214783744
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1032,15 +1024,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8e5705bb5498f4ba6a9f119005acb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  maxHealth: 5
-  currentHealth: 5
-  damageToPlayer: 0
-  detectionRadius: 0
-  attackRadius: 0
-  target: {fileID: 0}
-  attackCooldown: 1
-  lastAttackTime: 0
 --- !u!1 &1305270547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,11 +1513,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d022443d319fcf4e9a59591c0f8184b, type: 3}
---- !u!198 &1415504803 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 29767485586119350, guid: 8d022443d319fcf4e9a59591c0f8184b, type: 3}
-  m_PrefabInstance: {fileID: 1415504802}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1415504804 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2927145296840803101, guid: 8d022443d319fcf4e9a59591c0f8184b, type: 3}
@@ -2055,11 +2033,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5598026272250848285, guid: e254a88c179500b48a8c527f0644e3e9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5904139406809880176, guid: e254a88c179500b48a8c527f0644e3e9, type: 3}
+      propertyPath: speed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5904139406809880176, guid: e254a88c179500b48a8c527f0644e3e9, type: 3}
       propertyPath: lookedAtSpeedFactor
-      value: 0.8
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2075,12 +2057,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 237071251888398344, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
+      propertyPath: jumpTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237071251888398344, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: jumpSpeed
       value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 237071251888398344, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: pointLeft
-      value: 5.19
+      value: 3.69
       objectReference: {fileID: 0}
     - target: {fileID: 237071251888398344, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: pointRight
@@ -2090,9 +2076,9 @@ PrefabInstance:
       propertyPath: jumpCooldown
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1975960231427871758, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
-      propertyPath: m_GravityScale
-      value: 2
+    - target: {fileID: 237071251888398344, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
+      propertyPath: contactDamage
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3927492006396174049, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: m_Name
@@ -2100,7 +2086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3927492006396174049, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5131885664879863443, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: m_LocalPosition.x
