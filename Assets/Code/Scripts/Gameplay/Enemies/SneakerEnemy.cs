@@ -45,18 +45,10 @@ public class SneakerEnemy : BaseEnemy
             }
 
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1f, wallLayer);
-            if (hit.collider == null)
-            {
-                currentTargetPoint = _Player.transform.position;
-
-            }
-            else
-            {
-                currentTargetPoint = originPoint;
-
-            }
+            
+            currentTargetPoint = _Player.transform.position;
             direction = (currentTargetPoint - transform.position).normalized;
+
 
             if (!IsBeingLookedAt())
             {
@@ -151,6 +143,8 @@ public class SneakerEnemy : BaseEnemy
         Gizmos.DrawWireCube(originPoint, Vector3.one * wanderRange * 2);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(currentTargetPoint, POINTMERCYAREA);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, transform.position+new Vector3(direction.x, direction.y));
     }
 
 
