@@ -666,17 +666,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 200
   currentHealth: 200
-  animator: {fileID: 5146345799764889243}
+  pointLeft: 0
+  pointRight: 0
   jumpCooldown: 5
-  jumpSpeed: 3
+  jumpTime: 2
+  contactDamage: 1
+  contactDamageRange: 1
+  contactCooldown: 0.25
   attackRange: 2
   attackCooldown: 5
   damage: 2
+  animator: {fileID: 5146345799764889243}
   purifyHandler: {fileID: 1379783707271185127}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  jumpXIdleRange: {x: -5, y: 5}
   aggroRange: {fileID: 6497421186289050082}
 --- !u!50 &1975960231427871758
 Rigidbody2D:

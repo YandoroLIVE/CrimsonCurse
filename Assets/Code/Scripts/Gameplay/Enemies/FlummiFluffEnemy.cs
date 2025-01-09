@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class FlummiFluffEnemy : BaseEnemy
 {
     private const float POINTMERCYAREA = 2f;
+    private const float JUMPANIMATIONEND_OFFSET = 0.1f;
     private const float GROUNDCHECK_LENGTH = 1.25f;
     private const float JUMP_DISTANCE_OFFSET_TO_PLAYER = 5f;
     private Vector2 origin;
@@ -18,12 +20,15 @@ public class FlummiFluffEnemy : BaseEnemy
     public float pointRight = 0;
     public float jumpCooldown = 2f;
     public float jumpTime = 2f;
-    public Animator animator;
-
+    public float contactDamage;
+    public float contactDamageRange = 1f;
+    public float contactCooldown = 0.25f;
+    private float contactTimer = 0f;
 
     public float attackRange = 2f;
     public float attackCooldown = 5f;
     public float damage = 2f;
+    public Animator animator;
     [SerializeField] private EnemyPurify purifyHandler;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private IsPlayerInTrigger aggroRange;
@@ -80,6 +85,12 @@ public class FlummiFluffEnemy : BaseEnemy
         }
     }
 
+    IEnumerator ActivateJumpEndAnimation() 
+    {
+        yield return new WaitForSeconds(jumpTime- JUMPANIMATIONEND_OFFSET);
+        animator.SetTrigger("EndJump");
+    }
+
     private void ChooseIdlePoint()
     {
         if (jumpToLeft) 
@@ -111,7 +122,7 @@ public class FlummiFluffEnemy : BaseEnemy
         Vector2 goalPos = currentTarget;
 
 
-        float velocityX = ((goalPos.x - startPos.x)/jumpTime)*2;
+        float velocityX = ((goalPos.x - startPos.x)/jumpTime);
 
         float velocityY = 0.5f*-Physics2D.gravity.y*jumpTime; // Grüße gehen raus an horea
 
@@ -121,7 +132,9 @@ public class FlummiFluffEnemy : BaseEnemy
         animator.transform.localScale = new Vector3(xScale, animator.transform.localScale.y, animator.transform.localScale.z);
         Vector2 velocity = new Vector2(velocityX, velocityY);
         Debug.Log(Mathf.Pow(velocityY*(jumpTime/2) + -1/2* Physics2D.gravity.y*(jumpTime/2),2));
-        rigid.linearVelocity = velocity;  
+        rigid.linearVelocity = velocity;
+        animator.SetTrigger("Jump");
+        StartCoroutine(ActivateJumpEndAnimation());
         jumpTimer = Time.time + jumpCooldown;  
 
     }
@@ -163,7 +176,12 @@ public class FlummiFluffEnemy : BaseEnemy
                 _Player.health.TakeDamage((int)damage);
                 attacked = true;
             }
-            
+            if (distance <= contactDamageRange && _Player.health != null && Time.time >= contactTimer && !IsStunned())
+            {
+                contactTimer = Time.time + contactCooldown;
+                _Player.health.TakeDamage((int)contactDamage);
+            }
+
         }
     }
 
@@ -197,7 +215,6 @@ public class FlummiFluffEnemy : BaseEnemy
     {
         if (collision != null) 
         {
-            animator.SetBool("IsJumping", false);
             rigid.linearVelocity = Vector2.zero; // makes sure enemy dosent glide on the ground
         }
     }
@@ -205,11 +222,6 @@ public class FlummiFluffEnemy : BaseEnemy
 
     
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision != null) 
-        {
-            animator.SetBool("IsJumping", true);
-        }
-    }
+    
+
 }
