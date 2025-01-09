@@ -5,8 +5,6 @@ public class FlummiFluffEnemy : BaseEnemy
     private const float POINTMERCYAREA = 2f;
     private const float GROUNDCHECK_LENGTH = 1.25f;
     private const float JUMP_DISTANCE_OFFSET_TO_PLAYER = 5f;
-    public float maxJumpDistance = 5f;
-    public float minJumpDistance = 1f;
     private Vector2 origin;
     private bool foundIdlepoint = false;
     private Vector2 currentTarget = Vector2.zero;
@@ -19,7 +17,7 @@ public class FlummiFluffEnemy : BaseEnemy
     public float pointLeft = 0;
     public float pointRight = 0;
     public float jumpCooldown = 2f;
-    private float jumpHeight = 4.5f;
+    public float jumpTime = 2f;
     public Animator animator;
 
 
@@ -77,10 +75,6 @@ public class FlummiFluffEnemy : BaseEnemy
         }
         else if(!foundIdlepoint)
         {
-            if (HasReachedPoint())
-            {
-                jumpToLeft = !jumpToLeft;
-            }
             foundIdlepoint = true;
             ChooseIdlePoint();
         }
@@ -90,11 +84,13 @@ public class FlummiFluffEnemy : BaseEnemy
     {
         if (jumpToLeft) 
         {
+            jumpToLeft = false;
             currentTarget = origin;
             currentTarget.x -= pointLeft;
         }
         else 
         {
+            jumpToLeft = true;
             currentTarget = origin;
             currentTarget.x += pointRight;
         }
@@ -115,25 +111,16 @@ public class FlummiFluffEnemy : BaseEnemy
         Vector2 goalPos = currentTarget;
 
 
-        float velocityX = goalPos.x - startPos.x;
-        if (Mathf.Abs(velocityX) > maxJumpDistance)
-        {
-        
-            velocityX = maxJumpDistance * Mathf.Sign(velocityX);
-        }
+        float velocityX = ((goalPos.x - startPos.x)/jumpTime)*2;
 
-        if(Mathf.Abs(velocityX) < minJumpDistance) 
-        {
-            jumpToLeft = !jumpToLeft;
-            return;
-        }
-        float velocityY = Mathf.Sqrt(jumpHeight * -Physics2D.gravity.y);
+        float velocityY = 0.5f*-Physics2D.gravity.y*jumpTime; // Grüße gehen raus an horea
 
 
 
         float xScale = Mathf.Abs(animator.transform.localScale.x) * Mathf.Sign(-velocityX);
         animator.transform.localScale = new Vector3(xScale, animator.transform.localScale.y, animator.transform.localScale.z);
         Vector2 velocity = new Vector2(velocityX, velocityY);
+        Debug.Log(Mathf.Pow(velocityY*(jumpTime/2) + -1/2* Physics2D.gravity.y*(jumpTime/2),2));
         rigid.linearVelocity = velocity;  
         jumpTimer = Time.time + jumpCooldown;  
 
