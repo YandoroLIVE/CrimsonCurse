@@ -2,24 +2,32 @@ using UnityEngine;
 
 public class FlummiFluffEnemy : BaseEnemy
 {
-    private const float MINJUMPDIST = 0.25f;
-    private const float POINTMERCYAREA = 0.25f; 
+    private const float POINTMERCYAREA = 2f;
+    private const float GROUNDCHECK_LENGTH = 1.25f;
+    private const float JUMP_DISTANCE_OFFSET_TO_PLAYER = 5f;
+    public float maxJumpDistance = 5f;
+    public float minJumpDistance = 1f;
     private Vector2 origin;
+    private bool foundIdlepoint = false;
     private Vector2 currentTarget = Vector2.zero;
     private Rigidbody2D rigid;
     private bool aggro = false;
     private bool attacked = false;
+    private bool jumpToLeft = false;
     private float jumpTimer = 0f;
     private float attackTimer = 0f;
-    public Animator animator;
+    public float pointLeft = 0;
+    public float pointRight = 0;
     public float jumpCooldown = 2f;
-    public float jumpSpeed = 3f;
+    private float jumpHeight = 4.5f;
+    public Animator animator;
+
+
     public float attackRange = 2f;
     public float attackCooldown = 5f;
     public float damage = 2f;
     [SerializeField] private EnemyPurify purifyHandler;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private Vector2 jumpXIdleRange;
     [SerializeField] private IsPlayerInTrigger aggroRange;
     (Transform transform, Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null, null);
     public override void Start()
@@ -27,6 +35,7 @@ public class FlummiFluffEnemy : BaseEnemy
         origin = transform.position;
         aggroRange = GetComponentInChildren<IsPlayerInTrigger>();
         rigid = GetComponent<Rigidbody2D>();
+        jumpTimer = 0;
     }
     public override void Move()
     {
@@ -40,9 +49,7 @@ public class FlummiFluffEnemy : BaseEnemy
 
     private void DeterminTargetPoint()
     {
-        
-        
-
+         
         if (aggroRange.GetPlayer() != null)
         {
             //get player component the first time that the player enters the aggro range
@@ -53,13 +60,12 @@ public class FlummiFluffEnemy : BaseEnemy
                 _Player.transform = collision.transform;
                 _Player.health = collision.GetComponent<S_PlayerHealth>();
             }
-
             aggro = aggroRange.IsPlayerInBox();
         }
         if (attacked)
         {
             //Set point away from player as target
-            currentTarget = _Player.transform.position - (_Player.transform.position - this.transform.position).normalized*5f;
+            currentTarget = _Player.transform.position - (_Player.transform.position - this.transform.position).normalized* JUMP_DISTANCE_OFFSET_TO_PLAYER;
             currentTarget.y = this.transform.position.y;
         }
 
@@ -69,18 +75,29 @@ public class FlummiFluffEnemy : BaseEnemy
             currentTarget = _Player.transform.position - (_Player.transform.position - this.transform.position).normalized;
             currentTarget.y = this.transform.position.y;
         }
-        else
+        else if(!foundIdlepoint)
         {
-            RandomIdlePoint();
+            if (HasReachedPoint())
+            {
+                jumpToLeft = !jumpToLeft;
+            }
+            foundIdlepoint = true;
+            ChooseIdlePoint();
         }
     }
 
-    private void RandomIdlePoint()
+    private void ChooseIdlePoint()
     {
-        float x = Random.Range(jumpXIdleRange.x, jumpXIdleRange.y + 1);
-        //to do check that the x position isnt to close to the current position
-        float y = this.transform.position.y;
-        currentTarget = new Vector2(origin.x + x, y);
+        if (jumpToLeft) 
+        {
+            currentTarget = origin;
+            currentTarget.x -= pointLeft;
+        }
+        else 
+        {
+            currentTarget = origin;
+            currentTarget.x += pointRight;
+        }
     }
 
     private void InitJump() 
@@ -89,24 +106,32 @@ public class FlummiFluffEnemy : BaseEnemy
         {
             attacked = false;
         }
+        if (foundIdlepoint)
+        {
+            foundIdlepoint = false;
+        }
+
         Vector2 startPos = this.transform.position;
         Vector2 goalPos = currentTarget;
 
-        // Calculate distance and time
-        float distancX = goalPos.x - startPos.x;
-        float distancY = goalPos.y - startPos.y;
-        float distance = Vector2.Distance(startPos, goalPos);
-        if(distance <= MINJUMPDIST) 
+
+        float velocityX = goalPos.x - startPos.x;
+        if (Mathf.Abs(velocityX) > maxJumpDistance)
         {
+        
+            velocityX = maxJumpDistance * Mathf.Sign(velocityX);
+        }
+
+        if(Mathf.Abs(velocityX) < minJumpDistance) 
+        {
+            jumpToLeft = !jumpToLeft;
             return;
         }
-        float speed = jumpSpeed;
-        float timeOfFlight = distance / speed;
-        float gravity = Mathf.Abs(Physics2D.gravity.y);
-        float velocityY = (distancY + 0.5f * gravity * Mathf.Pow(timeOfFlight, 2)) / timeOfFlight;
-        float velocityX = distancX / timeOfFlight;
+        float velocityY = Mathf.Sqrt(jumpHeight * -Physics2D.gravity.y);
+
+
+
         float xScale = Mathf.Abs(animator.transform.localScale.x) * Mathf.Sign(-velocityX);
-        Debug.Log(xScale);
         animator.transform.localScale = new Vector3(xScale, animator.transform.localScale.y, animator.transform.localScale.z);
         Vector2 velocity = new Vector2(velocityX, velocityY);
         rigid.linearVelocity = velocity;  
@@ -123,10 +148,14 @@ public class FlummiFluffEnemy : BaseEnemy
     {
         bool onGround= false;
 
-        if(Physics2D.Raycast(transform.position,Vector2.down,1,groundLayer) != false) 
+        if(Physics2D.Raycast(transform.position,Vector2.down, GROUNDCHECK_LENGTH*transform.localScale.y, groundLayer) != false) 
         {
             onGround = true;
-            
+        }
+
+        else 
+        {
+            jumpTimer = Time.time + jumpCooldown;
         }
         return onGround;
     }
@@ -162,9 +191,20 @@ public class FlummiFluffEnemy : BaseEnemy
 
     private void OnDrawGizmos()
     {
+        if(origin == Vector2.zero) 
+        {
+            origin = transform.position;
+        }   
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(new Vector3(currentTarget.x,currentTarget.y,this.transform.position.z), POINTMERCYAREA/2);
-        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0,-1,1));
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(new Vector3(origin.x + pointRight,origin.y,this.transform.position.z), POINTMERCYAREA/2);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(new Vector3(origin.x - pointLeft, origin.y, this.transform.position.z), POINTMERCYAREA/2);
+
+        Gizmos.DrawLine(transform.position, transform.position + (new Vector3(0,-1,1)* GROUNDCHECK_LENGTH * transform.localScale.y));
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -174,6 +214,10 @@ public class FlummiFluffEnemy : BaseEnemy
             rigid.linearVelocity = Vector2.zero; // makes sure enemy dosent glide on the ground
         }
     }
+
+
+    
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision != null) 
