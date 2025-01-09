@@ -36,8 +36,14 @@ public class FlummiFluffEnemy : BaseEnemy
     public override void Start()
     {
         origin = transform.position;
-        aggroRange = GetComponentInChildren<IsPlayerInTrigger>();
-        rigid = GetComponent<Rigidbody2D>();
+        if(aggroRange == null)
+        { 
+            aggroRange = GetComponentInChildren<IsPlayerInTrigger>(); 
+        }
+        if(rigid == null)
+        { 
+            rigid = GetComponent<Rigidbody2D>();
+        }
         jumpTimer = 0;
     }
     public override void Move()
