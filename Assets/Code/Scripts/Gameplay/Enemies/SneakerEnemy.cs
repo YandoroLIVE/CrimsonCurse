@@ -34,7 +34,7 @@ public class SneakerEnemy : BaseEnemy
 
     public override void Move()
     {
-        if (attackRadius.GetPlayer() != null)
+        if (attackRadius.IsPlayerInBox())
         {
             if (_Player.rigidbody2D == null || _Player.transform == null || _Player.health == null)
             {
@@ -44,49 +44,42 @@ public class SneakerEnemy : BaseEnemy
                 _Player.health = collision.GetComponent<S_PlayerHealth>();
             }
 
-            if (attackRadius.IsPlayerInBox())
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1f, wallLayer);
+            if (hit.collider == null)
             {
-                //target Player
-                if (!IsBeingLookedAt())
-                {
-                    //Move closer   
-
-                    RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1f, wallLayer);
-                    if (hit.collider == null)
-                    {
-                        currentTargetPoint = _Player.transform.position;
-                        //if (HasReachedPoint()) { currentTargetPoint = this.transform.position; }
-
-                    }
-                    else
-                    {
-                        currentTargetPoint = originPoint;
-
-                    }
-
-                    direction = (currentTargetPoint - transform.position).normalized;
-                    transform.position += (Vector3)direction * speed * sneakSpeedFactor * Time.deltaTime;
-                }
-                else
-                {
-                    //Move Back
-                    currentTargetPoint = originPoint;
-                    direction = (currentTargetPoint - transform.position).normalized;
-                    transform.position += (Vector3)direction * speed * lookedAtSpeedFactor * Time.deltaTime;
-                }
+                currentTargetPoint = _Player.transform.position;
 
             }
+            else
+            {
+                currentTargetPoint = originPoint;
+
+            }
+            direction = (currentTargetPoint - transform.position).normalized;
+
+            if (!IsBeingLookedAt())
+            {
+                transform.position += ((Vector3)direction * speed * Time.deltaTime)* sneakSpeedFactor;
+            }
+
+            else
+            {
+
+                transform.position += ((Vector3)direction * speed  * Time.deltaTime) * lookedAtSpeedFactor;
+            }
+
         }
 
         //idle movement
-        if (idleTimer + wanderMaxTime < Time.time || HasReachedPoint())
+        else if (idleTimer + wanderMaxTime < Time.time || HasReachedPoint())
         {
             idleTimer = Time.time;
             currentTargetPoint = RandomTargetPoint();
 
         }
         direction = (currentTargetPoint - transform.position).normalized;
-        transform.position += (Vector3)direction * speed * lookedAtSpeedFactor * Time.deltaTime;
+        transform.position += (Vector3)direction * speed * Time.deltaTime;
         //Move to Point
 
 
