@@ -33,6 +33,7 @@ public class FlummiFluffEnemy : BaseEnemy
     public float damage = 2f;
     public Animator animator;
     [SerializeField] private EnemyPurify purifyHandler;
+    [SerializeField] private ParticleSystem jumpVFX;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private IsPlayerInTrigger aggroRange;
     (Transform transform, Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null, null);
@@ -149,6 +150,7 @@ public class FlummiFluffEnemy : BaseEnemy
         Debug.Log(Mathf.Pow(velocityY*(jumpTime/2) + -1/2* Physics2D.gravity.y*(jumpTime/2),2));
         rigid.linearVelocity = velocity;
         animator.SetTrigger("Jump");
+        jumpVFX.Play();
         isJumping = true;
         StartCoroutine(ActivateJumpEndAnimation());
         jumpTimer = Time.time + jumpCooldown;  
@@ -242,6 +244,10 @@ public class FlummiFluffEnemy : BaseEnemy
         if (collision != null) 
         {
             rigid.linearVelocity = Vector2.zero; // makes sure enemy dosent glide on the ground
+            if (jumpVFX != null) 
+            {
+                jumpVFX.Play();
+            }
         }
     }
 
