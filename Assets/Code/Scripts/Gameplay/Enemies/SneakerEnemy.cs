@@ -34,8 +34,14 @@ public class SneakerEnemy : BaseEnemy
     public void Awake()
     {
         originPoint = transform.position;
-        rigi = GetComponent<Rigidbody2D>();
-        attackRadius = GetComponentInChildren<IsPlayerInTrigger>();
+        if (rigi == null)
+        {
+            rigi = GetComponent<Rigidbody2D>();
+        }
+        if (attackRadius == null)
+        {
+            attackRadius = GetComponentInChildren<IsPlayerInTrigger>();
+        }
         currentTargetPoint = RandomTargetPoint();
         animator = GetComponent<Animator>();
     }
@@ -91,8 +97,8 @@ public class SneakerEnemy : BaseEnemy
     {
         yield return new WaitForSeconds(ATTACKANIMATION_HIT_OFFSET);
         if (distanceToPlayer <= hitRange)
-        { 
-            _Player.health.TakeDamage((int)damage); 
+        {
+            _Player.health.TakeDamage((int)damage);
         }
     }
 

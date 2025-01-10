@@ -7,6 +7,9 @@ public class FlummiFluffEnemy : BaseEnemy
     private const float JUMPANIMATIONEND_OFFSET = 0.1f;
     private const float GROUNDCHECK_LENGTH = 1.25f;
     private const float JUMP_DISTANCE_OFFSET_TO_PLAYER = 5f;
+    private const float JUMP_TO_PLAYER_OFFSET = 0.75f;
+    private const float ATTACKANIMATION_HIT_OFFSET = 0.5f;
+
     private Vector2 origin;
     private bool foundIdlepoint = false;
     private Vector2 currentTarget = Vector2.zero;
@@ -24,21 +27,41 @@ public class FlummiFluffEnemy : BaseEnemy
     public float contactDamageRange = 1f;
     public float contactCooldown = 0.25f;
     private float contactTimer = 0f;
+    private bool isJumping = true;
+    public bool isInCave = true;
 
+    private float distance = float.MaxValue;
     public float attackRange = 2f;
     public float attackCooldown = 5f;
     public float damage = 2f;
     public Animator animator;
     [SerializeField] private EnemyPurify purifyHandler;
+    private ParticleSystem jumpVFX;
+    [SerializeField] private ParticleSystem caveJumpVFX;
+    [SerializeField] private ParticleSystem forrestJumpVFX;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private IsPlayerInTrigger aggroRange;
     (Transform transform, Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null, null);
     public override void Start()
     {
         origin = transform.position;
-        aggroRange = GetComponentInChildren<IsPlayerInTrigger>();
-        rigid = GetComponent<Rigidbody2D>();
+        if(aggroRange == null)
+        { 
+            aggroRange = GetComponentInChildren<IsPlayerInTrigger>(); 
+        }
+        if(rigid == null)
+        { 
+            rigid = GetComponent<Rigidbody2D>();
+        }
         jumpTimer = 0;
+        if (isInCave) 
+        {
+            jumpVFX = caveJumpVFX;
+        }
+        else 
+        {
+            jumpVFX = forrestJumpVFX;
+        }
     }
     public override void Move()
     {
@@ -75,7 +98,8 @@ public class FlummiFluffEnemy : BaseEnemy
         else if (aggro)
         {
             //Set player as target
-            currentTarget = _Player.transform.position - (_Player.transform.position - this.transform.position).normalized;
+            
+            currentTarget = _Player.transform.position - (_Player.transform.position - this.transform.position).normalized*(attackRange- JUMP_TO_PLAYER_OFFSET);
             currentTarget.y = this.transform.position.y;
         }
         else if(!foundIdlepoint)
@@ -89,6 +113,7 @@ public class FlummiFluffEnemy : BaseEnemy
     {
         yield return new WaitForSeconds(jumpTime- JUMPANIMATIONEND_OFFSET);
         animator.SetTrigger("EndJump");
+        isJumping = false;
     }
 
     private void ChooseIdlePoint()
@@ -113,6 +138,10 @@ public class FlummiFluffEnemy : BaseEnemy
         {
             attacked = false;
         }
+        else if (distance < attackRange)
+        {
+            return; //is close enough to player dosent need to move
+        }
         if (foundIdlepoint)
         {
             foundIdlepoint = false;
@@ -134,6 +163,8 @@ public class FlummiFluffEnemy : BaseEnemy
         Debug.Log(Mathf.Pow(velocityY*(jumpTime/2) + -1/2* Physics2D.gravity.y*(jumpTime/2),2));
         rigid.linearVelocity = velocity;
         animator.SetTrigger("Jump");
+        jumpVFX.Play();
+        isJumping = true;
         StartCoroutine(ActivateJumpEndAnimation());
         jumpTimer = Time.time + jumpCooldown;  
 
@@ -165,16 +196,27 @@ public class FlummiFluffEnemy : BaseEnemy
         purifyHandler.SetStunned(this);
     }
 
+
+    IEnumerator Hit()
+    {
+        yield return new WaitForSeconds(ATTACKANIMATION_HIT_OFFSET);
+        if (distance <= attackRange)
+        {
+            _Player.health.TakeDamage((int)damage);
+        }
+    }
+
     public override void Attack()
     {
         if(_Player.transform != null)
         {
-            float distance = Vector2.Distance(this.transform.position, _Player.transform.position);
+            distance = Vector2.Distance(this.transform.position, _Player.transform.position);
             if (distance <= attackRange && Time.time >= attackTimer) 
             {
                 attackTimer = Time.time+ attackCooldown;
-                _Player.health.TakeDamage((int)damage);
-                attacked = true;
+                StartCoroutine(Hit());
+                animator.SetTrigger("Attack");
+                
             }
             if (distance <= contactDamageRange && _Player.health != null && Time.time >= contactTimer && !IsStunned())
             {
@@ -182,6 +224,15 @@ public class FlummiFluffEnemy : BaseEnemy
                 _Player.health.TakeDamage((int)contactDamage);
             }
 
+        }
+    }
+    public override void Hurt(float damage)
+    {
+        base.Hurt(damage);
+        attacked = true;
+        if (!isJumping)
+        {
+            animator.SetTrigger("Hurt");
         }
     }
 
@@ -216,6 +267,10 @@ public class FlummiFluffEnemy : BaseEnemy
         if (collision != null) 
         {
             rigid.linearVelocity = Vector2.zero; // makes sure enemy dosent glide on the ground
+            if (jumpVFX != null) 
+            {
+                jumpVFX.Play();
+            }
         }
     }
 

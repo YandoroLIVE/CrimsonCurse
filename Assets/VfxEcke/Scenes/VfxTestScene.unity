@@ -276,6 +276,10 @@ PrefabInstance:
       propertyPath: projectilePrefab
       value: 
       objectReference: {fileID: 4142049674696562425, guid: 165ada3e65f39e447ac4dbb297a1bcbc, type: 3}
+    - target: {fileID: 1902946799816293166, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: invincibilityTime
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3038803841253255279, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_Name
       value: Player Controller
@@ -2033,7 +2037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5598026272250848285, guid: e254a88c179500b48a8c527f0644e3e9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5904139406809880176, guid: e254a88c179500b48a8c527f0644e3e9, type: 3}
       propertyPath: speed
@@ -2041,7 +2045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5904139406809880176, guid: e254a88c179500b48a8c527f0644e3e9, type: 3}
       propertyPath: lookedAtSpeedFactor
-      value: 0.1
+      value: -0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2086,7 +2090,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3927492006396174049, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5131885664879863443, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: m_LocalPosition.x
