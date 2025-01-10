@@ -26,7 +26,7 @@ public class SneakerEnemy : BaseEnemy
     private float idleTimer;
     private bool canAttack = true;
     Rigidbody2D rigi;
-    (Transform transform, Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null, null);
+    (Transform transform, S_PlayerHealth health) _Player = (null, null);
     private Animator animator;
     Vector3 currentTargetPoint = Vector3.zero;
     Vector2 direction = Vector2.zero;
@@ -48,20 +48,18 @@ public class SneakerEnemy : BaseEnemy
         animator = GetComponent<Animator>();
     }
 
+    public override void Start()
+    {
+        base.Start();
+        Heal();
+        _Player.health = S_PlayerHealth.GetInstance();
+        _Player.transform = _Player.health.transform;
+    }
+
     public override void Move()
     {
         if (attackRadius.IsPlayerInBox())
         {
-            if (_Player.rigidbody2D == null || _Player.transform == null || _Player.health == null)
-            {
-                GameObject collision = attackRadius.GetPlayer().gameObject;
-                _Player.rigidbody2D = collision.GetComponent<Rigidbody2D>();
-                _Player.transform = collision.transform;
-                _Player.health = collision.GetComponent<S_PlayerHealth>();
-            }
-
-
-
             currentTargetPoint = _Player.transform.position;
             direction = (currentTargetPoint - transform.position).normalized;
             if (distanceToPlayer <= hitRange && (IsBeingLookedAt() && !returnIfBeingLookedAtWhileAttacked))

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class S_PlayerHealth : MonoBehaviour
 {
+    private static S_PlayerHealth _instance;
     const float HIT_BLINK_DURATION = 0.1f;
     const int FIRST_LEVEL_BUILD_INDEX = 1;
     public int maxHealth = 100;
@@ -17,9 +18,21 @@ public class S_PlayerHealth : MonoBehaviour
     [SerializeField] SpriteRenderer _Sprite;
 
 
+    public static S_PlayerHealth GetInstance() 
+    {
+        return _instance;
+    }
+
+    private void Awake()
+    {
+
+        _instance = this;
+    }
+
     void Start()
     {
 
+        _instance = this;
         if (_CurrentHealth <= 0)
         {
             _CurrentHealth = maxHealth;

@@ -41,9 +41,10 @@ public class FlummiFluffEnemy : BaseEnemy
     [SerializeField] private ParticleSystem forrestJumpVFX;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private IsPlayerInTrigger aggroRange;
-    (Transform transform, Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null, null);
+    (Transform transform, S_PlayerHealth health) _Player = (null, null);
     public override void Start()
     {
+        Heal();
         origin = transform.position;
         if(aggroRange == null)
         { 
@@ -62,6 +63,8 @@ public class FlummiFluffEnemy : BaseEnemy
         {
             jumpVFX = forrestJumpVFX;
         }
+        _Player.health = S_PlayerHealth.GetInstance();
+        _Player.transform = _Player.health.transform;
     }
     public override void Move()
     {
@@ -78,14 +81,6 @@ public class FlummiFluffEnemy : BaseEnemy
          
         if (aggroRange.GetPlayer() != null)
         {
-            //get player component the first time that the player enters the aggro range
-            if (_Player.rigidbody2D == null || _Player.transform == null || _Player.health == null)
-            {
-                GameObject collision = aggroRange.GetPlayer().gameObject;
-                _Player.rigidbody2D = collision.GetComponent<Rigidbody2D>();
-                _Player.transform = collision.transform;
-                _Player.health = collision.GetComponent<S_PlayerHealth>();
-            }
             aggro = aggroRange.IsPlayerInBox();
         }
         if (attacked)
