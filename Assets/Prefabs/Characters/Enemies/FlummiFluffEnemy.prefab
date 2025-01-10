@@ -473,7 +473,7 @@ Transform:
   m_GameObject: {fileID: 3660570968142543788}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.09, y: 0.43, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.72, y: 0.72, z: 0.72}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -666,17 +666,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 200
   currentHealth: 200
-  animator: {fileID: 5146345799764889243}
+  pointLeft: 0
+  pointRight: 0
   jumpCooldown: 5
-  jumpSpeed: 3
+  jumpTime: 2
+  contactDamage: 1
+  contactDamageRange: 1
+  contactCooldown: 0.25
   attackRange: 2
   attackCooldown: 5
   damage: 2
+  animator: {fileID: 5146345799764889243}
   purifyHandler: {fileID: 1379783707271185127}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  jumpXIdleRange: {x: -5, y: 5}
   aggroRange: {fileID: 6497421186289050082}
 --- !u!50 &1975960231427871758
 Rigidbody2D:
@@ -739,7 +743,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.11027622}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.28866667}
@@ -749,7 +753,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1.2021141}
+  m_Size: {x: 3, y: 2}
   m_EdgeRadius: 0
 --- !u!1001 &550153209314141219
 PrefabInstance:

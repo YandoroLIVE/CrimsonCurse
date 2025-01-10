@@ -261,32 +261,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -3089645825415717033, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
-      propertyPath: attackRange
-      value: 3
+      propertyPath: attackCooldown
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -3089645825415717033, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
-      propertyPath: attackHeight
-      value: 2
+    - target: {fileID: 901974382164256339, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: firePoint.x
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2843345012753654412, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.00000023841858
+    - target: {fileID: 901974382164256339, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: projectileSpeed
+      value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 2843345012753654412, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.00000023841858
-      objectReference: {fileID: 0}
+    - target: {fileID: 901974382164256339, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 4142049674696562425, guid: 165ada3e65f39e447ac4dbb297a1bcbc, type: 3}
     - target: {fileID: 3038803841253255279, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_Name
       value: Player Controller
       objectReference: {fileID: 0}
-    - target: {fileID: 3409804111135636520, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
-      propertyPath: pickedUpDash
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4770194614540401366, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.67
+      value: -6.78
       objectReference: {fileID: 0}
     - target: {fileID: 4770194614540401366, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.y
@@ -324,7 +320,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8559068819731633990, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3388146263823813143, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -848,11 +849,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b10f5d16ae823444dae00b9e8c54530d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AttackVFX: {fileID: 1415504803}
-  _BounceDirection: {x: 1, y: 0}
-  _PushStrength: 500000
-  _PushDelay: 0.125
-  animationCooldown: 0.25
 --- !u!61 &1214783744
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1028,12 +1024,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8e5705bb5498f4ba6a9f119005acb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  maxHealth: 5
-  currentHealth: 5
-  damageToPlayer: 0
-  detectionRadius: 0
-  attackRadius: 0
 --- !u!1 &1305270547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,11 +1513,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d022443d319fcf4e9a59591c0f8184b, type: 3}
---- !u!198 &1415504803 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 29767485586119350, guid: 8d022443d319fcf4e9a59591c0f8184b, type: 3}
-  m_PrefabInstance: {fileID: 1415504802}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1415504804 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2927145296840803101, guid: 8d022443d319fcf4e9a59591c0f8184b, type: 3}
@@ -2004,11 +1989,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4899292572576396060, guid: e254a88c179500b48a8c527f0644e3e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.33
+      value: 10.5
       objectReference: {fileID: 0}
     - target: {fileID: 4899292572576396060, guid: e254a88c179500b48a8c527f0644e3e9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.6
+      value: 3.75
       objectReference: {fileID: 0}
     - target: {fileID: 4899292572576396060, guid: e254a88c179500b48a8c527f0644e3e9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2048,7 +2033,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5598026272250848285, guid: e254a88c179500b48a8c527f0644e3e9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5904139406809880176, guid: e254a88c179500b48a8c527f0644e3e9, type: 3}
+      propertyPath: speed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5904139406809880176, guid: e254a88c179500b48a8c527f0644e3e9, type: 3}
+      propertyPath: lookedAtSpeedFactor
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2064,8 +2057,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 237071251888398344, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
+      propertyPath: jumpTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237071251888398344, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
+      propertyPath: jumpSpeed
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 237071251888398344, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
+      propertyPath: pointLeft
+      value: 3.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 237071251888398344, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
+      propertyPath: pointRight
+      value: 3.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 237071251888398344, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: jumpCooldown
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237071251888398344, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
+      propertyPath: contactDamage
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3927492006396174049, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: m_Name
@@ -2081,7 +2094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5131885664879863443, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.54
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5131885664879863443, guid: b6657df4ac0f00a46afe0ba5deb66944, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2131,6 +2144,10 @@ PrefabInstance:
     - target: {fileID: 2114744990052451304, guid: e0243169252c9e2468bd99e1b9b420ce, type: 3}
       propertyPath: m_Name
       value: PusherProjectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 2114744990052451304, guid: e0243169252c9e2468bd99e1b9b420ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7278920227781391011, guid: e0243169252c9e2468bd99e1b9b420ce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2310,6 +2327,10 @@ PrefabInstance:
     - target: {fileID: 3392373576721457143, guid: 7e5884516b0af8b4e9767af75471cece, type: 3}
       propertyPath: m_Name
       value: Pusher
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392373576721457143, guid: 7e5884516b0af8b4e9767af75471cece, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8439540601216127841, guid: 7e5884516b0af8b4e9767af75471cece, type: 3}
       propertyPath: m_LocalPosition.x
