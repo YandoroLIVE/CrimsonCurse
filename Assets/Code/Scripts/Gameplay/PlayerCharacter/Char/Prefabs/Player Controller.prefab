@@ -737,7 +737,7 @@ MonoBehaviour:
   dashSpeed: 25
   dashDuration: 1.25
   dashCooldown: 1
-  pickedUpDash: 1
+  pickedUpDash: 0
   hasWallJump: 0
   wallLayer:
     serializedVersion: 2
@@ -773,6 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  invincibilityTime: 0.1
   currentHealth: 50
   HitColor: {r: 1, g: 0.6273585, b: 0.6273585, a: 1}
   _Sprite: {fileID: 7350503545055187747}
@@ -790,14 +791,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 100
   attackRange: 1.5
-  attackHeight: 1.5
   attackCooldown: 0.5
   attackMinCooldownBeforeComboAttack: 0.1
   attackComboTime: 0.25
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  attackDamage: {fileID: 9020373020287212625}
+  attackVFX: {fileID: 9020373020287212625}
 --- !u!114 &901974382164256339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -810,8 +810,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a710b5866df99f042962775396c910b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1908827898544655525, guid: 165ada3e65f39e447ac4dbb297a1bcbc, type: 3}
-  firePoint: {x: 0, y: 0, z: 0}
+  projectilePrefab: {fileID: 4142049674696562425, guid: 165ada3e65f39e447ac4dbb297a1bcbc, type: 3}
+  firePoint: {x: 1, y: 0, z: 0}
   projectileSpeed: 4
   projectileLifeTime: 10
   damage: 100
@@ -1862,15 +1862,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.942787
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.9427865
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.9427865
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1911,6 +1911,10 @@ PrefabInstance:
     - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4220308301161472815, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: scalingMode
