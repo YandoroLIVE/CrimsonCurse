@@ -26,6 +26,7 @@ public class FlummiFluffEnemy : BaseEnemy
     public float contactCooldown = 0.25f;
     private float contactTimer = 0f;
     private bool isJumping = true;
+    public bool isInCave = true;
 
     private float distance = float.MaxValue;
     public float attackRange = 2f;
@@ -33,7 +34,9 @@ public class FlummiFluffEnemy : BaseEnemy
     public float damage = 2f;
     public Animator animator;
     [SerializeField] private EnemyPurify purifyHandler;
-    [SerializeField] private ParticleSystem jumpVFX;
+    private ParticleSystem jumpVFX;
+    [SerializeField] private ParticleSystem caveJumpVFX;
+    [SerializeField] private ParticleSystem forrestJumpVFX;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private IsPlayerInTrigger aggroRange;
     (Transform transform, Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null, null);
@@ -49,6 +52,14 @@ public class FlummiFluffEnemy : BaseEnemy
             rigid = GetComponent<Rigidbody2D>();
         }
         jumpTimer = 0;
+        if (isInCave) 
+        {
+            jumpVFX = caveJumpVFX;
+        }
+        else 
+        {
+            jumpVFX = forrestJumpVFX;
+        }
     }
     public override void Move()
     {
