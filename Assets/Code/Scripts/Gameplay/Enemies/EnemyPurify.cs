@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnemyPurify : MonoBehaviour
 {
+    public static KeyCode purifyKeyboardInput = KeyCode.Q;
+    public static KeyCode purifyControllerInput = KeyCode.Joystick1Button4;
     private BaseEnemy _targetEnemy;
     [SerializeField] ParticleSystem _purifyVFX;
     [SerializeField] ParticleSystem _stunnedVFX;
@@ -25,7 +27,7 @@ public class EnemyPurify : MonoBehaviour
             UnStun();
         }
 
-        else if (canInteract && Input.GetKey(KeyCode.Q) && !purified) 
+        else if (canInteract && Input.GetKey(purifyKeyboardInput) && Input.GetKey(purifyControllerInput) && !purified) 
         {
             purified = true;
             Purify();

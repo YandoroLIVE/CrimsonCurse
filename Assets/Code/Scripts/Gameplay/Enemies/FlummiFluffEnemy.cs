@@ -173,13 +173,18 @@ public class FlummiFluffEnemy : BaseEnemy
     private bool IsGrounded() 
     {
         bool onGround= false;
-
-        if(Physics2D.Raycast(transform.position,Vector2.down, GROUNDCHECK_LENGTH*transform.localScale.y, groundLayer) != false) 
+        RaycastHit2D[] rays = Physics2D.RaycastAll(transform.position, Vector2.down, GROUNDCHECK_LENGTH * transform.localScale.y, groundLayer);
+        foreach(RaycastHit2D ray in rays) 
         {
-            onGround = true;
+            if (ray != false && !ray.collider.isTrigger)
+            {
+                onGround = true;
+                break;
+            }
         }
+       
 
-        else 
+        if (!onGround) 
         {
             jumpTimer = Time.time + jumpCooldown;
         }

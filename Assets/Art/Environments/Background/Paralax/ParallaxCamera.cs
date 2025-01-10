@@ -35,6 +35,9 @@ public class ParallaxCamera : MonoBehaviour
             oldPosition.y = transform.position.y;
 
         }
-        onCameraTranslate(delta);
+        if(onCameraTranslate != null)
+        {
+            onCameraTranslate(delta);
+        }
     }
 }

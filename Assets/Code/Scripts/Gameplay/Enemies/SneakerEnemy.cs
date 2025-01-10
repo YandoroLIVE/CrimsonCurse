@@ -1,5 +1,6 @@
 
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SneakerEnemy : BaseEnemy
@@ -16,6 +17,7 @@ public class SneakerEnemy : BaseEnemy
     [SerializeField] private bool returnIfBeingLookedAtWhileAttacked;
     [SerializeField] private int wanderRange;
     [SerializeField] private float attackCooldown;
+    [SerializeField] private float lookReactionDelayTime = 0.5f;
     private float attackTimer;
     [SerializeField] private float wanderMaxTime;
     [SerializeField] private float speed;
@@ -25,6 +27,8 @@ public class SneakerEnemy : BaseEnemy
     IsPlayerInTrigger attackRadius;
     private float idleTimer;
     private bool canAttack = true;
+    private bool lookedAt = false;
+    private bool reactingToLook = false;
     Rigidbody2D rigi;
     (Transform transform, S_PlayerHealth health) _Player = (null, null);
     private Animator animator;
@@ -58,18 +62,19 @@ public class SneakerEnemy : BaseEnemy
 
     public override void Move()
     {
+        IsBeingLookedAt();
         if (attackRadius.IsPlayerInBox())
         {
             currentTargetPoint = _Player.transform.position;
             direction = (currentTargetPoint - transform.position).normalized;
-            if (distanceToPlayer <= hitRange && (IsBeingLookedAt() && !returnIfBeingLookedAtWhileAttacked))
+            if (distanceToPlayer <= hitRange && (lookedAt && !returnIfBeingLookedAtWhileAttacked))
             {
                 canAttack = true;
                 return; // is close enought to attack no need to get Closer
             }
             LookAtDirection();
 
-            if (!IsBeingLookedAt())
+            if (!lookedAt)
             {
                 transform.position += ((Vector3)direction * speed * Time.deltaTime) * sneakSpeedFactor;
                 canAttack = true;
@@ -189,7 +194,27 @@ public class SneakerEnemy : BaseEnemy
     private bool IsBeingLookedAt()
     {
         float offset = this.transform.position.x - _Player.transform.position.x;
-        return Mathf.Sign(offset) == Mathf.Sign(_Player.transform.localScale.x);
+        bool look = Mathf.Sign(offset) == Mathf.Sign(_Player.transform.localScale.x);
+        if (look && !lookedAt && !reactingToLook)
+        {
+            StartCoroutine(DelayedLookedAt());
+        }
+
+        else if (!look && lookedAt) 
+        {
+            lookedAt = false;
+        }
+
+        Debug.Log(lookedAt + " | " + look);
+        return look;
+    }
+
+    IEnumerator DelayedLookedAt() 
+    {
+        reactingToLook = true;
+        yield return new WaitForSeconds(lookReactionDelayTime);
+        lookedAt = true;
+        reactingToLook = false;
     }
 
     private bool HasReachedPoint()
