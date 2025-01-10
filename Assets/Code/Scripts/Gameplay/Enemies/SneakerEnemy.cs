@@ -13,6 +13,7 @@ public class SneakerEnemy : BaseEnemy
     [SerializeField] private float contactCooldown = 0.25f;
     private float contactTimer = 0;
     [SerializeField] private float damage;
+    [SerializeField] private bool returnIfBeingLookedAtWhileAttacked;
     [SerializeField] private int wanderRange;
     [SerializeField] private float attackCooldown;
     private float attackTimer;
@@ -23,6 +24,7 @@ public class SneakerEnemy : BaseEnemy
     [SerializeField] private LayerMask wallLayer;
     IsPlayerInTrigger attackRadius;
     private float idleTimer;
+    private bool canAttack = true;
     Rigidbody2D rigi;
     (Transform transform, Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null, null);
     private Animator animator;
@@ -62,18 +64,30 @@ public class SneakerEnemy : BaseEnemy
 
             currentTargetPoint = _Player.transform.position;
             direction = (currentTargetPoint - transform.position).normalized;
-            if (distanceToPlayer <= hitRange)
+            if (distanceToPlayer <= hitRange && (IsBeingLookedAt() && !returnIfBeingLookedAtWhileAttacked))
             {
+                canAttack = true;
                 return; // is close enought to attack no need to get Closer
             }
+            LookAtDirection();
 
             if (!IsBeingLookedAt())
             {
                 transform.position += ((Vector3)direction * speed * Time.deltaTime) * sneakSpeedFactor;
+                canAttack = true;
             }
 
             else
             {
+                canAttack = false;
+                currentTargetPoint = originPoint;
+                direction = (currentTargetPoint - transform.position).normalized;
+                LookAtDirection();
+                if (HasReachedPoint())
+                {
+                    LookAtPlayer();
+                    return;
+                }
                 transform.position += ((Vector3)direction * speed * Time.deltaTime) * lookedAtSpeedFactor;
             }
 
@@ -86,16 +100,38 @@ public class SneakerEnemy : BaseEnemy
             currentTargetPoint = RandomTargetPoint();
 
         }
-        direction = (currentTargetPoint - transform.position).normalized;
-        transform.position += (Vector3)direction * speed * Time.deltaTime;
+        else
+        {
+            direction = (currentTargetPoint - transform.position).normalized;
+            transform.position += (Vector3)direction * speed * Time.deltaTime;
+            LookAtDirection();
+        }
+
         //Move to Point
 
 
     }
 
+    private void LookAtDirection()
+    {
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * Mathf.Sign(-direction.x);
+        transform.localScale = scale;
+    }
+
+    private void LookAtPlayer()
+    {
+        Vector3 scale;
+        float xScale = _Player.transform.position.x - this.transform.position.x;
+        scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * Mathf.Sign(-xScale);
+        transform.localScale = scale;
+    }
+
     IEnumerator Hit()
     {
         yield return new WaitForSeconds(ATTACKANIMATION_HIT_OFFSET);
+        LookAtPlayer();
         if (distanceToPlayer <= hitRange)
         {
             _Player.health.TakeDamage((int)damage);
@@ -104,13 +140,13 @@ public class SneakerEnemy : BaseEnemy
 
     public override void Attack()
     {
-        if (distanceToPlayer <= hitRange && attackTimer >= attackCooldown)
+        if (distanceToPlayer <= hitRange && attackTimer >= attackCooldown && canAttack)
         {
             //attack
             StartCoroutine(Hit());
             animator.SetTrigger("Attack");
             attackTimer = 0;
-
+            LookAtPlayer();
         }
         if (distanceToPlayer <= contactRange && Time.deltaTime >= contactTimer)
         {
