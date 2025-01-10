@@ -7,7 +7,9 @@ public class FlummiFluffEnemy : BaseEnemy
     private const float JUMPANIMATIONEND_OFFSET = 0.1f;
     private const float GROUNDCHECK_LENGTH = 1.25f;
     private const float JUMP_DISTANCE_OFFSET_TO_PLAYER = 5f;
-    private const float JUMP_TO_PLAYER_OFFSET = 0.5f;
+    private const float JUMP_TO_PLAYER_OFFSET = 0.75f;
+    private const float ATTACKANIMATION_HIT_OFFSET = 0.5f;
+
     private Vector2 origin;
     private bool foundIdlepoint = false;
     private Vector2 currentTarget = Vector2.zero;
@@ -194,6 +196,16 @@ public class FlummiFluffEnemy : BaseEnemy
         purifyHandler.SetStunned(this);
     }
 
+
+    IEnumerator Hit()
+    {
+        yield return new WaitForSeconds(ATTACKANIMATION_HIT_OFFSET);
+        if (distance <= attackRange)
+        {
+            _Player.health.TakeDamage((int)damage);
+        }
+    }
+
     public override void Attack()
     {
         if(_Player.transform != null)
@@ -202,7 +214,7 @@ public class FlummiFluffEnemy : BaseEnemy
             if (distance <= attackRange && Time.time >= attackTimer) 
             {
                 attackTimer = Time.time+ attackCooldown;
-                _Player.health.TakeDamage((int)damage);
+                StartCoroutine(Hit());
                 animator.SetTrigger("Attack");
                 
             }
