@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class S_PlayerAttack : MonoBehaviour
 {
+    private const float VFX_SCALE = 1.75f;
     public int damage = 25;
     public float attackRange = 1.5f;
-    public float attackHeight = 1.5f;
     public float attackCooldown = 0.5f;
     public float attackMinCooldownBeforeComboAttack = 0.1f;
     public float attackComboTime = 0.25f;
     private float attackComboTimer = 0;
     public LayerMask enemyLayer;
-    public ParticleSystem attackDamage;
+    public ParticleSystem attackVFX;
     private float attackTimer = 0;
     private Collider2D[] enemiesInRange;
     private bool comboActive = false;
+    private Vector2 attackPos = Vector2.zero;
     private void Start()
     {
         attackTimer = attackCooldown;
@@ -33,7 +34,7 @@ public class S_PlayerAttack : MonoBehaviour
         {
             if (attackTimer >= attackCooldown)
             {
-                attackDamage.transform.localScale = Vector3.one* attackHeight;
+                attackVFX.transform.localScale = Vector3.one* attackRange * VFX_SCALE;
                 comboActive = true;
                 attackComboTimer = 0;
                 attackTimer = 0;
@@ -41,30 +42,30 @@ public class S_PlayerAttack : MonoBehaviour
             }
             else if (attackTimer <= attackComboTime+ attackMinCooldownBeforeComboAttack && attackTimer >= attackMinCooldownBeforeComboAttack && comboActive)
             {
-                Vector3 secondComboScale = Vector3.one*1* attackHeight;
+                Vector3 secondComboScale = Vector3.one* VFX_SCALE * attackRange;
                 secondComboScale.y = secondComboScale.y * -1;
-                attackDamage.transform.localScale = secondComboScale;
+                attackVFX.transform.localScale = secondComboScale;
                 Attack();
                 attackComboTimer = 0;
                 comboActive = false;
-                Debug.Log("Did combo attack");
             }
         }
     }
 
     private void CheckForEnemiesInRange()
     {
-        Vector2 pos = transform.position;
-        pos.x = pos.x + (attackRange / 2 * transform.localScale.x);
-        enemiesInRange = Physics2D.OverlapBoxAll(pos, new Vector2(attackRange, attackHeight), 0, enemyLayer);
+        attackPos = transform.position;
+        attackPos.x = attackPos.x + (attackRange / 2 * transform.localScale.x)* VFX_SCALE;
+        attackVFX.transform.position = attackPos;
+        enemiesInRange = Physics2D.OverlapCircleAll(attackPos, attackRange, enemyLayer);
     }
 
 
     // Angriffs-Methode
     void Attack()
     {
-        attackDamage.Play();
         CheckForEnemiesInRange();
+        attackVFX.Play();
         foreach (var enemyCollider in enemiesInRange)
         {
             IHurtable enemy = enemyCollider.GetComponent<IHurtable>();
@@ -78,9 +79,7 @@ public class S_PlayerAttack : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Vector2 pos = transform.position;
-        pos.x = pos.x + (attackRange / 2 * transform.localScale.x);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(pos, new Vector2(attackRange, attackHeight));
+        Gizmos.DrawWireSphere(attackPos, attackRange);
     }
 }
