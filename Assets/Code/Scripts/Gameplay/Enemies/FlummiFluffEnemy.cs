@@ -30,6 +30,7 @@ public class FlummiFluffEnemy : BaseEnemy
     private bool isJumping = true;
     public bool isInCave = true;
 
+    
     private float distance = float.MaxValue;
     public float attackRange = 2f;
     public float attackCooldown = 5f;
@@ -110,6 +111,11 @@ public class FlummiFluffEnemy : BaseEnemy
         animator.SetTrigger("EndJump");
         isJumping = false;
     }
+    IEnumerator ActivateJumpMidAnimation() 
+    {
+        yield return new WaitForSeconds(jumpTime/2);
+        animator.SetTrigger("MidJump");
+    }
 
     private void ChooseIdlePoint()
     {
@@ -160,6 +166,7 @@ public class FlummiFluffEnemy : BaseEnemy
         animator.SetTrigger("Jump");
         jumpVFX.Play();
         isJumping = true;
+        StartCoroutine(ActivateJumpMidAnimation());
         StartCoroutine(ActivateJumpEndAnimation());
         jumpTimer = Time.time + jumpCooldown;  
 

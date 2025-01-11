@@ -27,7 +27,7 @@ public class EnemyPurify : MonoBehaviour
             UnStun();
         }
 
-        else if (canInteract && Input.GetKey(purifyKeyboardInput) && Input.GetKey(purifyControllerInput) && !purified) 
+        else if (canInteract && Input.GetKey(purifyKeyboardInput) || Input.GetKey(purifyControllerInput) && !purified) 
         {
             purified = true;
             Purify();
