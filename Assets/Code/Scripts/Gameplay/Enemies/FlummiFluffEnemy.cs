@@ -30,6 +30,7 @@ public class FlummiFluffEnemy : BaseEnemy
     private bool isJumping = true;
     public bool isInCave = true;
 
+    
     private float distance = float.MaxValue;
     public float attackRange = 2f;
     public float attackCooldown = 5f;
@@ -41,9 +42,10 @@ public class FlummiFluffEnemy : BaseEnemy
     [SerializeField] private ParticleSystem forrestJumpVFX;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private IsPlayerInTrigger aggroRange;
-    (Transform transform, Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null, null);
+    (Transform transform, S_PlayerHealth health) _Player = (null, null);
     public override void Start()
     {
+        Heal();
         origin = transform.position;
         if(aggroRange == null)
         { 
@@ -62,6 +64,8 @@ public class FlummiFluffEnemy : BaseEnemy
         {
             jumpVFX = forrestJumpVFX;
         }
+        _Player.health = S_PlayerHealth.GetInstance();
+        _Player.transform = _Player.health.transform;
     }
     public override void Move()
     {
@@ -78,14 +82,6 @@ public class FlummiFluffEnemy : BaseEnemy
          
         if (aggroRange.GetPlayer() != null)
         {
-            //get player component the first time that the player enters the aggro range
-            if (_Player.rigidbody2D == null || _Player.transform == null || _Player.health == null)
-            {
-                GameObject collision = aggroRange.GetPlayer().gameObject;
-                _Player.rigidbody2D = collision.GetComponent<Rigidbody2D>();
-                _Player.transform = collision.transform;
-                _Player.health = collision.GetComponent<S_PlayerHealth>();
-            }
             aggro = aggroRange.IsPlayerInBox();
         }
         if (attacked)
@@ -114,6 +110,11 @@ public class FlummiFluffEnemy : BaseEnemy
         yield return new WaitForSeconds(jumpTime- JUMPANIMATIONEND_OFFSET);
         animator.SetTrigger("EndJump");
         isJumping = false;
+    }
+    IEnumerator ActivateJumpMidAnimation() 
+    {
+        yield return new WaitForSeconds(jumpTime/2);
+        animator.SetTrigger("MidJump");
     }
 
     private void ChooseIdlePoint()
@@ -165,6 +166,7 @@ public class FlummiFluffEnemy : BaseEnemy
         animator.SetTrigger("Jump");
         jumpVFX.Play();
         isJumping = true;
+        StartCoroutine(ActivateJumpMidAnimation());
         StartCoroutine(ActivateJumpEndAnimation());
         jumpTimer = Time.time + jumpCooldown;  
 
@@ -178,13 +180,18 @@ public class FlummiFluffEnemy : BaseEnemy
     private bool IsGrounded() 
     {
         bool onGround= false;
-
-        if(Physics2D.Raycast(transform.position,Vector2.down, GROUNDCHECK_LENGTH*transform.localScale.y, groundLayer) != false) 
+        RaycastHit2D[] rays = Physics2D.RaycastAll(transform.position, Vector2.down, GROUNDCHECK_LENGTH * transform.localScale.y, groundLayer);
+        foreach(RaycastHit2D ray in rays) 
         {
-            onGround = true;
+            if (ray != false && !ray.collider.isTrigger)
+            {
+                onGround = true;
+                break;
+            }
         }
+       
 
-        else 
+        if (!onGround) 
         {
             jumpTimer = Time.time + jumpCooldown;
         }

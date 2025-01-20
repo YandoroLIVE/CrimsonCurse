@@ -35,7 +35,7 @@ public class ParallaxBackground : MonoBehaviour
         }
     }
 
-    void Move(float delta)
+    void Move(Vector2 delta)
     {
         foreach (ParallaxLayer layer in parallaxLayers)
         {
