@@ -19,7 +19,10 @@ public class WingAttack : MonoBehaviour
     private bool attacking;
     private float attackTimer;
     
-
+    public void SetPlayer((Rigidbody2D, S_PlayerHealth) player) 
+    {
+        _Player = player;
+    }
     private void Push(Rigidbody2D target)
     {
         //target.linearDamping = 0;

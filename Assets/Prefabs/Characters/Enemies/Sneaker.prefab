@@ -396,7 +396,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.54, y: 0.54, z: 0.54}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2260408983846052623}
@@ -476,14 +476,19 @@ MonoBehaviour:
   maxHealth: 200
   currentHealth: 200
   purifyHandler: {fileID: 3032264178920356876}
-  hitRange: 4
-  damage: 1
+  hitRange: 3
+  contactRange: 1
+  contactDamage: 5
+  contactCooldown: 0.25
+  damage: 10
+  returnIfBeingLookedAtWhileAttacked: 1
   wanderRange: 2
-  attackCooldown: 2
+  attackCooldown: 1
+  lookReactionDelayTime: 0.5
   wanderMaxTime: 2
-  speed: 5
-  sneakSpeedFactor: 1
-  lookedAtSpeedFactor: 1
+  speed: 2
+  sneakSpeedFactor: 1.5
+  lookedAtSpeedFactor: 2
   wallLayer:
     serializedVersion: 2
     m_Bits: 8

@@ -36,6 +36,7 @@ public class WingPhase : BossPhase, IHurtable
     }
     public void Awake()
     {
+        currenthealth = maxHealth;
         attacksOne = new List<WingAttack>();
         attacksTwo = new List<WingAttack>();
         currentAttacks = new List<WingAttack>();
@@ -71,6 +72,7 @@ public class WingPhase : BossPhase, IHurtable
                 attack.warnduration = attackLists.warnTime;
                 attack._Damage = attackLists.attackDamage;
                 attack.gameObject.SetActive(true);
+                attack.SetPlayer(player);
             }
             foreach (WingAttack attack in attackLists.attackWithOffset)
             {
@@ -79,6 +81,7 @@ public class WingPhase : BossPhase, IHurtable
                 attack.attackDuration = attackLists.attackDuration;
                 attack.warnduration = attackLists.warnTime;
                 //attack.timer = attackLists.timerOffset;
+                attack.SetPlayer(player);
                 attack._Damage = attackLists.attackDamage;
                 attack.gameObject.SetActive(true);
 
@@ -146,6 +149,7 @@ public class WingPhase : BossPhase, IHurtable
 
     public void Update()
     {
+        Debug.Log(currentPhaseID + " | " + Phases.Count);
         if(currenthealth <=  (Phases[currentPhaseID].healthPercentageToTransiton/100) * maxHealth) 
         {
             TransitionPhase();

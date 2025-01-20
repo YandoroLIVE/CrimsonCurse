@@ -51,6 +51,7 @@ public class HeadPhase : BossPhase
         {
             BossHeadCrystals tmp = Instantiate<BossHeadCrystals>(headCrystalPrefab,crystal.position, Quaternion.identity, this.transform);
             tmp.maxHealth = crystal.maxHealth;
+            tmp.Heal();
             tmp.SetOwner(this);
         }
     }
