@@ -557,7 +557,6 @@ GameObject:
   - component: {fileID: 1709451335225921395}
   - component: {fileID: 1902946799816293166}
   - component: {fileID: -3089645825415717033}
-  - component: {fileID: 3388146263823813143}
   - component: {fileID: 901974382164256339}
   - component: {fileID: 6799236300371877320}
   m_Layer: 6
@@ -738,7 +737,7 @@ MonoBehaviour:
   dashSpeed: 25
   dashDuration: 1.25
   dashCooldown: 1
-  pickedUpDash: 1
+  pickedUpDash: 0
   hasWallJump: 0
   wallLayer:
     serializedVersion: 2
@@ -774,10 +773,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  invincibilityTime: 0.1
   currentHealth: 50
-  healthRegenOnKill: 25
-  healthUi: {fileID: 0}
-  sceneToLoad: MainMenu
+  HitColor: {r: 1, g: 0.6273585, b: 0.6273585, a: 1}
+  _Sprite: {fileID: 7350503545055187747}
 --- !u!114 &-3089645825415717033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -792,30 +791,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 100
   attackRange: 1.5
-  attackHeight: 1.5
+  attackCooldown: 0.5
+  attackMinCooldownBeforeComboAttack: 0.1
+  attackComboTime: 0.25
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  attackDamage: {fileID: 9020373020287212625}
---- !u!114 &3388146263823813143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3038803841253255279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff5eb2cfbd143aa408ee5e2de447850c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 120
-  attackRange: 4
-  attackHeight: 2
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  attackDamage: {fileID: 2945322359294768892, guid: 53542bdebff13b941ade4b27b0741d44, type: 3}
+  attackVFX: {fileID: 9020373020287212625}
 --- !u!114 &901974382164256339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -828,9 +810,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a710b5866df99f042962775396c910b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1908827898544655525, guid: 165ada3e65f39e447ac4dbb297a1bcbc, type: 3}
-  firePoint: {fileID: 2862342964026579621}
+  projectilePrefab: {fileID: 4142049674696562425, guid: 165ada3e65f39e447ac4dbb297a1bcbc, type: 3}
+  firePoint: {x: 1, y: 0, z: 0}
   projectileSpeed: 4
+  projectileLifeTime: 10
+  damage: 100
   attackCooldown: 0.5
 --- !u!114 &6799236300371877320
 MonoBehaviour:
@@ -875,7 +859,7 @@ Transform:
   m_GameObject: {fileID: 3444097860367738832}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0058356524, y: 2.0921202, z: -10}
+  m_LocalPosition: {x: 0.00000047683716, y: 0.00000023841858, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -916,7 +900,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1195,7 +1179,7 @@ SpriteRenderer:
   m_SortingLayer: -5
   m_SortingOrder: -4
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.09371662, g: 0.105001464, b: 0.24528301, a: 1}
+  m_Color: {r: 0.15516818, g: 0.03466536, b: 0.1792453, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1233,7 +1217,7 @@ Transform:
   m_GameObject: {fileID: 5591204150383606517}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.00000047683716, y: 0, z: -10}
+  m_LocalPosition: {x: 0.00000047683716, y: 0.00000023841858, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1264,7 +1248,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
-    OrthographicSize: 6
+    OrthographicSize: 8
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -1410,7 +1394,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 2749006007245333646, guid: 5b85416c6cda11b48be70eff5c513418, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1878,15 +1862,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.942787
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.9427865
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.9427865
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1927,6 +1911,10 @@ PrefabInstance:
     - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3564786898261633080, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4220308301161472815, guid: 2ce7c5d496de279408519b51bfbfc9f0, type: 3}
       propertyPath: scalingMode

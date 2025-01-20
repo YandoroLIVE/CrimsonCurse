@@ -61,7 +61,6 @@ public class SafepointObject : MonoBehaviour
     {
         Safepoint safe = Safepoint.GetCurrentSafepoint();
         SceneManager.LoadScene(safe.targetScene);
-        Debug.Log(safe.isActive);
         _Respawned = true;
         
     }

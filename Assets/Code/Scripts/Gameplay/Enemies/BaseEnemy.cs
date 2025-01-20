@@ -9,6 +9,11 @@ public abstract class BaseEnemy : MonoBehaviour, IHurtable
     {
         
     }
+
+    public bool IsStunned() 
+    {
+        return stunned;
+    }
     public virtual void Update() 
     {
         Move();

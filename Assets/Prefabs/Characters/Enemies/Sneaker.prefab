@@ -396,7 +396,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.54, y: 0.54, z: 0.54}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2260408983846052623}
@@ -450,7 +450,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
+  m_Sprite: {fileID: 1440485314, guid: c795419b0a550334fab5aa03f7fdac9c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -522,7 +522,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1
+  m_Radius: 2
 --- !u!50 &3677783713350006410
 Rigidbody2D:
   serializedVersion: 5
@@ -652,7 +652,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 5
+  m_Radius: 10
 --- !u!1001 &1967055142968872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -670,8 +670,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7076990325100121815, guid: 9e30a2f25dcbf0c43a5638b22bcf5639, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076990325100121815, guid: 9e30a2f25dcbf0c43a5638b22bcf5639, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076990325100121815, guid: 9e30a2f25dcbf0c43a5638b22bcf5639, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076990325100121815, guid: 9e30a2f25dcbf0c43a5638b22bcf5639, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7
+      value: -3.52
       objectReference: {fileID: 0}
     - target: {fileID: 7076990325100121815, guid: 9e30a2f25dcbf0c43a5638b22bcf5639, type: 3}
       propertyPath: m_LocalPosition.y
@@ -709,8 +721,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7076990325100121815, guid: 9e30a2f25dcbf0c43a5638b22bcf5639, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7460215227478356176, guid: 9e30a2f25dcbf0c43a5638b22bcf5639, type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7460215227478356176, guid: 9e30a2f25dcbf0c43a5638b22bcf5639, type: 3}
+      propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -758,15 +778,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5715736110886081430, guid: 87055e96171ee914b97fe037c93de8ca, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.25
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5715736110886081430, guid: 87055e96171ee914b97fe037c93de8ca, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5715736110886081430, guid: 87055e96171ee914b97fe037c93de8ca, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.25
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5715736110886081430, guid: 87055e96171ee914b97fe037c93de8ca, type: 3}
       propertyPath: m_LocalPosition.x
