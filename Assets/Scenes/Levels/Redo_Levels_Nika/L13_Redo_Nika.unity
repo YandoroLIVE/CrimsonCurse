@@ -247,7 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.4
+  parallaxFactorX: 0
+  parallaxFactorY: 0
 --- !u!212 &136058113
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -469,7 +470,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.2
+  parallaxFactorX: 0
+  parallaxFactorY: 0
 --- !u!1001 &490891646
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -629,7 +631,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.1
+  parallaxFactorX: 0
+  parallaxFactorY: 0
 --- !u!212 &560427423
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1080,7 +1083,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.3
+  parallaxFactorX: 0
+  parallaxFactorY: 0
 --- !u!1001 &938554851
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1466,7 +1470,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.1
+  parallaxFactorX: 0
+  parallaxFactorY: 0
 --- !u!1 &1332163903
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,7 +1630,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.7
+  parallaxFactorX: 0
+  parallaxFactorY: 0
 --- !u!212 &1451265577
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8785,11 +8791,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2843345012753654412, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.7089744
+      value: 4.160263
       objectReference: {fileID: 0}
     - target: {fileID: 2843345012753654412, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.58742
+      value: -0.61529016
+      objectReference: {fileID: 0}
+    - target: {fileID: 2893566362874930249, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: m_Color.b
+      value: 0.12156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 2893566362874930249, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: m_Color.g
+      value: 0.08235294
+      objectReference: {fileID: 0}
+    - target: {fileID: 2893566362874930249, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: m_Color.r
+      value: 0.11764706
       objectReference: {fileID: 0}
     - target: {fileID: 3038803841253255279, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_Name

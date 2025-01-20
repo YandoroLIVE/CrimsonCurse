@@ -867,7 +867,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.1
+  parallaxFactorX: 0
+  parallaxFactorY: 0
 --- !u!1 &627706987
 GameObject:
   m_ObjectHideFlags: 0
@@ -9519,7 +9520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.3
+  parallaxFactorX: 0
+  parallaxFactorY: 0
 --- !u!1 &1339368732
 GameObject:
   m_ObjectHideFlags: 0
@@ -10562,11 +10564,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2843345012753654412, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.198179
+      value: 6.660243
       objectReference: {fileID: 0}
     - target: {fileID: 2843345012753654412, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.6157503
+      value: -1.6314301
+      objectReference: {fileID: 0}
+    - target: {fileID: 2893566362874930249, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: m_Color.b
+      value: 0.12156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 2893566362874930249, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: m_Color.g
+      value: 0.08235294
+      objectReference: {fileID: 0}
+    - target: {fileID: 2893566362874930249, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: m_Color.r
+      value: 0.11764706
       objectReference: {fileID: 0}
     - target: {fileID: 3038803841253255279, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_Name
@@ -10717,7 +10731,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.2
+  parallaxFactorX: 0
+  parallaxFactorY: 0
 --- !u!1 &1896052824
 GameObject:
   m_ObjectHideFlags: 0
