@@ -15,7 +15,7 @@ public class WingAttack : MonoBehaviour
     public float attackInterval;
     public float attackDuration;
     public float timer;
-    private (Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null);
+    private (Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player;
     private bool attacking;
     private float attackTimer;
     
