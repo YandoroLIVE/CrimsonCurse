@@ -16,7 +16,7 @@ public class DebugKeys : MonoBehaviour
 
     void RestartLevel()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             // Aktuelle Szene neu laden
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
