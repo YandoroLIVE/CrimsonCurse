@@ -2,17 +2,31 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+[System.Serializable]
+struct HeadCrystalPoint 
+{
+    public float maxHealth;
+    public Vector3 position;
+}
+
 public class HeadPhase : BossPhase
 {
     private int crystal_Pool_Size;
     [SerializeField] private CrystalProjectileEnemy crystalProjectileEnemyPrefab;
+    [SerializeField] private BossHeadCrystals headCrystalPrefab;
     [SerializeField] private List<Vector3> crystalSpawnPositons;
+    [SerializeField] private List<HeadCrystalPoint> headCrystalPoints;
+    private List<BossHeadCrystals> headCrystalss;
     public float crystalRespawnTime = 5f;
     public float crystalDamage = 5f;
+    public float crystalSpeed = 7f;
     private List<float> crystalDownTimers;
     private List<int> disabledCrystals;
     List<CrystalProjectileEnemy> crystalObjects;
+    private Boss owner;
 
+    
+    
 
     private void Awake()
     {
@@ -24,12 +38,20 @@ public class HeadPhase : BossPhase
         for(int i = 0; i < crystal_Pool_Size; ++i) 
         {
             CrystalProjectileEnemy tmp = Instantiate<CrystalProjectileEnemy>(crystalProjectileEnemyPrefab, crystalSpawnPositons[i], Quaternion.identity,this.transform);
+            tmp.SetPlayer(player.rigidbody, player.health);
             tmp.SetOwner(this);
             tmp.SetOrigin(crystalSpawnPositons[i]);
             tmp.damage = crystalDamage;
+            tmp.speed = crystalSpeed;
             crystalObjects.Add(tmp);
             crystalDownTimers.Add(i);
             
+        }
+        foreach (HeadCrystalPoint crystal in headCrystalPoints) 
+        {
+            BossHeadCrystals tmp = Instantiate<BossHeadCrystals>(headCrystalPrefab,crystal.position, Quaternion.identity, this.transform);
+            tmp.maxHealth = crystal.maxHealth;
+            tmp.SetOwner(this);
         }
     }
 
@@ -67,6 +89,12 @@ public class HeadPhase : BossPhase
         foreach(Vector3 t in crystalSpawnPositons) 
         { 
             Gizmos.DrawWireSphere(t, 0.5f);
+        }
+
+        Gizmos.color = Color.blue;
+        foreach(HeadCrystalPoint crystal in headCrystalPoints) 
+        {
+            Gizmos.DrawWireSphere(crystal.position, 0.5f);
         }
     }
 

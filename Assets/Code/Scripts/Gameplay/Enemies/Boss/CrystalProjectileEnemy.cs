@@ -11,16 +11,17 @@ public class CrystalProjectileEnemy : BaseEnemy
     [SerializeField] private float attackCooldown;
     private float attackTimer;
     [SerializeField] private float wanderMaxTime;
-    [SerializeField] private float speed;
+    public float speed;
     [SerializeField] private LayerMask wallLayer;
     IsPlayerInTrigger attackRadius;
     private float idleTimer;
     Rigidbody2D rigi;
-    (Transform transform, Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null, null);
+    public (Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player;
     Vector3 currentTargetPoint = Vector3.zero;
     Vector2 direction = Vector2.zero;
     Vector3 originPoint = Vector3.zero;
     float distanceToPlayer = float.MaxValue;
+    
 
     public void Awake()
     {
@@ -36,18 +37,16 @@ public class CrystalProjectileEnemy : BaseEnemy
         Heal();
     }
 
+    public void SetPlayer(Rigidbody2D rigidbody, S_PlayerHealth health) 
+    {
+        _Player.health = health;
+        _Player.rigidbody2D = rigidbody;
+    }
+
     public override void Move()
     {
         if (attackRadius.GetPlayer() != null)
         {
-            if (_Player.rigidbody2D == null || _Player.transform == null || _Player.health == null)
-            {
-                GameObject collision = attackRadius.GetPlayer().gameObject;
-                _Player.rigidbody2D = collision.GetComponent<Rigidbody2D>();
-                _Player.transform = collision.transform;
-                _Player.health = collision.GetComponent<S_PlayerHealth>();
-            }
-
             if (attackRadius.IsPlayerInBox())
             {
                 //target Player
@@ -55,7 +54,7 @@ public class CrystalProjectileEnemy : BaseEnemy
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1f, wallLayer);
                 if (hit.collider == null)
                 {
-                    currentTargetPoint = _Player.transform.position;
+                    currentTargetPoint = _Player.health.transform.position;
                 }   
                 direction = (currentTargetPoint - transform.position).normalized;
                 transform.position += (Vector3)(direction * speed * Time.deltaTime);
@@ -109,12 +108,17 @@ public class CrystalProjectileEnemy : BaseEnemy
 
     public override void Update()
     {
-        if (_Player.transform != null)
+        base.Update();
+        if (_Player != (null,null))
         {
-            distanceToPlayer = (_Player.transform.position - this.transform.position).sqrMagnitude;
+            distanceToPlayer = (_Player.health.transform.position - this.transform.position).sqrMagnitude;
+        }
+
+        else 
+        {
+            _Player = owner.player;
         }
         attackTimer += Time.deltaTime;
-        base.Update();
 
     }
 
@@ -134,8 +138,8 @@ public class CrystalProjectileEnemy : BaseEnemy
 
     private bool IsBeingLookedAt()
     {
-        float offset = this.transform.position.x - _Player.transform.position.x;
-        return Mathf.Sign(offset) == Mathf.Sign(_Player.transform.localScale.x);
+        float offset = this.transform.position.x - _Player.health.transform.position.x;
+        return Mathf.Sign(offset) == Mathf.Sign(_Player.health.transform.localScale.x);
     }
 
     private bool HasReachedPoint()
