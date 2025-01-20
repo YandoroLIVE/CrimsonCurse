@@ -16,6 +16,11 @@ public class BossHeadCrystals : MonoBehaviour, IHurtable
         currentHealth = maxHealth;
     }
 
+    public void Heal() 
+    {
+        currentHealth = maxHealth;
+    }
+
     public void OnEnable()
     {
         this.gameObject.SetActive(!destroyed);
@@ -23,6 +28,7 @@ public class BossHeadCrystals : MonoBehaviour, IHurtable
     public void Hurt(float damage) 
     {
         currentHealth -= damage;
+        Debug.Log(currentHealth);
         if (currentHealth <= 0) 
         {
             this.gameObject.SetActive(false);
