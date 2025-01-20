@@ -707,7 +707,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.2
+  parallaxFactorX: 0
+  parallaxFactorY: 0
 --- !u!1 &183845789
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,7 +1503,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.1
+  parallaxFactorX: 0
+  parallaxFactorY: 0
 --- !u!1001 &434616465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2583,7 +2585,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 8428058113065204704, guid: 8d9ec6e4dc4e89640bbf0a0252cd239f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6884259, g: 0.6018156, b: 0.7924528, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2858,7 +2860,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2551498943064562069, guid: 82808fd3d51999a47a281b811ff3ecfa, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.972061, g: 0.9481132, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -7400,11 +7402,11 @@ Tilemap:
   - m_RefCount: 2
     m_Data: {fileID: -1094852668, guid: 8c7f9abad884946408a20ce8342b49dc, type: 3}
   - m_RefCount: 6
-    m_Data: {fileID: -755084082, guid: daa3c80b3d2d316498cf26fcc95da5d7, type: 3}
+    m_Data: {fileID: -460665939, guid: 1801712400c222840b8083b9b40d8098, type: 3}
   - m_RefCount: 5
-    m_Data: {fileID: -1488796860, guid: daa3c80b3d2d316498cf26fcc95da5d7, type: 3}
+    m_Data: {fileID: 718787615, guid: 160d6be11b70710449b2f0b759efcd4e, type: 3}
   - m_RefCount: 37
-    m_Data: {fileID: -1038412488, guid: daa3c80b3d2d316498cf26fcc95da5d7, type: 3}
+    m_Data: {fileID: 298832259, guid: 1801712400c222840b8083b9b40d8098, type: 3}
   - m_RefCount: 9
     m_Data: {fileID: 4689474867912626609, guid: 1baeaea5e87407a49978c04811dca325, type: 3}
   - m_RefCount: 84
@@ -7412,15 +7414,15 @@ Tilemap:
   - m_RefCount: 5
     m_Data: {fileID: -1600151174, guid: daa3c80b3d2d316498cf26fcc95da5d7, type: 3}
   - m_RefCount: 5
-    m_Data: {fileID: 1479673162, guid: daa3c80b3d2d316498cf26fcc95da5d7, type: 3}
+    m_Data: {fileID: -441655754, guid: 1801712400c222840b8083b9b40d8098, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 6774009632434826205, guid: 4f6dbaecd8736cd46a5654e84cc2bcf1, type: 3}
   - m_RefCount: 45
-    m_Data: {fileID: 1932369679, guid: ef3b02ec2aca9e141b6029fd1780a048, type: 3}
+    m_Data: {fileID: -1778026880, guid: 1801712400c222840b8083b9b40d8098, type: 3}
   - m_RefCount: 2
-    m_Data: {fileID: 1475214389, guid: ef3b02ec2aca9e141b6029fd1780a048, type: 3}
+    m_Data: {fileID: 1877166644, guid: 1801712400c222840b8083b9b40d8098, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: 3205818814257197516, guid: edd392affdefd784cbc664c4a761a5e9, type: 3}
+    m_Data: {fileID: 4143972344842269948, guid: 1801712400c222840b8083b9b40d8098, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 420
     m_Data:
@@ -8299,7 +8301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d45c25700aa946adc7f0d52116af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.3
+  parallaxFactorX: 0
+  parallaxFactorY: 0
 --- !u!1001 &1073811239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8837,6 +8840,18 @@ PrefabInstance:
     - target: {fileID: 2843345012753654412, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.y
       value: 8.82242
+      objectReference: {fileID: 0}
+    - target: {fileID: 2893566362874930249, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: m_Color.b
+      value: 0.13207549
+      objectReference: {fileID: 0}
+    - target: {fileID: 2893566362874930249, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: m_Color.g
+      value: 0.015574938
+      objectReference: {fileID: 0}
+    - target: {fileID: 2893566362874930249, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: m_Color.r
+      value: 0.11318349
       objectReference: {fileID: 0}
     - target: {fileID: 3038803841253255279, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_Name
@@ -14792,8 +14807,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.88, y: 0.88, z: 0.88}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1060280241}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
