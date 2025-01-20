@@ -124,6 +124,6 @@ public class HeadPhase : BossPhase
     public override void OnEnable()
     {
         base.OnEnable();
-        ResetPhase();
+        //ResetPhase();
     }
 }

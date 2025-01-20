@@ -51,6 +51,7 @@ public class Boss : MonoBehaviour
         else 
         { 
             phaseTransitions[currentPhaseCounter].gameObject.SetActive(true);
+            phaseTransitions[currentPhaseCounter].ResetPhase();
         }
     }
 
