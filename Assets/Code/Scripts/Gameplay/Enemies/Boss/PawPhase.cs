@@ -87,14 +87,14 @@ public class PawPhase : BossPhase
         Loop(Time.deltaTime);
     }
 
-    public override void Hurt(float damage)
-    {
-        if (vulnerable)
-        {
-            base.Hurt(damage);
+    //public override void Hurt(float damage)
+    //{
+    //    if (vulnerable)
+    //    {
+    //        base.Hurt(damage);
 
-        }
-    }
+    //    }
+    //}
 
         public void OnDrawGizmos()
     {
