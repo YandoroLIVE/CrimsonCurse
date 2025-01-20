@@ -3626,6 +3626,10 @@ PrefabInstance:
       value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 1205433234352316115, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: crystalDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205433234352316115, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: arenaApearDelay
       value: 0.2
       objectReference: {fileID: 0}
@@ -3633,6 +3637,10 @@ PrefabInstance:
       propertyPath: arenaGameObject
       value: 
       objectReference: {fileID: 1580601135}
+    - target: {fileID: 1205433234352316115, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: crystalRespawnTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1205433234352316115, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: headCrystalPoints.Array.size
       value: 4
@@ -10955,7 +10963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1580601136
 Transform:
   m_ObjectHideFlags: 0
