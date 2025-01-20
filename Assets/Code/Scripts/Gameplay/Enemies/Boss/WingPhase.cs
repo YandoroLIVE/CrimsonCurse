@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-public class WingPhase : BossPhase
+public class WingPhase : BossPhase, IHurtable
 {
+    public float maxHealth = 100;
+    public float currenthealth;
     [SerializeField] public List<PhaseAttacks> Phases;
     private List<WingAttack> attacksOne;
     private List<WingAttack> attacksTwo;
@@ -115,6 +117,14 @@ public class WingPhase : BossPhase
         }
         switiching = false;
     }
+    public void Hurt(float damage) 
+    {
+        currenthealth -= damage;
+        if(currenthealth <= 0) 
+        {
+            EndPhase();
+        }
+    }
     public void Loop(float delta)
     {
         if (currentAttacks.Count == 0)
@@ -136,7 +146,7 @@ public class WingPhase : BossPhase
 
     public void Update()
     {
-        if(GetHealth() <=  (Phases[currentPhaseID].healthPercentageToTransiton/100) * GetMaxHealth()) 
+        if(currenthealth <=  (Phases[currentPhaseID].healthPercentageToTransiton/100) * maxHealth) 
         {
             TransitionPhase();
         }
