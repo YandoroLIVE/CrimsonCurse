@@ -6,20 +6,25 @@ public class PlayerControllerNew : MonoBehaviour
 {
     // Serialized Fields
     [SerializeField] private float speed;
-
+    [SerializeField] private bool forrestLevel;
+    [SerializeField] private GameObject cameraPrefab;
+    [SerializeField] private ParticleSystem m_dustParticle;
+    [SerializeField] private ParticleSystem m_LeafParticle;
+    
     [Header("Jumping")]
     [SerializeField] private float jumpForce;
     [SerializeField] private float fallMultiplier;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private GameObject jumpEffect;
+    [SerializeField] private ParticleSystem jumpEffect;
+    [SerializeField] private ParticleSystem impactEffect;
 
     [Header("Dashing")]
     [SerializeField] private float dashSpeed = 30f;
     [SerializeField] private float startDashTime = 0.1f;
     [SerializeField] private float dashCooldown = 0.2f;
-    [SerializeField] private GameObject dashEffect;
+    [SerializeField] private ParticleSystem dashEffect;
 
     [Header("Wall grab & jump")]
     [SerializeField] public Vector2 grabRightOffset = new Vector2(0.16f, 0f);
@@ -36,12 +41,13 @@ public class PlayerControllerNew : MonoBehaviour
     [HideInInspector] public bool isDashing = false;
     [HideInInspector] public bool actuallyWallGrabbing = false;
     [HideInInspector] public bool isCurrentlyPlayable = false;
+    public bool pickedUpDash = false;
+    public bool hasWallJump = false;
 
     // Private Fields
     private Rigidbody2D m_rb;
-    private ParticleSystem m_dustParticle;
     private bool m_facingRight = true;
-
+    private ParticleSystem runParticle;
     private readonly float m_groundedRememberTime = 0.25f;
     private float m_groundedRemember;
     private float m_dashTime;
@@ -68,6 +74,22 @@ public class PlayerControllerNew : MonoBehaviour
     public static bool Jump() => Input.GetKeyDown(KeyCode.Space);
     public static bool Dash() => Input.GetKeyDown(KeyCode.LeftShift);
 
+    public void Awake()
+    {
+        Instantiate(cameraPrefab);
+        if (forrestLevel) 
+        {
+            m_LeafParticle.gameObject.SetActive(true);
+            m_LeafParticle.Play();
+            runParticle = m_LeafParticle;
+        }
+        else 
+        {
+            m_dustParticle.gameObject.SetActive(true);
+            m_dustParticle.Play();
+            runParticle = m_dustParticle;
+        }
+    }
     private void Start()
     {
         if (transform.CompareTag("Player"))
@@ -101,15 +123,24 @@ public class PlayerControllerNew : MonoBehaviour
     private void UpdateGroundedState()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckRadius, whatIsGround);
+        bool wasGrounded = isGrounded;
         isGrounded = false;
-
         foreach (var collider in colliders)
         {
             if (collider.isTrigger == false)
             {
                 isGrounded = true;
+                if (!wasGrounded) 
+                {
+                    impactEffect.Play();
+                    runParticle.Play();
+                }
                 break;
             }
+        }
+        if (!isGrounded) 
+        {
+            runParticle.Stop();
         }
         m_groundedRemember -= Time.deltaTime;
         if (isGrounded)
@@ -223,10 +254,12 @@ public class PlayerControllerNew : MonoBehaviour
     private void HandleDashInput()
     {
         m_dashCooldown -= Time.deltaTime;
+        if (!pickedUpDash) return;
 
         if (!isDashing && !m_hasDashedInAir && m_dashCooldown <= 0f && Dash())
         {
             isDashing = true;
+            dashEffect.Play();
             if (!isGrounded) m_hasDashedInAir = true;
         }
 
@@ -237,13 +270,14 @@ public class PlayerControllerNew : MonoBehaviour
     {
         if (Jump() && isGrounded)
         {
+            jumpEffect.Play();
             m_rb.linearVelocity = new Vector2(m_rb.linearVelocity.x, jumpForce);
         }
-        else if (Jump() && m_wallGrabbing && moveInput != m_onWallSide)
+        else if (hasWallJump && Jump() && m_wallGrabbing && moveInput != m_onWallSide)
         {
             PerformWallJump(wallJumpForce);
         }
-        else if (Jump() && m_wallGrabbing && moveInput == m_onWallSide)
+        else if (hasWallJump && Jump() && m_wallGrabbing && moveInput == m_onWallSide)
         {
             PerformWallJump(wallClimbForce);
         }
