@@ -47,14 +47,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDone: 0
-  phaseHealth: 25
+  arenaGameObject: {fileID: 0}
+  arenaApearDelay: 0.5
+  healthCrystalHealAmount: 0
+  healthCrystal: {fileID: 0}
   crystalProjectileEnemyPrefab: {fileID: 164127948111338560, guid: 0a0fbc66ed674ce46af2b61e7c8c6692, type: 3}
+  headCrystalPrefab: {fileID: 0}
   crystalSpawnPositons:
   - {x: 10, y: 3, z: 0}
   - {x: -10, y: 3, z: 0}
   - {x: 12, y: -5, z: 0}
   - {x: -12, y: -5, z: 0}
+  headCrystalPoints: []
   crystalRespawnTime: 5
+  crystalDamage: 5
+  crystalSpeed: 7
 --- !u!61 &6939470748881365728
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -62,7 +69,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1614635828323983602}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}

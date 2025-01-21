@@ -258,6 +258,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7443740856402859841, guid: 43a026c768c319842a9b07b61595a736, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9125009927224744441, guid: 43a026c768c319842a9b07b61595a736, type: 3}
       propertyPath: m_Name
       value: ShockWaveObject
@@ -403,7 +407,8 @@ PrefabInstance:
       propertyPath: 'Phases.Array.data[0].attackList.Array.data[0].attacks.Array.data[0].attackGameobjects.Array.data[1]'
       value: 
       objectReference: {fileID: 8283873141837202763}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7913005701932251757, guid: 62a27945616c2ed4688e3f37b38ff9c6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -750,7 +755,8 @@ PrefabInstance:
       propertyPath: headCrystalPoints.Array.data[2].position.y
       value: 4.74
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6939470748881365728, guid: af2354599c4c9d64db563b2270f17952, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
