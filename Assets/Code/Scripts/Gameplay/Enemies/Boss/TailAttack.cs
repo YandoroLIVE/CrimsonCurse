@@ -30,6 +30,7 @@ public class TailAttack : MonoBehaviour
     bool retreating;
     float dirModifier;
     bool finishedAttack;
+    bool chilling = false;
     public void SetOnwer(TailPhase pawPhase)
     {
         owner = pawPhase;
@@ -107,7 +108,10 @@ public class TailAttack : MonoBehaviour
             {
                 if (finishedAttack)
                 {
-                    StartCoroutine(TimeToChill());
+                    if(!chilling)
+                    {
+                        StartCoroutine(TimeToChill());
+                    }
                     return;
                 }
                 else 
@@ -125,9 +129,11 @@ public class TailAttack : MonoBehaviour
     IEnumerator TimeToChill() 
     {
         owner.SetVulnerable(true);
+        chilling = true;
         yield return new WaitForSeconds(chillTime);
         owner.SetVulnerable(false);
         finishedAttack = false;
+        chilling = false;
         owner.InitNextAttack();
         yield return null;
     }
