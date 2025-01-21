@@ -28,6 +28,7 @@ public class Boss : MonoBehaviour
             phase.player.rigidbody = player.rigidbody;
         }
         phaseTransitions.First().gameObject.SetActive(true);
+        phaseTransitions[currentPhaseCounter].ResetPhase();
     }
 
     public void Update()
