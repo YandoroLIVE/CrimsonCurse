@@ -1,0 +1,40 @@
+using UnityEngine;
+
+public class BossHeadCrystals : MonoBehaviour, IHurtable
+{
+    public float maxHealth = 100;
+    public float currentHealth;
+    private HeadPhase owner;
+    public bool destroyed;
+
+    public void SetOwner(HeadPhase headPhase) 
+    {
+        owner = headPhase;    
+    }
+    public void Awake()
+    {
+        currentHealth = maxHealth;
+    }
+
+    public void Heal() 
+    {
+        currentHealth = maxHealth;
+    }
+
+    public void OnEnable()
+    {
+        this.gameObject.SetActive(!destroyed);
+    }
+    public void Hurt(float damage) 
+    {
+        currentHealth -= damage;
+        Debug.Log(currentHealth);
+        if (currentHealth <= 0) 
+        {
+            this.gameObject.SetActive(false);
+            destroyed = true;
+            Debug.Assert(owner != null,"Owner is null");
+            owner.EndPhase();
+        }
+    }
+}

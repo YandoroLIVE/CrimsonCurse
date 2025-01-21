@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class ChimeraPhase : BossPhase
 {
+    public float phaseHealth;
+    private float currentHealth;
     public float damage;
     public float appearRadius;
     public float appearTime;
@@ -13,11 +15,9 @@ public class ChimeraPhase : BossPhase
     private bool appeared = false;
     private Vector2 targetPoint;
     private Vector2 playPos;
-    private S_PlayerHealth player;
 
     private void Awake()
     {
-        player = FindAnyObjectByType<S_PlayerHealth>();
         ResetPhase();
     }
 
@@ -31,7 +31,7 @@ public class ChimeraPhase : BossPhase
 
     public void ChoosePoint() 
     {
-        targetPoint = player.transform.position;
+        targetPoint = player.health.transform.position;
         targetPoint += GenerateRandomPointInRadius();
     }
 
@@ -48,11 +48,11 @@ public class ChimeraPhase : BossPhase
         }
         if (attackTime > attackCooldown) 
         {
-            playPos = player.transform.position;
+            playPos = player.health.transform.position;
             attackObject.Attack();
             if(Vector2.Distance(targetPoint, playPos) <= attackRange) 
             {
-                player.TakeDamage((int)damage);
+                player.health.TakeDamage((int)damage);
             }
             //attack at positon
             attackTime = 0;
@@ -63,6 +63,15 @@ public class ChimeraPhase : BossPhase
     {
         Loop(Time.deltaTime);
         Hurt(phaseSpeed*Time.deltaTime);
+    }
+
+    private void Hurt(float damage) 
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            EndPhase();
+        }
     }
 
     private void OnDrawGizmos()
