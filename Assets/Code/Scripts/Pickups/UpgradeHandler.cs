@@ -1,4 +1,3 @@
-using HeroController;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

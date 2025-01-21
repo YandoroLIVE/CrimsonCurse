@@ -651,8 +651,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.053322732, y: -0.08887148}
-  m_Size: {x: 1.1066455, y: 2.177743}
+  m_Offset: {x: 0.103604555, y: 0.010640621}
+  m_Size: {x: 0.89943624, y: 1.9787188}
   m_Direction: 0
 --- !u!50 &1874192666424001282
 Rigidbody2D:
@@ -669,7 +669,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -693,13 +693,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c915dd4be1d3f84899850de85017936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 8
   forrestLevel: 0
   cameraPrefab: {fileID: 4427336018264215240, guid: 2c039eca635cf064a8a1c2c49ef4c1a5, type: 3}
   m_dustParticle: {fileID: 5470193528990482272}
   m_LeafParticle: {fileID: 2748418905331216796}
-  jumpForce: 10
-  fallMultiplier: 4
+  jumpForce: 18
+  fallMultiplier: 2
   groundCheck: {fileID: 104175345194728217}
   groundCheckRadius: 0.1
   whatIsGround:
@@ -708,15 +708,15 @@ MonoBehaviour:
   jumpEffect: {fileID: 4554583891056918215}
   impactEffect: {fileID: 3075569594264493692}
   dashSpeed: 30
-  startDashTime: 0.1
+  startDashTime: 0.3
   dashCooldown: 0.2
   dashEffect: {fileID: 1145866625423061133}
-  grabRightOffset: {x: 0.16, y: 0}
-  grabLeftOffset: {x: -0.16, y: 0}
+  grabRightOffset: {x: 0.42, y: 0}
+  grabLeftOffset: {x: -0.42, y: 0}
   grabCheckRadius: 0.24
-  slideSpeed: 2.5
-  wallJumpForce: {x: 10.5, y: 18}
-  wallClimbForce: {x: 4, y: 14}
+  slideSpeed: 4
+  wallJumpForce: {x: 20, y: 18}
+  wallClimbForce: {x: 0, y: 14}
   isGrounded: 0
   moveInput: 0
   canMove: 1
@@ -1373,23 +1373,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5745363085867010031, guid: 22000e9a7f544ce4c9d10edcc88a72ae, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6411920629673673142, guid: 22000e9a7f544ce4c9d10edcc88a72ae, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6411920629673673142, guid: 22000e9a7f544ce4c9d10edcc88a72ae, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6411920629673673142, guid: 22000e9a7f544ce4c9d10edcc88a72ae, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6411920629673673142, guid: 22000e9a7f544ce4c9d10edcc88a72ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.029999971
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 6411920629673673142, guid: 22000e9a7f544ce4c9d10edcc88a72ae, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1426,6 +1426,10 @@ PrefabInstance:
     - target: {fileID: 6411920629673673142, guid: 22000e9a7f544ce4c9d10edcc88a72ae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6411920629673673142, guid: 22000e9a7f544ce4c9d10edcc88a72ae, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

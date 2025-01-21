@@ -1,6 +1,4 @@
-using UnityEditor.EditorTools;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerControllerNew : MonoBehaviour
 {
