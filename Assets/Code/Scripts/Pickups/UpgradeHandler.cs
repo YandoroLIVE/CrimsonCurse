@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class UpgradeHandler : MonoBehaviour
 {
     bool inMenu = false;
-    private PlayerController _Player;
+    private PlayerControllerNew _Player;
     private static UpgradeHandler _Instance;
     private bool _PickedUpDash = false;
     [SerializeField] private GameObject _DashIcon;
@@ -13,6 +13,7 @@ public class UpgradeHandler : MonoBehaviour
     [SerializeField] private GameObject _WalljumpIcon;
     private bool _PickedUpLongrange = false;
     [SerializeField] private GameObject _LongrangeIcon;
+
 
     public static UpgradeHandler GetInstance() 
     {
@@ -84,7 +85,7 @@ public class UpgradeHandler : MonoBehaviour
     {
         if (_Player == null) 
         {
-            _Player = FindFirstObjectByType<PlayerController>();
+            _Player = FindFirstObjectByType<PlayerControllerNew>();
             if (_Player == null)
             {
                 Debug.Log("Player not found");

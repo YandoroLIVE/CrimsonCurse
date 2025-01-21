@@ -8,7 +8,7 @@ public class WingPhase : BossPhase
 {
     [SerializeField] private List<PhaseAttacks> Phases;
     [SerializeField] private WingPhaseCrystal wingCrystalPrefab;
-
+    [SerializeField] private List<HeadCrystalPosition> crystals;
 
     private int crystalAmountToDestroy = int.MaxValue;
     private int crystalAmountDestroyed = 0;
@@ -24,7 +24,7 @@ public class WingPhase : BossPhase
     private class PhaseAttacks
     {
         public List<PhaseAttack> attackList;
-        public List<HeadCrystalPosition> crystals;
+        public int crystalsToDestroy;
     }
 
     [System.Serializable]
@@ -72,6 +72,7 @@ public class WingPhase : BossPhase
         interval = 0;
         if (currentPhaseID >= Phases.Count)
         {
+            EndPhase();
             return;
         }
         foreach (PhaseAttack attackLists in Phases[currentPhaseID].attackList)
@@ -97,15 +98,8 @@ public class WingPhase : BossPhase
             }
         }
 
-        foreach (HeadCrystalPosition crystal in Phases[currentPhaseID].crystals)
-        {
-
-            WingPhaseCrystal tmp = Instantiate(wingCrystalPrefab, crystal.position, Quaternion.identity, this.transform);
-            tmp.SetOwner(this);
-            tmp.maxHealth = crystal.maxHealth;
-            tmp.Heal();
-        }
-        crystalAmountToDestroy = Phases[currentPhaseID].crystals.Count;
+        
+        crystalAmountToDestroy = Phases[currentPhaseID].crystalsToDestroy;
     }
 
     public void CrystalDestroyed()
@@ -139,6 +133,14 @@ public class WingPhase : BossPhase
     {
         base.ResetPhase();
         currentPhaseID = -1;
+        foreach (HeadCrystalPosition crystal in crystals)
+        {
+
+            WingPhaseCrystal tmp = Instantiate(wingCrystalPrefab, crystal.position, Quaternion.identity, this.transform);
+            tmp.SetOwner(this);
+            tmp.maxHealth = crystal.maxHealth;
+            tmp.Heal();
+        }
         SetAllAttacksInactive();
         TransitionPhase();
     }
@@ -171,7 +173,7 @@ public class WingPhase : BossPhase
         foreach (var tmp in Phases)
         {
             Gizmos.color += new Color(0.1f, 0, 0);
-            foreach (HeadCrystalPosition crystal in tmp.crystals)
+            foreach (HeadCrystalPosition crystal in crystals)
             {
                 Gizmos.DrawSphere(crystal.position, 0.5f);
             }
