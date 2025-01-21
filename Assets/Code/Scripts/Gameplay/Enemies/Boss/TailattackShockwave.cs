@@ -20,7 +20,8 @@ public class TailattackShockwave : MonoBehaviour
 
     public void Update()
     {
-        this.transform.position += new Vector3(speed*Time.deltaTime,0,0);
+        float dir = Mathf.Sign(goalXPos - transform.position.x);
+        this.transform.position += new Vector3(dir * speed*Time.deltaTime,0,0);
         if(Mathf.Abs(goalXPos-transform.position.x) <= SNAP_VALUE) 
         {
             gameObject.SetActive(false);

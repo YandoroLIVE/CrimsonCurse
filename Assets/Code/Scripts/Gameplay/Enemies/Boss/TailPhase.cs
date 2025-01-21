@@ -17,7 +17,6 @@ public class TailPhase : BossPhase
     [SerializeField] private float slamAttackStartYValue = 10;
     [SerializeField] private float swipeAttackStartXValue = 20;
     [SerializeField] TailAttack attackObject;
-    [SerializeField] Vector2 restingPosition;
     private bool vulnerable = false;
     private int currentAttackID = -1;
     Collider2D crystalColl;
@@ -31,6 +30,7 @@ public class TailPhase : BossPhase
         public float positonModifier;
         public bool alternativeAttack;
         public float chillTime;
+        public Vector2 chillPoint;
     }
 
     public void SetVulnerable(bool status) 
@@ -52,6 +52,7 @@ public class TailPhase : BossPhase
         attackObject.positionModifier = attackLoop[currentAttackID].positonModifier;
         attackObject.alternativeAttack = attackLoop[currentAttackID].alternativeAttack;
         attackObject.chillTime = attackLoop[currentAttackID].chillTime;
+        attackObject.restingPosition = attackLoop[currentAttackID].chillPoint;
         attackObject.PrepareNewAttack();
 
     }
@@ -63,7 +64,6 @@ public class TailPhase : BossPhase
         attackObject.groundYLevel = groundYLevel;
         attackObject.shockwaveSpeed = shockwaveSpeed;
         attackObject.SetOnwer(this);
-        attackObject.restingPosition = restingPosition;
         crystal.maxHealth = headCrystalPoint.maxHealth;
         crystal.transform.position = headCrystalPoint.position;
         crystal.Heal();
@@ -99,9 +99,11 @@ public class TailPhase : BossPhase
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(new Vector3(-1,groundYLevel), new Vector3(1, groundYLevel));
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(restingPosition, 0.5f);
+        foreach(AttackStats stat in attackLoop) 
+        {
+            Gizmos.DrawSphere(stat.chillPoint,0.5f);
+            Gizmos.color += new Color(0, 0.1f, 0);
+        }
     }
 
 
