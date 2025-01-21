@@ -12,7 +12,7 @@ public class Boss : MonoBehaviour
     private int currentPhaseCounter = 0;
     [SerializeField] private List<BossPhase> phaseTransitions;
     (Rigidbody2D rigidbody, S_PlayerHealth health) player;
-
+    [SerializeField] HealthPickup healthCrystalPrefab;
     public void Awake()
     {
         player.health = FindAnyObjectByType<S_PlayerHealth>();
@@ -22,10 +22,13 @@ public class Boss : MonoBehaviour
             child.gameObject.SetActive(false);
 
         }
+        HealthPickup healthCrystal = Instantiate(healthCrystalPrefab);
+        healthCrystal.gameObject.SetActive(false);
         foreach (BossPhase phase in phaseTransitions) 
         {
             phase.player.health = player.health;
             phase.player.rigidbody = player.rigidbody;
+            phase.healthCrystal = healthCrystal;
         }
         phaseTransitions.First().gameObject.SetActive(true);
         phaseTransitions[currentPhaseCounter].ResetPhase();
