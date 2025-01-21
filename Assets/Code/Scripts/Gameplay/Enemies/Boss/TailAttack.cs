@@ -12,8 +12,8 @@ public class TailAttack : MonoBehaviour
     [SerializeField] TailattackShockwave rightShockWave;
     public float shockwaveSpeed;
     private const float SNAP_AREA = 0.25f;
-    public float slamAttackStartYValue = 10;
-    public float swipeAttackStartXValue = 20;
+    private const float slamAttackStartYValue = 10;
+    private const float swipeAttackStartXValue = 20;
     public Vector3 originPoint;
     public Vector2 targetPoint;
     public Vector2 restingPosition;
@@ -45,6 +45,8 @@ public class TailAttack : MonoBehaviour
 
     public void PrepareNewAttack()
     {
+        leftShockWave.speed = shockwaveSpeed;
+        rightShockWave.speed = shockwaveSpeed;
         if (attackType == TailAttackType.SwipeAttack)
         {
             //dirModifier = alternativeAttack? -1 : 1;
@@ -140,8 +142,7 @@ public class TailAttack : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-
-        
+        player.TakeDamage((int)damage);       
 
     }
 

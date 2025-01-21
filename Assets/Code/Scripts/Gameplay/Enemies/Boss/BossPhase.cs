@@ -49,20 +49,6 @@ public abstract class BossPhase : MonoBehaviour
         else Debug.Log("No Arena gameobject found");
     }
 
-    //public float GetMaxHealth() 
-    //{
-    //    return phaseHealth;
-    //}
-
-    //public virtual void Hurt(float damage)
-    //{
-    //    health -= damage;
-    //    if (health <= 0f)
-    //    {
-    //        EndPhase();
-    //    }
-    //}
-
     public virtual void EndPhase() 
     {
         gameObject.SetActive(false);
