@@ -8,7 +8,7 @@ public class S_PlayerHealth : MonoBehaviour
 {
     private static S_PlayerHealth _instance;
     const float HIT_BLINK_DURATION = 0.1f;
-    const int FIRST_LEVEL_BUILD_INDEX = 1;
+    const string FIRST_LEVEL_BUILD_NAME = "L1_Redo_Nika";
     public int maxHealth = 100;
     public float invincibilityTime = 0.1f;
     private float invincibilityTimer = 0;
@@ -75,7 +75,7 @@ public class S_PlayerHealth : MonoBehaviour
 
         else
         {
-            SceneManager.LoadScene(SceneManager.GetSceneByBuildIndex(FIRST_LEVEL_BUILD_INDEX).name);
+            SceneManager.LoadScene(FIRST_LEVEL_BUILD_NAME);
         }
     }
 

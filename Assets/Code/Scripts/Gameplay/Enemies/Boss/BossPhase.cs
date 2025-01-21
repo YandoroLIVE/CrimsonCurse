@@ -1,13 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public abstract class BossPhase : MonoBehaviour, IHurtable
+public abstract class BossPhase : MonoBehaviour
 {
     [HideInInspector] public bool isDone = false;
     [SerializeField] GameObject arenaGameObject;
+    public (Rigidbody2D rigidbody, S_PlayerHealth health) player;
     public float arenaApearDelay = 0.5f;
-    [SerializeField] private float phaseHealth = 25;
-    float health;
+    //[SerializeField] private float phaseHealth = 25;
+    //float health;
     public virtual bool IsFinished() 
     {
         bool tmp = isDone;
@@ -17,10 +18,10 @@ public abstract class BossPhase : MonoBehaviour, IHurtable
         }
         return tmp;
     }
-    public float GetHealth() 
-    {
-        return health;
-    }
+    //public float GetHealth() 
+    //{
+    //    return health;
+    //}
     public virtual void OnEnable()
     {
         if (arenaGameObject != null)
@@ -48,19 +49,19 @@ public abstract class BossPhase : MonoBehaviour, IHurtable
         else Debug.Log("No Arena gameobject found");
     }
 
-    public float GetMaxHealth() 
-    {
-        return phaseHealth;
-    }
+    //public float GetMaxHealth() 
+    //{
+    //    return phaseHealth;
+    //}
 
-    public virtual void Hurt(float damage)
-    {
-        health -= damage;
-        if (health <= 0f)
-        {
-            EndPhase();
-        }
-    }
+    //public virtual void Hurt(float damage)
+    //{
+    //    health -= damage;
+    //    if (health <= 0f)
+    //    {
+    //        EndPhase();
+    //    }
+    //}
 
     public virtual void EndPhase() 
     {
@@ -69,7 +70,6 @@ public abstract class BossPhase : MonoBehaviour, IHurtable
     }
 
     public virtual void ResetPhase()
-    {
-        health = phaseHealth;   
+    { 
     }
 }

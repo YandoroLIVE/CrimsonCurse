@@ -11,12 +11,21 @@ public class Boss : MonoBehaviour
     string winSceneName = "WinScene";
     private int currentPhaseCounter = 0;
     [SerializeField] private List<BossPhase> phaseTransitions;
+    (Rigidbody2D rigidbody, S_PlayerHealth health) player;
 
     public void Awake()
     {
+        player.health = FindAnyObjectByType<S_PlayerHealth>();
+        player.rigidbody = player.health.GetComponent<Rigidbody2D>();
         foreach (Transform child in transform) 
         {
             child.gameObject.SetActive(false);
+
+        }
+        foreach (BossPhase phase in phaseTransitions) 
+        {
+            phase.player.health = player.health;
+            phase.player.rigidbody = player.rigidbody;
         }
         phaseTransitions.First().gameObject.SetActive(true);
     }
@@ -42,6 +51,7 @@ public class Boss : MonoBehaviour
         else 
         { 
             phaseTransitions[currentPhaseCounter].gameObject.SetActive(true);
+            phaseTransitions[currentPhaseCounter].ResetPhase();
         }
     }
 

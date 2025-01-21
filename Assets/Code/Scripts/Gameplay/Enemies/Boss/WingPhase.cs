@@ -1,145 +1,137 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+[System.Serializable]
+
+
 public class WingPhase : BossPhase
 {
-    [SerializeField] public List<PhaseAttacks> Phases;
-    private List<WingAttack> attacksOne;
-    private List<WingAttack> attacksTwo;
+    [SerializeField] private List<PhaseAttacks> Phases;
+    [SerializeField] private WingPhaseCrystal wingCrystalPrefab;
+
+
+    private int crystalAmountToDestroy = int.MaxValue;
+    private int crystalAmountDestroyed = 0;
     private List<WingAttack> currentAttacks;
-    float attackSwitchCooldown;
     bool switiching = false;
     bool attackOneActive = true;
-
+    float interval = 0;
+    float intervallength = 0;
     private int currentPhaseID = -1;
 
 
     [System.Serializable]
-    public class PhaseAttacks 
+    private class PhaseAttacks
     {
-        public List<PhaseAttack> attacks;
-        public float healthPercentageToTransiton;
+        public List<PhaseAttack> attackList;
+        public List<HeadCrystalPosition> crystals;
     }
 
     [System.Serializable]
-    public class PhaseAttack 
+    private class HeadCrystalPosition
     {
-        public List<WingAttack> attackWithoutOffset;
-        public List<WingAttack> attackWithOffset;
+        public float maxHealth;
+        public Vector3 position;
+    }
+    [System.Serializable]
+    private class PhaseAttack
+    {
+        public List<AttackList> attacks;
+
+    }
+
+    [System.Serializable]
+    private class AttackList
+    {
+        public List<WingAttack> attackGameobjects;
+        public float pushStrength;
+        public float projectileSpeed;
         public float attackDamage;
         public float attackInterval;
-        public float timerOffset;
+        public float attackCooldown;
         public float attackDuration;
         public float warnTime;
+
     }
     public void Awake()
     {
-        attacksOne = new List<WingAttack>();
-        attacksTwo = new List<WingAttack>();
         currentAttacks = new List<WingAttack>();
-        SetAllAttacksInactive();
-        TransitionPhase();
     }
     public override void OnEnable()
     {
         base.OnEnable();
-        ResetPhase();
+        //ResetPhase();
     }
 
-    public void TransitionPhase() 
+    public void TransitionPhase()
     {
+        crystalAmountDestroyed = 0;
         currentPhaseID++;
         SetAllAttacksInactive();
-        attacksOne.Clear();
-        attacksTwo.Clear();
         currentAttacks.Clear();
-        if (currentPhaseID >= Phases.Count) 
+        interval = 0;
+        if (currentPhaseID >= Phases.Count)
         {
-            Debug.Log("PhaseDone");
             return;
         }
-        foreach(PhaseAttack attackLists in Phases[currentPhaseID].attacks) 
+        foreach (PhaseAttack attackLists in Phases[currentPhaseID].attackList)
         {
-            foreach(WingAttack attack in attackLists.attackWithoutOffset) 
+            foreach (AttackList list in attackLists.attacks)
             {
-                attacksOne.Add(attack);
-                attack.attackInterval = attackLists.attackInterval;
-                attackSwitchCooldown = attackLists.attackInterval + attackLists.attackDuration;
-                attack.attackDuration = attackLists.attackDuration;
-                attack.warnduration = attackLists.warnTime;
-                attack._Damage = attackLists.attackDamage;
-                attack.gameObject.SetActive(true);
-            }
-            foreach (WingAttack attack in attackLists.attackWithOffset)
-            {
-                attacksTwo.Add(attack);
-                attack.attackInterval = attackLists.attackInterval;
-                attack.attackDuration = attackLists.attackDuration;
-                attack.warnduration = attackLists.warnTime;
-                //attack.timer = attackLists.timerOffset;
-                attack._Damage = attackLists.attackDamage;
-                attack.gameObject.SetActive(true);
 
+                foreach (WingAttack attack in list.attackGameobjects)
+                {
+                    attack.attackInterval = list.attackInterval;
+                    attack.projectileSpeed = list.projectileSpeed;
+                    attack.attackCooldown = list.attackCooldown;
+                    attack._Pushstrength = list.pushStrength;
+                    attack.attackDuration = list.attackDuration;
+                    attack.warnduration = list.warnTime;
+                    attack._Damage = list.attackDamage;
+                    attack.gameObject.SetActive(true);
+                    attack.SetPlayer(player);
+                    float maxTime = attack.attackInterval + attack.attackDuration;
+                    intervallength = maxTime > intervallength ? maxTime : intervallength;
+                    currentAttacks.Add(attack);
+                }
             }
         }
-        currentAttacks = attacksOne;
-        attackOneActive = true;
-    }
-    void InstanstSwapAttack()
-    {
-        if (attackOneActive)
+
+        foreach (HeadCrystalPosition crystal in Phases[currentPhaseID].crystals)
         {
-            currentAttacks = attacksTwo;
-            attackOneActive = false;
+
+            WingPhaseCrystal tmp = Instantiate(wingCrystalPrefab, crystal.position, Quaternion.identity, this.transform);
+            tmp.SetOwner(this);
+            tmp.maxHealth = crystal.maxHealth;
+            tmp.Heal();
         }
-        else
-        {
-            currentAttacks = attacksOne;
-            attackOneActive = true;
-        }
+        crystalAmountToDestroy = Phases[currentPhaseID].crystals.Count;
     }
 
-    IEnumerator SwapAttackLists()
+    public void CrystalDestroyed()
     {
-        switiching = true;
-        yield return new WaitForSeconds(attackSwitchCooldown);
-        if (attackOneActive) 
+        crystalAmountDestroyed += 1;
+        if (crystalAmountDestroyed >= crystalAmountToDestroy)
         {
-            currentAttacks = attacksTwo;
-            attackOneActive = false;
+            TransitionPhase();
         }
-        else 
-        {
-            currentAttacks = attacksOne;
-            attackOneActive = true;
-        }
-        switiching = false;
     }
     public void Loop(float delta)
     {
-        if (currentAttacks.Count == 0)
+        interval += delta;
+        foreach (WingAttack attack in currentAttacks)
         {
-            Debug.Log("current Attacks empty. An error accured or Phase is over");
-            InstanstSwapAttack();
-            return;
+            attack.Cycle(delta,interval);
         }
-        foreach(WingAttack attack in currentAttacks) 
+        if(interval >= intervallength) 
         {
-            attack.Cycle(delta);
-        }
-        if (!switiching)
-        {
-            StartCoroutine(SwapAttackLists());
+            interval = 0;
         }
 
     }
 
     public void Update()
     {
-        if(GetHealth() <=  (Phases[currentPhaseID].healthPercentageToTransiton/100) * GetMaxHealth()) 
-        {
-            TransitionPhase();
-        }
         Loop(Time.deltaTime);
     }
 
@@ -151,22 +143,20 @@ public class WingPhase : BossPhase
         TransitionPhase();
     }
 
-    public void SetAllAttacksInactive() 
+    public void SetAllAttacksInactive()
     {
         foreach (PhaseAttacks phase in Phases)
         {
 
-            foreach (PhaseAttack attackList in phase.attacks)
+            foreach (PhaseAttack attackList in phase.attackList)
             {
 
-                foreach (WingAttack attack in attackList.attackWithOffset)
+                foreach (var list in attackList.attacks)
                 {
-                    attack.gameObject.SetActive(false);
-                }
-
-                foreach (WingAttack attack in attackList.attackWithoutOffset)
-                {
-                    attack.gameObject.SetActive(false);
+                    foreach(var attack in list.attackGameobjects) 
+                    {
+                        attack.gameObject.SetActive(false);
+                    }
                 }
 
             }
@@ -175,5 +165,16 @@ public class WingPhase : BossPhase
 
     }
 
-   
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        foreach (var tmp in Phases)
+        {
+            Gizmos.color += new Color(0.1f, 0, 0);
+            foreach (HeadCrystalPosition crystal in tmp.crystals)
+            {
+                Gizmos.DrawSphere(crystal.position, 0.5f);
+            }
+        }
+    }
 }

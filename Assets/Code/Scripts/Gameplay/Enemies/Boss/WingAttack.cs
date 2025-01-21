@@ -1,112 +1,100 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WingAttack : MonoBehaviour
 {
-    private const int PUSH_AMOUNT = 20;
-    [SerializeField] ParticleSystem _AttackVFX;
-    [SerializeField] Vector2 _PushDirection;
-    [SerializeField] float _PushStrength;
-    [SerializeField] float _PushDelay;
-    [SerializeField] IsPlayerInTrigger _PlayerDetector;
     [SerializeField] GameObject warnZone;
+
+    [SerializeField] PusherProjectile _ProjectilePrefab;
+    public float projectileSpeed = 10f;
+    private Vector2 lookDirection = new Vector2(0, -1); //Default position
+
+    private List<PusherProjectile> projectiles = new List<PusherProjectile>();
     public float _Damage;
+    public float _Pushstrength;
     public float warnduration;
+    public float attackCooldown;
+    private float attackTimer = 0;
+    private bool canAttack;
     public float attackInterval;
     public float attackDuration;
-    public float timer;
-    private (Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null);
-    private bool attacking;
-    private float attackTimer;
+    private (Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player;
     
-
-    private void Push(Rigidbody2D target)
+    public void SetPlayer((Rigidbody2D, S_PlayerHealth) player) 
     {
-        //target.linearDamping = 0;
-        Vector2 pushforce = (_PushDirection.normalized * _PushStrength);
-        target.AddForce(pushforce);
-
+        _Player = player;
     }
 
-    IEnumerator DelayPush(Rigidbody2D target) 
-    {
-        for (int i = 0; i < PUSH_AMOUNT; i++)
+    private bool CanAttack() 
+    { 
+        if(Time.time >= attackTimer) 
         {
-            yield return new WaitForSeconds(_PushDelay);
-            Push(target);
+            canAttack = true;
+            attackTimer = Time.time +attackCooldown;
+            
         }
-        _Player.health.TakeDamage(((int)_Damage));
-    }
-
-    private void Playeffects()
-    {
-        _AttackVFX.Play();
+        return canAttack;
     }
 
     private void Awake()
     {
         warnZone.SetActive(false);
-        timer = attackInterval;
     }
+    
 
-    public void Attack()
+    public void Cycle(float delta, float timer)
     {
-        if (_Player.rigidbody2D == null || _Player.health == null)
-        {
-            Collider2D collision = _PlayerDetector.GetPlayer();
-            _Player.rigidbody2D = collision.gameObject.GetComponent<Rigidbody2D>();
-            _Player.health = collision.gameObject.GetComponent<S_PlayerHealth>();
-        }
-        if(transform.position.x <= _Player.rigidbody2D.transform.position.x) 
-        {
-            _PushDirection.x = 1;
-        }
-        else _PushDirection.x = -1;
-        StartCoroutine(DelayPush(_Player.rigidbody2D));
-        
-    }
-
-    public void Cycle(float delta)
-    {
-        if (warnZone != null && timer >= attackInterval - warnduration)
+        if (warnZone != null && timer >= attackInterval - warnduration && timer <= attackInterval)
         {
             warnZone.SetActive(true);
         }
-        if (timer >= attackInterval)
+        if (timer >= attackInterval && timer <= attackInterval+attackDuration && CanAttack())
         {
-            attacking = true;
-            Playeffects();
-            timer = 0;
-            if (_PlayerDetector.IsPlayerInBox())
-            {
-                Attack();
-            }
+            canAttack = false;
+            Shoot();
             warnZone.SetActive(false);
-        }
-        else if (attacking)
-        {
-            if (_PlayerDetector.IsPlayerInBox()) 
-            {
-                Attack();
-            }
-            
-            attackTimer += delta;
-            
-            if (attackTimer >= attackDuration)
-            {
-                attackTimer = 0;
-                attacking = false;
-            }
-        }
-        else 
-        {
-            timer += delta;
         }
     }
     public void OnEnable()
     {
         warnZone.SetActive(false);
-        timer = 0;
         attackTimer = 0;
+    }
+
+    public void Shoot() 
+    {
+        bool needMoreProjectiles = true;
+        foreach (PusherProjectile shot in projectiles)
+        {
+            if (!shot.gameObject.activeInHierarchy)
+            {
+                needMoreProjectiles = false;
+                shot.transform.position = transform.position;
+                shot.Init(_Player, _Pushstrength, _Damage);
+                float rotationAngle = transform.eulerAngles.z;
+                shot.SetVelocity(RotateVector2(lookDirection, rotationAngle), projectileSpeed);
+                shot.gameObject.SetActive(true);
+                break;
+
+            }
+
+        }
+        if (needMoreProjectiles)
+        {
+            PusherProjectile shot = Instantiate(_ProjectilePrefab, transform);
+            shot.Init(_Player, _Pushstrength, _Damage);
+            shot.gameObject.SetActive(true);
+            projectiles.Add(shot);
+
+        }
+    }
+    private Vector2 RotateVector2(Vector2 vector, float delta)
+    {
+        delta *= Mathf.Deg2Rad;
+        return new Vector2(
+            vector.x * Mathf.Cos(delta) - vector.y * Mathf.Sin(delta),
+            vector.x * Mathf.Sin(delta) + vector.y * Mathf.Cos(delta)
+    );
     }
 }
