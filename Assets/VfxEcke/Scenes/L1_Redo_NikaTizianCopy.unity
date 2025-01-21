@@ -4769,24 +4769,12 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2876985128780076601, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3038803841253255279, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_Name
       value: Player Controller
       objectReference: {fileID: 0}
     - target: {fileID: 3038803841253255279, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3409804111135636520, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
-      propertyPath: hasWallJump
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3409804111135636520, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
-      propertyPath: pickedUpDash
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4005090578499525825, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
@@ -4796,6 +4784,18 @@ PrefabInstance:
     - target: {fileID: 4005090578499525825, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4166460847696567367, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: jumpForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4166460847696567367, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: fallMultiplier
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4166460847696567367, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: whatIsGround.m_Bits
+      value: 264
       objectReference: {fileID: 0}
     - target: {fileID: 4770194614540401366, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.x

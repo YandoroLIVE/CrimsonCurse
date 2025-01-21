@@ -6,7 +6,8 @@ public class PlayerControllerNew : MonoBehaviour
 {
     // Serialized Fields
     [SerializeField] private float speed;
-
+    [SerializeField] private GameObject cameraPrefab;
+    
     [Header("Jumping")]
     [SerializeField] private float jumpForce;
     [SerializeField] private float fallMultiplier;
@@ -36,6 +37,8 @@ public class PlayerControllerNew : MonoBehaviour
     [HideInInspector] public bool isDashing = false;
     [HideInInspector] public bool actuallyWallGrabbing = false;
     [HideInInspector] public bool isCurrentlyPlayable = false;
+    public bool pickedUpDash = false;
+    public bool hasWallJump = false;
 
     // Private Fields
     private Rigidbody2D m_rb;
@@ -68,6 +71,10 @@ public class PlayerControllerNew : MonoBehaviour
     public static bool Jump() => Input.GetKeyDown(KeyCode.Space);
     public static bool Dash() => Input.GetKeyDown(KeyCode.LeftShift);
 
+    public void Awake()
+    {
+        Instantiate(cameraPrefab);
+    }
     private void Start()
     {
         if (transform.CompareTag("Player"))
@@ -223,6 +230,7 @@ public class PlayerControllerNew : MonoBehaviour
     private void HandleDashInput()
     {
         m_dashCooldown -= Time.deltaTime;
+        if (!pickedUpDash) return;
 
         if (!isDashing && !m_hasDashedInAir && m_dashCooldown <= 0f && Dash())
         {
@@ -239,11 +247,11 @@ public class PlayerControllerNew : MonoBehaviour
         {
             m_rb.linearVelocity = new Vector2(m_rb.linearVelocity.x, jumpForce);
         }
-        else if (Jump() && m_wallGrabbing && moveInput != m_onWallSide)
+        else if (hasWallJump && Jump() && m_wallGrabbing && moveInput != m_onWallSide)
         {
             PerformWallJump(wallJumpForce);
         }
-        else if (Jump() && m_wallGrabbing && moveInput == m_onWallSide)
+        else if (hasWallJump && Jump() && m_wallGrabbing && moveInput == m_onWallSide)
         {
             PerformWallJump(wallClimbForce);
         }
