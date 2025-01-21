@@ -27,8 +27,10 @@ public class TailPhase : BossPhase
         public TailAttackType type;
         public float speed;
         public float damage;
-        public float positonModifier;
-        public bool alternativeAttack;
+        //public float positonModifier;
+        //public bool alternativeAttack;
+        public Vector2 startPoint;
+        public Vector2 endPoint;
         public float chillTime;
         public Vector2 chillPoint;
     }
@@ -49,8 +51,8 @@ public class TailPhase : BossPhase
         attackObject.attackType = attackLoop[currentAttackID].type;
         attackObject.speed = attackLoop[currentAttackID].speed;
         attackObject.damage = attackLoop[currentAttackID].damage;
-        attackObject.positionModifier = attackLoop[currentAttackID].positonModifier;
-        attackObject.alternativeAttack = attackLoop[currentAttackID].alternativeAttack;
+        attackObject.originPoint= attackLoop[currentAttackID].startPoint;
+        attackObject.targetPoint = attackLoop[currentAttackID].endPoint;
         attackObject.chillTime = attackLoop[currentAttackID].chillTime;
         attackObject.restingPosition = attackLoop[currentAttackID].chillPoint;
         attackObject.PrepareNewAttack();
@@ -59,13 +61,10 @@ public class TailPhase : BossPhase
 
     private void Awake()
     {
-        attackObject.slamAttackStartYValue = slamAttackStartYValue;
-        attackObject.swipeAttackStartXValue = swipeAttackStartXValue;
-        attackObject.groundYLevel = groundYLevel;
         attackObject.shockwaveSpeed = shockwaveSpeed;
         attackObject.SetOnwer(this);
         crystal.maxHealth = headCrystalPoint.maxHealth;
-        crystal.transform.position = headCrystalPoint.position;
+        //crystal.transform.position = headCrystalPoint.position;
         crystal.Heal();
         crystal.SetOwner(this);
         crystalColl = crystal.GetComponent<Collider2D>();
@@ -98,11 +97,18 @@ public class TailPhase : BossPhase
 
     private void OnDrawGizmos()
     {
+        float x = 0f;
         Gizmos.color = Color.yellow;
         foreach(AttackStats stat in attackLoop) 
         {
+            Gizmos.color = Color.red;
+            Gizmos.color += new Color(0, 0, x);
             Gizmos.DrawSphere(stat.chillPoint,0.5f);
-            Gizmos.color += new Color(0, 0.1f, 0);
+            Gizmos.color = Color.yellow;
+            Gizmos.color += new Color(x, 0, 0);
+            Gizmos.DrawSphere(stat.startPoint, 0.5f);
+            Gizmos.DrawWireSphere(stat.endPoint, 0.5f);
+            x += 0.1f;
         }
     }
 

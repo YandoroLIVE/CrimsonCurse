@@ -12,23 +12,19 @@ public class TailAttack : MonoBehaviour
     [SerializeField] TailattackShockwave rightShockWave;
     public float shockwaveSpeed;
     private const float SNAP_AREA = 0.25f;
-    public float groundYLevel;
     public float slamAttackStartYValue = 10;
     public float swipeAttackStartXValue = 20;
-    private Vector3 originPoint;
-    private Vector2 targetPoint;
+    public Vector3 originPoint;
+    public Vector2 targetPoint;
     public Vector2 restingPosition;
-    public float positionModifier;
     public float speed;
     public float damage;
     public float chillTime = 2f;
-    private float hitTimer = 0;
     public S_PlayerHealth player;
     public bool alternativeAttack = false;
     private TailPhase owner;
     public TailAttackType attackType;
     bool retreating;
-    float dirModifier;
     bool finishedAttack;
     bool chilling = false;
     public void SetOnwer(TailPhase pawPhase)
@@ -39,7 +35,6 @@ public class TailAttack : MonoBehaviour
 
     public void Awake()
     {
-        hitTimer -= chillTime;
         leftShockWave.SetOwner(this);
         leftShockWave.goalXPos = -swipeAttackStartXValue;
         leftShockWave.speed = shockwaveSpeed;
@@ -52,23 +47,23 @@ public class TailAttack : MonoBehaviour
     {
         if (attackType == TailAttackType.SwipeAttack)
         {
-            dirModifier = alternativeAttack? -1 : 1;
-            Vector3 posOffset =new Vector3(swipeAttackStartXValue* dirModifier, positionModifier, 0) ;
-            originPoint = owner.transform.position + posOffset;
-            //transform.position = originPoint;
-            posOffset.x = -posOffset.x * 2;
-            posOffset.y = 0;
-            targetPoint = originPoint + posOffset;
+            //dirModifier = alternativeAttack? -1 : 1;
+            //Vector3 posOffset =new Vector3(swipeAttackStartXValue* dirModifier, positionModifier, 0) ;
+            //originPoint = owner.transform.position + posOffset;
+            ////transform.position = originPoint;
+            //posOffset.x = -posOffset.x * 2;
+            //posOffset.y = 0;
+            //targetPoint = originPoint + posOffset;
             retreating = true;
 
         }
 
         else if (attackType == TailAttackType.SlamAttack)
         {
-            Vector3 posOffset = new Vector3(positionModifier, slamAttackStartYValue, 0);
-            originPoint = new Vector3(owner.transform.position.x + posOffset.x, posOffset.y,owner.transform.position.z);
-            //transform.position = originPoint;
-            targetPoint = new Vector2(originPoint.x, groundYLevel);
+            //Vector3 posOffset = new Vector3(positionModifier, slamAttackStartYValue, 0);
+            //originPoint = new Vector3(owner.transform.position.x + posOffset.x, posOffset.y,owner.transform.position.z);
+            ////transform.position = originPoint;
+            //targetPoint = new Vector2(originPoint.x, groundYLevel);
             retreating = true;
         }
     }
@@ -146,27 +141,12 @@ public class TailAttack : MonoBehaviour
     public void OnTriggerStay2D(Collider2D collision)
     {
 
-        if (Time.time >= hitTimer + chillTime)
-        {
-            hitTimer = Time.time;
-            if (player == null)
-            {
-                player = owner.player.health;
-            }
-            player.TakeDamage((int)damage);
-        }
+        
 
     }
 
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(originPoint,0.5f);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(targetPoint,0.5f);
-    }
-
+  
 
 
 }
