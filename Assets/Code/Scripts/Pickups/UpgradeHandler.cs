@@ -14,6 +14,7 @@ public class UpgradeHandler : MonoBehaviour
     private bool _PickedUpLongrange = false;
     [SerializeField] private GameObject _LongrangeIcon;
 
+
     public static UpgradeHandler GetInstance() 
     {
         if(_Instance == null) 
