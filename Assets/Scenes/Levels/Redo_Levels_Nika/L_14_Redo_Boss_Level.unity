@@ -3401,11 +3401,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: groundYLevel
-      value: -9.73
+      value: -9.86
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: shockwaveSpeed
-      value: 6
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: arenaGameObject
@@ -3413,7 +3413,7 @@ PrefabInstance:
       objectReference: {fileID: 938360027}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: attackLoop.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: slamAttackStartYValue
@@ -3421,7 +3421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: headCrystalPoint.maxHealth
-      value: 200
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: attackLoop.Array.data[1].type
@@ -3429,55 +3429,231 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: attackLoop.Array.data[2].type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[3].type
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[4].type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: attackLoop.Array.data[0].speed
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: attackLoop.Array.data[1].speed
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: attackLoop.Array.data[2].speed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[3].speed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[4].speed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[5].speed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[0].damage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[1].damage
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: attackLoop.Array.data[2].damage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[3].damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[4].damage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[5].damage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[0].chillTime
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: attackLoop.Array.data[1].chillTime
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: attackLoop.Array.data[2].chillTime
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
-      propertyPath: attackLoop.Array.data[0].chillPoint.x
-      value: 15.28
+      propertyPath: attackLoop.Array.data[3].chillTime
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
-      propertyPath: attackLoop.Array.data[0].chillPoint.y
-      value: -9.3
+      propertyPath: attackLoop.Array.data[4].chillTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
-      propertyPath: attackLoop.Array.data[1].chillPoint.x
-      value: 0.03
+      propertyPath: attackLoop.Array.data[5].chillTime
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
-      propertyPath: attackLoop.Array.data[1].chillPoint.y
-      value: -9.18
+      propertyPath: attackLoop.Array.data[0].endPoint.x
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
-      propertyPath: attackLoop.Array.data[2].chillPoint.x
+      propertyPath: attackLoop.Array.data[0].endPoint.y
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[1].endPoint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[1].endPoint.y
+      value: -9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[2].endPoint.x
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[2].endPoint.y
+      value: -9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[3].endPoint.x
       value: -13
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
-      propertyPath: attackLoop.Array.data[2].chillPoint.y
+      propertyPath: attackLoop.Array.data[3].endPoint.y
+      value: -9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[4].endPoint.x
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[4].endPoint.y
+      value: -9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[5].endPoint.x
+      value: -18
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[5].endPoint.y
+      value: -9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[0].chillPoint.x
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[0].chillPoint.y
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[0].startPoint.x
+      value: -13
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[0].startPoint.y
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[1].chillPoint.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[1].chillPoint.y
+      value: -9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[1].startPoint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[1].startPoint.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[2].chillPoint.x
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[2].chillPoint.y
+      value: -9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[2].startPoint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[2].startPoint.y
+      value: -9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[3].chillPoint.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[3].chillPoint.y
+      value: -9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[3].startPoint.x
+      value: -13
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[3].startPoint.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[4].chillPoint.x
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[4].chillPoint.y
+      value: -9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[4].startPoint.x
+      value: -13
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[4].startPoint.y
+      value: -9.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[5].chillPoint.x
+      value: -18
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[5].chillPoint.y
+      value: -9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[5].startPoint.x
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: attackLoop.Array.data[5].startPoint.y
+      value: -9.37
       objectReference: {fileID: 0}
     - target: {fileID: 675012763254964913, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: attackLoop.Array.data[0].positonModifier
