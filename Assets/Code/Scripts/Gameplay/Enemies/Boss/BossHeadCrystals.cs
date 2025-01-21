@@ -4,10 +4,10 @@ public class BossHeadCrystals : MonoBehaviour, IHurtable
 {
     public float maxHealth = 100;
     public float currentHealth;
-    private HeadPhase owner;
+    private BossPhase owner;
     public bool destroyed;
 
-    public void SetOwner(HeadPhase headPhase) 
+    public void SetOwner(BossPhase headPhase) 
     {
         owner = headPhase;    
     }
@@ -28,7 +28,6 @@ public class BossHeadCrystals : MonoBehaviour, IHurtable
     public void Hurt(float damage) 
     {
         currentHealth -= damage;
-        Debug.Log(currentHealth);
         if (currentHealth <= 0) 
         {
             this.gameObject.SetActive(false);
