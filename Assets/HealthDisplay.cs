@@ -19,6 +19,5 @@ public class HealthDisplay : MonoBehaviour
         {
             crystals[i].enabled = i < visibleCrystals;
         }
-        Debug.Log("Spieler leben sind:" + playerHealth.currentHealth);
     }
 }
