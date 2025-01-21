@@ -13,9 +13,6 @@ public class TailPhase : BossPhase
     [SerializeField] private HeadCrystalPoint headCrystalPoint;
     [SerializeField] private BossHeadCrystals crystal;
     [SerializeField] private float shockwaveSpeed;
-    [SerializeField] private float groundYLevel;
-    [SerializeField] private float slamAttackStartYValue = 10;
-    [SerializeField] private float swipeAttackStartXValue = 20;
     [SerializeField] TailAttack attackObject;
     private bool vulnerable = false;
     private int currentAttackID = -1;
@@ -27,8 +24,6 @@ public class TailPhase : BossPhase
         public TailAttackType type;
         public float speed;
         public float damage;
-        //public float positonModifier;
-        //public bool alternativeAttack;
         public Vector2 startPoint;
         public Vector2 endPoint;
         public float chillTime;
@@ -55,6 +50,7 @@ public class TailPhase : BossPhase
         attackObject.targetPoint = attackLoop[currentAttackID].endPoint;
         attackObject.chillTime = attackLoop[currentAttackID].chillTime;
         attackObject.restingPosition = attackLoop[currentAttackID].chillPoint;
+        attackObject.shockwaveSpeed = shockwaveSpeed;
         attackObject.PrepareNewAttack();
 
     }
