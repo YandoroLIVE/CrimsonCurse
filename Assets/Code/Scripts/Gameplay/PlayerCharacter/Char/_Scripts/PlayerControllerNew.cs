@@ -13,7 +13,6 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private int extraJumpCount = 1;
     [SerializeField] private GameObject jumpEffect;
 
     [Header("Dashing")]
@@ -31,7 +30,7 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField] public Vector2 wallClimbForce = new Vector2(4f, 14f);
 
     // Public Fields
-    [HideInInspector] public bool isGrounded;
+    [SerializeField] public bool isGrounded;
     [HideInInspector] public float moveInput;
     [HideInInspector] public bool canMove = true;
     [HideInInspector] public bool isDashing = false;
@@ -45,18 +44,17 @@ public class PlayerControllerNew : MonoBehaviour
 
     private readonly float m_groundedRememberTime = 0.25f;
     private float m_groundedRemember;
-    private int m_extraJumps;
-    private float m_extraJumpForce;
     private float m_dashTime;
     private bool m_hasDashedInAir;
     private bool m_onWall;
     private bool m_onRightWall;
     private bool m_onLeftWall;
     private bool m_wallGrabbing;
-    private readonly float m_wallStickTime = 0.25f;
+    private readonly float m_wallStickTime = 1.25f;
     private float m_wallStick;
     private bool m_wallJumping;
     private float m_dashCooldown;
+
 
     private int m_onWallSide;
     private int m_playerSide = 1;
@@ -75,24 +73,22 @@ public class PlayerControllerNew : MonoBehaviour
         if (transform.CompareTag("Player"))
             isCurrentlyPlayable = true;
 
-        m_extraJumps = extraJumpCount;
         m_dashTime = startDashTime;
         m_dashCooldown = dashCooldown;
-        m_extraJumpForce = jumpForce * 0.7f;
 
         m_rb = GetComponent<Rigidbody2D>();
         m_dustParticle = GetComponentInChildren<ParticleSystem>();
     }
+
 
     private void FixedUpdate()
     {
         UpdateGroundedState();
         UpdateWallState();
         CalculateSides();
-        HandleWallGrab();
+        HandleWallSlide();
         HandleMovement();
         HandleDash();
-        UpdateDustParticles();
     }
 
     private void Update()
@@ -104,19 +100,47 @@ public class PlayerControllerNew : MonoBehaviour
 
     private void UpdateGroundedState()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckRadius, whatIsGround);
+        isGrounded = false;
+
+        foreach (var collider in colliders)
+        {
+            if (collider.isTrigger == false)
+            {
+                isGrounded = true;
+                break;
+            }
+        }
         m_groundedRemember -= Time.deltaTime;
-        if (isGrounded) m_groundedRemember = m_groundedRememberTime;
+        if (isGrounded)
+        {
+            m_groundedRemember = m_groundedRememberTime;
+            if (m_wallJumping)
+            {
+                m_wallJumping = false;  // Reset WallJump flag after landing
+            }
+        }
     }
 
     private void UpdateWallState()
     {
         var position = (Vector2)transform.position;
-        m_onWall = Physics2D.OverlapCircle(position + grabRightOffset, grabCheckRadius, whatIsGround) ||
-                   Physics2D.OverlapCircle(position + grabLeftOffset, grabCheckRadius, whatIsGround);
-        m_onRightWall = Physics2D.OverlapCircle(position + grabRightOffset, grabCheckRadius, whatIsGround);
-        m_onLeftWall = Physics2D.OverlapCircle(position + grabLeftOffset, grabCheckRadius, whatIsGround);
+        Collider2D[] rightColliders = Physics2D.OverlapCircleAll(position + grabRightOffset, grabCheckRadius, whatIsGround);
+        m_onRightWall = CheckIfNonTrigger(rightColliders);
+        Collider2D[] leftColliders = Physics2D.OverlapCircleAll(position + grabLeftOffset, grabCheckRadius, whatIsGround);
+        m_onLeftWall = CheckIfNonTrigger(leftColliders);
+        m_onWall = m_onRightWall || m_onLeftWall;
     }
+    private bool CheckIfNonTrigger(Collider2D[] colliders)
+    {
+        foreach (var collider in colliders)
+        {
+            if (!collider.isTrigger)
+                return true;
+        }
+        return false;
+    }
+
 
     private void CalculateSides()
     {
@@ -124,8 +148,9 @@ public class PlayerControllerNew : MonoBehaviour
         m_playerSide = m_facingRight ? 1 : -1;
     }
 
-    private void HandleWallGrab()
+    private void HandleWallSlide()
     {
+
         if (m_onWall && !isGrounded && m_rb.linearVelocity.y <= 0f && m_playerSide == m_onWallSide)
         {
             m_wallGrabbing = true;
@@ -153,7 +178,15 @@ public class PlayerControllerNew : MonoBehaviour
         }
         else if (canMove && !m_wallGrabbing)
         {
-            m_rb.linearVelocity = new Vector2(moveInput * speed, m_rb.linearVelocity.y);
+            // Setze die horizontale Geschwindigkeit auf 0, wenn keine Eingabe erfolgt
+            if (moveInput == 0f)
+            {
+                m_rb.linearVelocity = new Vector2(0f, m_rb.linearVelocity.y);
+            }
+            else
+            {
+                m_rb.linearVelocity = new Vector2(moveInput * speed, m_rb.linearVelocity.y);
+            }
         }
         else if (!canMove)
         {
@@ -202,12 +235,7 @@ public class PlayerControllerNew : MonoBehaviour
 
     private void HandleJump()
     {
-        if (Jump() && m_extraJumps > 0 && !isGrounded && !m_wallGrabbing)
-        {
-            m_rb.linearVelocity = new Vector2(m_rb.linearVelocity.x, m_extraJumpForce);
-            m_extraJumps--;
-        }
-        else if (Jump() && (isGrounded || m_groundedRemember > 0f))
+        if (Jump() && isGrounded)
         {
             m_rb.linearVelocity = new Vector2(m_rb.linearVelocity.x, jumpForce);
         }
@@ -221,6 +249,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
     }
 
+
     private void PerformWallJump(Vector2 force)
     {
         m_wallGrabbing = false;
@@ -228,19 +257,6 @@ public class PlayerControllerNew : MonoBehaviour
         if (m_playerSide == m_onWallSide) Flip();
         m_rb.AddForce(new Vector2(-m_onWallSide * force.x, force.y), ForceMode2D.Impulse);
     }
-
-    private void UpdateDustParticles()
-    {
-        if (m_rb.linearVelocity.sqrMagnitude == 0f && m_dustParticle.isPlaying)
-        {
-            m_dustParticle.Stop();
-        }
-        else if (m_rb.linearVelocity.sqrMagnitude > 0f && !m_dustParticle.isPlaying)
-        {
-            m_dustParticle.Play();
-        }
-    }
-
     private void Flip()
     {
         m_facingRight = !m_facingRight;
