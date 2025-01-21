@@ -72,6 +72,7 @@ public class WingPhase : BossPhase
         interval = 0;
         if (currentPhaseID >= Phases.Count)
         {
+            EndPhase();
             return;
         }
         foreach (PhaseAttack attackLists in Phases[currentPhaseID].attackList)
