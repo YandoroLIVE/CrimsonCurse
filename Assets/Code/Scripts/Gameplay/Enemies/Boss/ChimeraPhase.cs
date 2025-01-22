@@ -1,7 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ChimeraPhase : BossPhase
 {
+    [SerializeField] List<GameObject> objectsToSpawn = new List<GameObject>();
+    public float objectSpawnTime = 0.25f;
+    private float objectSpawnTimer = 0;
+    private int currentObjectID =0;
     public float phaseHealth;
     private float currentHealth;
     public float damage;
@@ -37,6 +42,15 @@ public class ChimeraPhase : BossPhase
 
     public void Loop(float delta) 
     {
+        if(Time.time >= objectSpawnTimer) 
+        {
+            objectSpawnTimer = Time.time+objectSpawnTime;
+            if (currentObjectID < objectsToSpawn.Count)
+            {
+                objectsToSpawn[currentObjectID].SetActive(true);
+                currentObjectID++;
+            }
+        }
         attackTime += delta;
         if (attackTime > attackCooldown - appearTime && !appeared) 
         {
@@ -74,9 +88,26 @@ public class ChimeraPhase : BossPhase
         }
     }
 
+
+    public override void ResetPhase()
+    {
+        base.ResetPhase();
+        currentHealth = phaseHealth;
+        currentObjectID = 0;
+        foreach (GameObject obj in objectsToSpawn)
+        {
+            obj.SetActive(false);
+        }
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(targetPoint,Vector3.one);
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        ResetPhase();
     }
 }

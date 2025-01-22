@@ -7,6 +7,8 @@ public abstract class BossPhase : MonoBehaviour
     [SerializeField] GameObject arenaGameObject;
     public (Rigidbody2D rigidbody, S_PlayerHealth health) player;
     public float arenaApearDelay = 0.5f;
+    public int healthCrystalHealAmount;
+    [HideInInspector] public HealthPickup healthCrystal;
     //[SerializeField] private float phaseHealth = 25;
     //float health;
     public virtual bool IsFinished() 
@@ -49,23 +51,12 @@ public abstract class BossPhase : MonoBehaviour
         else Debug.Log("No Arena gameobject found");
     }
 
-    //public float GetMaxHealth() 
-    //{
-    //    return phaseHealth;
-    //}
-
-    //public virtual void Hurt(float damage)
-    //{
-    //    health -= damage;
-    //    if (health <= 0f)
-    //    {
-    //        EndPhase();
-    //    }
-    //}
-
     public virtual void EndPhase() 
     {
         gameObject.SetActive(false);
+        healthCrystal.transform.position = this.transform.position;
+        healthCrystal.healthToRestore = healthCrystalHealAmount;
+        healthCrystal.gameObject.SetActive(true);
         isDone = true;
     }
 
