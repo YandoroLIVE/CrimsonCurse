@@ -10,6 +10,7 @@ public class TailAttack : MonoBehaviour
 {
     [SerializeField] TailattackShockwave leftShockWave;
     [SerializeField] TailattackShockwave rightShockWave;
+    public SpriteRenderer sprite;
     public float shockwaveSpeed;
     private const float SNAP_AREA = 0.25f;
     private const float slamAttackStartYValue = 10;
@@ -142,8 +143,10 @@ public class TailAttack : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        player.TakeDamage((int)damage);       
-
+        if(!owner.vulnerable)
+        {
+            player.TakeDamage((int)damage);       
+        }    
     }
 
 

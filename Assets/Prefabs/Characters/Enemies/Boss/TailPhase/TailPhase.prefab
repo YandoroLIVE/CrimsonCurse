@@ -48,18 +48,14 @@ MonoBehaviour:
   isDone: 0
   arenaGameObject: {fileID: 0}
   arenaApearDelay: 0.5
+  healthCrystalHealAmount: 0
+  healthCrystal: {fileID: 0}
+  attackLoop: []
   headCrystalPoint:
     maxHealth: 0
     position: {x: 0, y: 0, z: 0}
-  slamAttackStartYValue: 10
-  swipeAttackStartXValue: 20
-  maxXPos: 0
-  attackCooldown: 0
-  pawSpeed: 0
-  pawDamage: 0
-  pawReturnSpeed: 0
-  homingFactor: 0
-  hitBoxSize: 3
+  crystal: {fileID: 0}
+  shockwaveSpeed: 0
   attackObject: {fileID: 8984050109298558947}
 --- !u!1 &7157798556229834186
 GameObject:
@@ -107,12 +103,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b0b70a29b2fe941a1484b34392b82c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxXPositon: 0
+  leftShockWave: {fileID: 0}
+  rightShockWave: {fileID: 0}
+  shockwaveSpeed: 0
+  originPoint: {x: 0, y: 0, z: 0}
+  targetPoint: {x: 0, y: 0}
+  restingPosition: {x: 0, y: 0}
   speed: 0
-  returnSpeed: 0
   damage: 0
-  hitCooldown: 2
-  homingFactor: 0.1
+  chillTime: 2
+  player: {fileID: 0}
+  alternativeAttack: 0
+  attackType: 0
 --- !u!58 &6969386053041018939
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -129,7 +131,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 191
+    m_Bits: 447
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

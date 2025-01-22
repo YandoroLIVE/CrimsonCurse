@@ -3259,6 +3259,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!212 &305702742 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6948336967069903266, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+  m_PrefabInstance: {fileID: 561257645}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &307521613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5660262020041851683, guid: b6ca78e0b4626f245a44a74020b1f71f, type: 3}
@@ -8253,6 +8258,10 @@ PrefabInstance:
       propertyPath: headCrystalPoints.Array.data[3].position.y
       value: 5.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1468827519154156512, guid: a5f294aaffe71424d8318550fba86368, type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 305702742}
     - target: {fileID: 1582163517157336833, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -8387,11 +8396,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3675621906442894515, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: Phases.Array.data[1].crystalsToDestroy
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3675621906442894515, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: Phases.Array.data[2].crystalsToDestroy
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3675621906442894515, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: Phases.Array.data[0].crystals.Array.size
@@ -8779,7 +8788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5594829865038166698, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5621874644612979425, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: m_Enabled
