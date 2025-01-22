@@ -9,7 +9,7 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField] private GameObject cameraPrefab;
     [SerializeField] private ParticleSystem m_dustParticle;
     [SerializeField] private ParticleSystem m_LeafParticle;
-    
+
     [Header("Jumping")]
     [SerializeField] private float jumpForce;
     [SerializeField] private float fallMultiplier;
@@ -18,6 +18,7 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private ParticleSystem jumpEffect;
     [SerializeField] private ParticleSystem impactEffect;
+    [SerializeField] private float jumpBufferTime = 0.2f;
 
     [Header("Dashing")]
     [SerializeField] private float dashSpeed = 30f;
@@ -52,6 +53,7 @@ public class PlayerControllerNew : MonoBehaviour
     private float m_dashTime;
     private bool m_hasDashedInAir;
     private bool m_onWall;
+    private float jumpBufferCounter;
     private bool m_onRightWall;
     private bool m_onLeftWall;
     private bool m_wallGrabbing;
@@ -118,7 +120,7 @@ public class PlayerControllerNew : MonoBehaviour
     private void Update()
     {
         moveInput = HorizontalRaw();
-        HandleJump();
+        HandleJumpBuffer(); 
         HandleDashInput();
     }
 
@@ -211,7 +213,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
         else if (canMove && !m_wallGrabbing)
         {
-            // Setze die horizontale Geschwindigkeit auf 0, wenn keine Eingabe erfolgt
+           
             if (moveInput == 0f)
             {
                 m_rb.linearVelocity = new Vector2(0f, m_rb.linearVelocity.y);
@@ -270,18 +272,37 @@ public class PlayerControllerNew : MonoBehaviour
 
     private void HandleJump()
     {
-        if (Jump() && isGrounded)
-        {
-            jumpEffect.Play();
-            m_rb.linearVelocity = new Vector2(m_rb.linearVelocity.x, jumpForce);
-        }
-        else if (hasWallJump && Jump() && m_wallGrabbing && moveInput != m_onWallSide)
+        
+        if (hasWallJump && Jump() && m_wallGrabbing && moveInput != m_onWallSide)
         {
             PerformWallJump(wallJumpForce);
         }
         else if (hasWallJump && Jump() && m_wallGrabbing && moveInput == m_onWallSide)
         {
             PerformWallJump(wallClimbForce);
+        }
+    }
+    private void JumpAction()
+    {
+        jumpEffect.Play();
+        m_rb.linearVelocity = new Vector2(m_rb.linearVelocity.x, jumpForce);
+    }
+
+
+    private void HandleJumpBuffer()
+    {
+        if (Jump())
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+        if (isGrounded && jumpBufferCounter > 0f)
+        {
+            JumpAction();
+            jumpBufferCounter = 0f;
         }
     }
 
