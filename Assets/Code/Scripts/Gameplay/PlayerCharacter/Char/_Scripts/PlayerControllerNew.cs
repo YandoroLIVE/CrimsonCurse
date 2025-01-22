@@ -5,6 +5,7 @@ public class PlayerControllerNew : MonoBehaviour
     // Serialized Fields
     [SerializeField] private float speed;
     [SerializeField] private bool forrestLevel;
+    [SerializeField] private bool spawnCamera = true;
     [SerializeField] private GameObject cameraPrefab;
     [SerializeField] private ParticleSystem m_dustParticle;
     [SerializeField] private ParticleSystem m_LeafParticle;
@@ -74,7 +75,10 @@ public class PlayerControllerNew : MonoBehaviour
 
     public void Awake()
     {
-        Instantiate(cameraPrefab);
+        if(spawnCamera)
+        {
+            Instantiate(cameraPrefab);
+        }
         if (forrestLevel) 
         {
             m_LeafParticle.gameObject.SetActive(true);
