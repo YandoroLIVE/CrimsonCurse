@@ -20,9 +20,9 @@ public class HeadPhase : BossPhase
     public float crystalRespawnTime = 5f;
     public float crystalDamage = 5f;
     public float crystalSpeed = 7f;
-    private List<float> crystalDownTimers;
-    private List<int> disabledCrystals;
-    List<CrystalProjectileEnemy> crystalObjects;
+    private List<float> crystalDownTimers = new();
+    private List<int> disabledCrystals = new();
+    List<CrystalProjectileEnemy> crystalObjects = new();
     private Boss owner;
 
     
