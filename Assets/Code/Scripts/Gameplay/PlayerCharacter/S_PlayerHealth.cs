@@ -66,6 +66,17 @@ public class S_PlayerHealth : MonoBehaviour
             }
         }
     }
+
+    public void Heal(int healAmount) 
+    {
+        _CurrentHealth += healAmount;
+        if (_CurrentHealth > maxHealth) 
+        {
+            _CurrentHealth = maxHealth;
+        }
+        currentHealth = _CurrentHealth;
+    
+    }
     void Die()
     {
         if (Safepoint.GetCurrentSafepoint() != null)
