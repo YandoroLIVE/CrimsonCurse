@@ -12,7 +12,7 @@ public class WingPhase : BossPhase
 
     private int crystalAmountToDestroy = int.MaxValue;
     private int crystalAmountDestroyed = 0;
-    private List<WingAttack> currentAttacks;
+    private List<WingAttack> currentAttacks = new();
     bool switiching = false;
     bool attackOneActive = true;
     float interval = 0;

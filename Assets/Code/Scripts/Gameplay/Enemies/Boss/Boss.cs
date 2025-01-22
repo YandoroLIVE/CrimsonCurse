@@ -29,6 +29,7 @@ public class Boss : MonoBehaviour
             phase.player.health = player.health;
             phase.player.rigidbody = player.rigidbody;
             phase.healthCrystal = healthCrystal;
+            phase.ResetPhase();
         }
         phaseTransitions.First().gameObject.SetActive(true);
         phaseTransitions[currentPhaseCounter].ResetPhase();
