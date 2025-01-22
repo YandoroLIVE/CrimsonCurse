@@ -24,6 +24,7 @@ public class ChimeraPhase : BossPhase
     private void Awake()
     {
         ResetPhase();
+        Debug.Log("test");
     }
 
     public Vector2 GenerateRandomPointInRadius() 

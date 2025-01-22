@@ -9,10 +9,11 @@ public class WingPhase : BossPhase
     [SerializeField] private List<PhaseAttacks> Phases;
     [SerializeField] private WingPhaseCrystal wingCrystalPrefab;
     [SerializeField] private List<HeadCrystalPosition> crystals;
+    private List<WingPhaseCrystal> crystalobjects = new();
 
     private int crystalAmountToDestroy = int.MaxValue;
     private int crystalAmountDestroyed = 0;
-    private List<WingAttack> currentAttacks;
+    private List<WingAttack> currentAttacks = new();
     bool switiching = false;
     bool attackOneActive = true;
     float interval = 0;
@@ -133,6 +134,11 @@ public class WingPhase : BossPhase
     {
         base.ResetPhase();
         currentPhaseID = -1;
+        foreach (WingPhaseCrystal crystal in crystalobjects) 
+        {
+            Destroy(crystal);
+        }
+        crystalobjects.Clear();
         foreach (HeadCrystalPosition crystal in crystals)
         {
 
@@ -140,6 +146,7 @@ public class WingPhase : BossPhase
             tmp.SetOwner(this);
             tmp.maxHealth = crystal.maxHealth;
             tmp.Heal();
+            crystalobjects.Add(tmp);
         }
         SetAllAttacksInactive();
         TransitionPhase();
