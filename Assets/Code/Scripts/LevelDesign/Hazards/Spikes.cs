@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class Spikes : MonoBehaviour
 {
-    private const int FIRST_LEVEL_BUILD_INDEX = 1;
+    private const string FIRST_LEVEL_NAME = "L1_Redo_Nika";
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Return to safepoint
@@ -14,7 +14,7 @@ public class Spikes : MonoBehaviour
 
         else
         {
-            SceneManager.LoadScene(SceneManager.GetSceneByBuildIndex(FIRST_LEVEL_BUILD_INDEX).name);
+            SceneManager.LoadScene(FIRST_LEVEL_NAME);
         }
     }
 }
