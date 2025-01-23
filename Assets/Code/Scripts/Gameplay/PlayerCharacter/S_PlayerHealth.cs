@@ -1,5 +1,6 @@
 
 using System.Collections;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,14 +10,16 @@ public class S_PlayerHealth : MonoBehaviour
     private static S_PlayerHealth _instance;
     const float HIT_BLINK_DURATION = 0.1f;
     const string FIRST_LEVEL_BUILD_NAME = "L1_Redo_Nika";
-    public int maxHealth = 100;
+    public int maxHealth = 50;
+    public int _StartHealth = 30;
+    public int _RespawnHealh = 50;
     public float invincibilityTime = 0.1f;
     private float invincibilityTimer = 0;
     private static int _CurrentHealth = 0;
-    public int currentHealth;
+    [HideInInspector] public int currentHealth;
     public Color HitColor;
     [SerializeField] SpriteRenderer _Sprite;
-
+    static bool oneTime = false;
 
     public static S_PlayerHealth GetInstance() 
     {
@@ -31,7 +34,11 @@ public class S_PlayerHealth : MonoBehaviour
 
     void Start()
     {
-
+        if (!oneTime) 
+        {
+            _CurrentHealth = _StartHealth;
+            oneTime = true;
+        }
         _instance = this;
         if (_CurrentHealth <= 0)
         {
@@ -77,9 +84,18 @@ public class S_PlayerHealth : MonoBehaviour
         currentHealth = _CurrentHealth;
     
     }
+    private void SetHealth(int amount) 
+    {
+        if(amount > maxHealth) 
+        {
+            amount = maxHealth;
+        }
+        _CurrentHealth = amount;
+        currentHealth = _CurrentHealth;
+    }
     void Die()
     {
-        Heal(maxHealth);
+        SetHealth(_RespawnHealh);
         if (Safepoint.GetCurrentSafepoint() != null)
         {
             SafepointObject.LoadCurrentSafepoint();
