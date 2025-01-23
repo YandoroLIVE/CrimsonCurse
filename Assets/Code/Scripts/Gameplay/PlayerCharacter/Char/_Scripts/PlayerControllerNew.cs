@@ -1,15 +1,16 @@
+using UnityEditor.EditorTools;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerControllerNew : MonoBehaviour
 {
     // Serialized Fields
     [SerializeField] private float speed;
     [SerializeField] private bool forrestLevel;
-    [SerializeField] private bool spawnCamera = true;
     [SerializeField] private GameObject cameraPrefab;
     [SerializeField] private ParticleSystem m_dustParticle;
     [SerializeField] private ParticleSystem m_LeafParticle;
-    
+
     [Header("Jumping")]
     [SerializeField] private float jumpForce;
     [SerializeField] private float fallMultiplier;
@@ -75,17 +76,14 @@ public class PlayerControllerNew : MonoBehaviour
 
     public void Awake()
     {
-        if(spawnCamera)
-        {
-            Instantiate(cameraPrefab);
-        }
-        if (forrestLevel) 
+        Instantiate(cameraPrefab);
+        if (forrestLevel)
         {
             m_LeafParticle.gameObject.SetActive(true);
             m_LeafParticle.Play();
             runParticle = m_LeafParticle;
         }
-        else 
+        else
         {
             m_dustParticle.gameObject.SetActive(true);
             m_dustParticle.Play();
@@ -132,7 +130,7 @@ public class PlayerControllerNew : MonoBehaviour
             if (collider.isTrigger == false)
             {
                 isGrounded = true;
-                if (!wasGrounded) 
+                if (!wasGrounded)
                 {
                     impactEffect.Play();
                     runParticle.Play();
@@ -140,7 +138,7 @@ public class PlayerControllerNew : MonoBehaviour
                 break;
             }
         }
-        if (!isGrounded) 
+        if (!isGrounded)
         {
             runParticle.Stop();
         }

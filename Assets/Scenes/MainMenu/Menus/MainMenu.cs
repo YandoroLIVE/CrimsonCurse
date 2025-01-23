@@ -22,4 +22,8 @@ public class MainMenu : MonoBehaviour
         optionsMenu.SetActive(true);
         mainMenu.SetActive(false);
     }
+    public void LoadBoss()
+    {
+        SceneManager.LoadScene(14);
+    }
 }
