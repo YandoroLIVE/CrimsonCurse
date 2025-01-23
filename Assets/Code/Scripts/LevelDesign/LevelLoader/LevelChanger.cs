@@ -11,7 +11,7 @@ namespace HeroController
 
         private void Start()
         {
-            if (_connection == LevelConnection.ActiveConnection)
+            if (_connection == LevelConnection.ActiveConnection && !SafepointObject._Respawned)
             {
                 FindObjectOfType<PlayerControllerNew>().transform.position = _spawnPoint.position;
             }

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class SafepointObject : MonoBehaviour
 {
     private Safepoint _data;
-    private static bool _Respawned;
+    public static bool _Respawned;
     [SerializeField] private ParticleSystem _NotActive;
     [SerializeField] private ParticleSystem _Active;
 
