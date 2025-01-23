@@ -37,6 +37,7 @@ public class FlummiFluffEnemy : BaseEnemy
     public float damage = 2f;
     public Animator animator;
     [SerializeField] private EnemyPurify purifyHandler;
+    [SerializeField] public float jumpHeight = 1f;
     private ParticleSystem jumpVFX;
     [SerializeField] private ParticleSystem caveJumpVFX;
     [SerializeField] private ParticleSystem forrestJumpVFX;
@@ -66,6 +67,7 @@ public class FlummiFluffEnemy : BaseEnemy
         }
         _Player.health = S_PlayerHealth.GetInstance();
         _Player.transform = _Player.health.transform;
+        rigid.gravityScale = jumpHeight;
     }
     public override void Move()
     {
@@ -154,7 +156,7 @@ public class FlummiFluffEnemy : BaseEnemy
 
         float velocityX = ((goalPos.x - startPos.x)/jumpTime);
 
-        float velocityY = 0.5f*-Physics2D.gravity.y*jumpTime; // Grüße gehen raus an horea
+        float velocityY = 0.5f*-Physics2D.gravity.y*jumpTime* jumpHeight; // Grüße gehen raus an horea
 
 
 
