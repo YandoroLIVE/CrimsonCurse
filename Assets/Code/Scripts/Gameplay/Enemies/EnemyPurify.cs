@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EnemyPurify : MonoBehaviour
 {
+    public int healthAmountRestoredOnPurify = 10;
     public static KeyCode purifyKeyboardInput = KeyCode.Q;
     public static KeyCode purifyControllerInput = KeyCode.Joystick1Button4;
     private BaseEnemy _targetEnemy;
@@ -50,6 +51,7 @@ public class EnemyPurify : MonoBehaviour
         _stunnedVFX.Stop();
         _stunnedVFX.Clear();
         this.enabled = false;
+        S_PlayerHealth.GetInstance().Heal(healthAmountRestoredOnPurify);
         _purifyVFX.Play();
         if (_animator != null) 
         { 

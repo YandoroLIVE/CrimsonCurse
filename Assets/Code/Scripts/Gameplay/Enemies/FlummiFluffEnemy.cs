@@ -201,6 +201,7 @@ public class FlummiFluffEnemy : BaseEnemy
     public override void ReachedZeroHitpoints()
     {
         purifyHandler.SetStunned(this);
+        purifyHandler.healthAmountRestoredOnPurify = healthAmountRestoredOnPurify;
     }
 
 

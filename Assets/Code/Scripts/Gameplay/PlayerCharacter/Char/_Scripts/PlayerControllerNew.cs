@@ -1,17 +1,22 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerControllerNew : MonoBehaviour
 {
+    static PlayerControllerNew inst;
     // Serialized Fields
     [SerializeField] private float speed;
     [SerializeField] private bool forrestLevel;
     [SerializeField] private GameObject cameraPrefab;
     [SerializeField] private ParticleSystem m_dustParticle;
     [SerializeField] private ParticleSystem m_LeafParticle;
+    [SerializeField] private bool spawnCamera;
 
     [Header("Jumping")]
+    [SerializeField] private float jumpCooldown = 0.1f;
     [SerializeField] private float jumpForce;
     [SerializeField] private float fallMultiplier;
     [SerializeField] private Transform groundCheck;
@@ -32,7 +37,6 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField] public float grabCheckRadius = 0.24f;
     [SerializeField] public float slideSpeed = 2.5f;
     [SerializeField] public Vector2 wallJumpForce = new Vector2(10.5f, 18f);
-    [SerializeField] public Vector2 wallClimbForce = new Vector2(4f, 14f);
 
     // Public Fields
     [SerializeField] public bool isGrounded;
@@ -43,6 +47,7 @@ public class PlayerControllerNew : MonoBehaviour
     [HideInInspector] public bool isCurrentlyPlayable = false;
     public bool pickedUpDash = false;
     public bool hasWallJump = false;
+    private bool jumped = false;
 
     // Private Fields
     private Rigidbody2D m_rb;
@@ -60,6 +65,9 @@ public class PlayerControllerNew : MonoBehaviour
     private float m_wallStick;
     private bool m_wallJumping;
     private float m_dashCooldown;
+    private float defaultGravityScale;
+    private int lastWalljumpDir = 0;
+    static private bool blockedInput;
 
 
     private int m_onWallSide;
@@ -71,12 +79,21 @@ public class PlayerControllerNew : MonoBehaviour
     private static readonly string DashInput = "Dash";
 
     public static float HorizontalRaw() => Input.GetAxisRaw(HorizontalInput);
-    public static bool Jump() => Input.GetKeyDown(KeyCode.Space);
+    public static bool Jump() => Input.GetKey(KeyCode.Space);
     public static bool Dash() => Input.GetKeyDown(KeyCode.LeftShift);
 
     public void Awake()
     {
-        Instantiate(cameraPrefab);
+        if(inst != null) 
+        {
+            Destroy(this.gameObject);
+        }
+
+        else 
+        {
+            inst= this;
+        }
+        if(spawnCamera)Instantiate(cameraPrefab);
         if (forrestLevel)
         {
             m_LeafParticle.gameObject.SetActive(true);
@@ -92,14 +109,12 @@ public class PlayerControllerNew : MonoBehaviour
     }
     private void Start()
     {
-        if (transform.CompareTag("Player"))
-            isCurrentlyPlayable = true;
-
+        isCurrentlyPlayable = true;
         m_dashTime = startDashTime;
         m_dashCooldown = dashCooldown;
 
         m_rb = GetComponent<Rigidbody2D>();
-        m_dustParticle = GetComponentInChildren<ParticleSystem>();
+        defaultGravityScale = m_rb.gravityScale;
     }
 
 
@@ -115,9 +130,18 @@ public class PlayerControllerNew : MonoBehaviour
 
     private void Update()
     {
-        moveInput = HorizontalRaw();
-        HandleJump();
-        HandleDashInput();
+        if(!blockedInput)
+        {
+            moveInput = HorizontalRaw();
+            HandleJump();
+            HandleDashInput();
+        }
+    }
+
+    public static void DisableInput(float duration) 
+    {
+        blockedInput = true;
+        inst.StartCoroutine(inst.GiveInputBack(duration));
     }
 
     private void UpdateGroundedState()
@@ -130,6 +154,7 @@ public class PlayerControllerNew : MonoBehaviour
             if (collider.isTrigger == false)
             {
                 isGrounded = true;
+                lastWalljumpDir = 0;
                 if (!wasGrounded)
                 {
                     impactEffect.Play();
@@ -181,7 +206,7 @@ public class PlayerControllerNew : MonoBehaviour
 
     private void HandleWallSlide()
     {
-
+        if (!hasWallJump) return;
         if (m_onWall && !isGrounded && m_rb.linearVelocity.y <= 0f && m_playerSide == m_onWallSide)
         {
             m_wallGrabbing = true;
@@ -203,34 +228,19 @@ public class PlayerControllerNew : MonoBehaviour
     {
         if (!isCurrentlyPlayable) return;
 
+        m_rb.gravityScale = Jump() ? defaultGravityScale : defaultGravityScale*fallMultiplier;
         if (m_wallJumping)
         {
             m_rb.linearVelocity = Vector2.Lerp(m_rb.linearVelocity, new Vector2(moveInput * speed, m_rb.linearVelocity.y), 1.5f * Time.fixedDeltaTime);
         }
         else if (canMove && !m_wallGrabbing)
         {
-            // Setze die horizontale Geschwindigkeit auf 0, wenn keine Eingabe erfolgt
-            if (moveInput == 0f)
-            {
-                m_rb.linearVelocity = new Vector2(0f, m_rb.linearVelocity.y);
-            }
-            else
-            {
-                m_rb.linearVelocity = new Vector2(moveInput * speed, m_rb.linearVelocity.y);
-            }
+            m_rb.linearVelocity = new Vector2(moveInput * speed, m_rb.linearVelocity.y);
         }
-        else if (!canMove)
-        {
-            m_rb.linearVelocity = new Vector2(0f, m_rb.linearVelocity.y);
-        }
+        
 
-        if (m_rb.linearVelocity.y < 0f)
-        {
-            m_rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
-        }
-
-        if (!m_facingRight && moveInput > 0f) Flip();
-        else if (m_facingRight && moveInput < 0f) Flip();
+        if (!m_facingRight && m_rb.linearVelocityX > 0f) Flip();
+        else if (m_facingRight && m_rb.linearVelocityX < 0f) Flip();
     }
 
     private void HandleDash()
@@ -247,7 +257,7 @@ public class PlayerControllerNew : MonoBehaviour
         else
         {
             m_dashTime -= Time.deltaTime;
-            m_rb.linearVelocity = (m_facingRight ? Vector2.right : Vector2.left) * dashSpeed;
+            m_rb.linearVelocity = (HorizontalRaw() >0 ? Vector2.right : Vector2.left) * dashSpeed;
         }
     }
 
@@ -268,28 +278,38 @@ public class PlayerControllerNew : MonoBehaviour
 
     private void HandleJump()
     {
-        if (Jump() && isGrounded)
+        if (Jump() && isGrounded && !jumped)
         {
+            jumped = true;
+            StartCoroutine(JumpCD());
             jumpEffect.Play();
-            m_rb.linearVelocity = new Vector2(m_rb.linearVelocity.x, jumpForce);
+            m_rb.linearVelocityY += jumpForce;
         }
-        else if (hasWallJump && Jump() && m_wallGrabbing && moveInput != m_onWallSide)
+        else if (hasWallJump && Jump() && m_wallGrabbing && lastWalljumpDir != m_onWallSide)
         {
             PerformWallJump(wallJumpForce);
         }
-        else if (hasWallJump && Jump() && m_wallGrabbing && moveInput == m_onWallSide)
-        {
-            PerformWallJump(wallClimbForce);
-        }
     }
 
+    IEnumerator JumpCD() 
+    {
+        yield return new WaitForSeconds(jumpCooldown);
+        jumped = false;
+    }
 
     private void PerformWallJump(Vector2 force)
     {
         m_wallGrabbing = false;
         m_wallJumping = true;
         if (m_playerSide == m_onWallSide) Flip();
+        lastWalljumpDir = m_onWallSide;
         m_rb.AddForce(new Vector2(-m_onWallSide * force.x, force.y), ForceMode2D.Impulse);
+    }
+
+    IEnumerator GiveInputBack(float duration) 
+    {
+        yield return new WaitForSeconds(duration);
+        blockedInput = false;
     }
     private void Flip()
     {

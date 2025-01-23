@@ -5,6 +5,7 @@ public abstract class BaseEnemy : MonoBehaviour, IHurtable
     public float maxHealth;
     public float currentHealth;
     private bool stunned = false;
+    public int healthAmountRestoredOnPurify = 10;
     public virtual void Start()
     {
         

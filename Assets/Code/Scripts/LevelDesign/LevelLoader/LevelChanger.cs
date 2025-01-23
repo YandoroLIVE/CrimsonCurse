@@ -9,9 +9,9 @@ namespace HeroController
         [SerializeField] private string _targetSceneName;
         [SerializeField] private Transform _spawnPoint;
 
-        private void Start()
+        private void Awake()
         {
-            if (_connection == LevelConnection.ActiveConnection)
+            if (_connection == LevelConnection.ActiveConnection && !SafepointObject._Respawned)
             {
                 FindObjectOfType<PlayerControllerNew>().transform.position = _spawnPoint.position;
             }
