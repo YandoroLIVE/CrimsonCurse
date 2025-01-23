@@ -205,7 +205,7 @@ public class PlayerControllerNew : MonoBehaviour
 
     private void HandleWallSlide()
     {
-
+        if (!hasWallJump) return;
         if (m_onWall && !isGrounded && m_rb.linearVelocity.y <= 0f && m_playerSide == m_onWallSide)
         {
             m_wallGrabbing = true;
@@ -282,7 +282,7 @@ public class PlayerControllerNew : MonoBehaviour
             jumped = true;
             StartCoroutine(JumpCD());
             jumpEffect.Play();
-            m_rb.linearVelocity = new Vector2(m_rb.linearVelocity.x, jumpForce);
+            m_rb.linearVelocityY += jumpForce;
         }
         else if (hasWallJump && Jump() && m_wallGrabbing && lastWalljumpDir != m_onWallSide)
         {
