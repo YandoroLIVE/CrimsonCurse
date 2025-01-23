@@ -13,7 +13,7 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField] private GameObject cameraPrefab;
     [SerializeField] private ParticleSystem m_dustParticle;
     [SerializeField] private ParticleSystem m_LeafParticle;
-    [SerializeField] private bool spawnCamera;
+    [SerializeField] private bool spawnCamera = true;
 
     [Header("Jumping")]
     [SerializeField] private float jumpCooldown = 0.1f;
