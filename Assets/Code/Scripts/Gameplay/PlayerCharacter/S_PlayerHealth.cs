@@ -79,6 +79,7 @@ public class S_PlayerHealth : MonoBehaviour
     }
     void Die()
     {
+        Heal(maxHealth);
         if (Safepoint.GetCurrentSafepoint() != null)
         {
             SafepointObject.LoadCurrentSafepoint();
