@@ -70,6 +70,7 @@ public class PusherEnemy : BaseEnemy
 
     public override void ReachedZeroHitpoints()
     {
+        purifycationHandler.healthAmountRestoredOnPurify = healthAmountRestoredOnPurify;
         purifycationHandler.SetStunned(this);
     }
     private void Shoot() 

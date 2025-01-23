@@ -162,6 +162,7 @@ public class SneakerEnemy : BaseEnemy
     public override void ReachedZeroHitpoints()
     {
         rigi.gravityScale = 1;
+        purifyHandler.healthAmountRestoredOnPurify = healthAmountRestoredOnPurify;
         purifyHandler.SetStunned(this);
 
     }
