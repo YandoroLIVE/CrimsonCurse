@@ -14,7 +14,7 @@ public class TailPhase : BossPhase
     [SerializeField] private BossHeadCrystals crystal;
     [SerializeField] private float shockwaveSpeed;
     [SerializeField] TailAttack attackObject;
-    private bool vulnerable = false;
+    [HideInInspector] public bool vulnerable = false;
     private int currentAttackID = -1;
     Collider2D crystalColl;
 
@@ -33,6 +33,14 @@ public class TailPhase : BossPhase
     public void SetVulnerable(bool status) 
     {
         vulnerable = status;
+        if (vulnerable) 
+        {
+            attackObject.sprite.color = Color.green;
+        }
+        else 
+        {
+            attackObject.sprite.color = Color.white;
+        }
         crystalColl.enabled =vulnerable;
     }
 

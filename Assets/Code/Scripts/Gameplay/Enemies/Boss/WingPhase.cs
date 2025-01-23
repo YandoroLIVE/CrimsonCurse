@@ -136,7 +136,7 @@ public class WingPhase : BossPhase
         currentPhaseID = -1;
         foreach (WingPhaseCrystal crystal in crystalobjects) 
         {
-            Destroy(crystal);
+            Destroy(crystal.gameObject);
         }
         crystalobjects.Clear();
         foreach (HeadCrystalPosition crystal in crystals)
