@@ -527,6 +527,7 @@ GameObject:
   - component: {fileID: 1902946799816293166}
   - component: {fileID: -3089645825415717033}
   - component: {fileID: 901974382164256339}
+  - component: {fileID: 5062178540783875685}
   m_Layer: 6
   m_Name: Player Controller
   m_TagString: Player
@@ -627,7 +628,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: bad9a83ed2555b949b330e98d6a4f78b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -651,8 +652,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.103604555, y: 0.010640621}
-  m_Size: {x: 0.89943624, y: 1.9787188}
+  m_Offset: {x: 0.103604555, y: 0.065151215}
+  m_Size: {x: 0.89943624, y: 1.8696976}
   m_Direction: 0
 --- !u!50 &1874192666424001282
 Rigidbody2D:
@@ -698,6 +699,7 @@ MonoBehaviour:
   cameraPrefab: {fileID: 4427336018264215240, guid: 2c039eca635cf064a8a1c2c49ef4c1a5, type: 3}
   m_dustParticle: {fileID: 5470193528990482272}
   m_LeafParticle: {fileID: 2748418905331216796}
+  jumpCooldown: 0.1
   jumpForce: 18
   fallMultiplier: 2
   groundCheck: {fileID: 104175345194728217}
@@ -716,7 +718,6 @@ MonoBehaviour:
   grabCheckRadius: 0.24
   slideSpeed: 4
   wallJumpForce: {x: 18, y: 18}
-  wallClimbForce: {x: 0, y: 14}
   isGrounded: 0
   moveInput: 0
   canMove: 1
@@ -750,6 +751,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  _StartHealth: 30
+  _RespawnHealh: 50
   invincibilityTime: 0.1
   currentHealth: 50
   HitColor: {r: 1, g: 0.6273585, b: 0.6273585, a: 1}
@@ -793,6 +796,43 @@ MonoBehaviour:
   projectileLifeTime: 10
   damage: 100
   attackCooldown: 0.5
+--- !u!70 &5062178540783875685
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3038803841253255279}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.1036046, y: -0.48}
+  m_Size: {x: 0.72, y: 1}
+  m_Direction: 0
 --- !u!1 &3678316828932598218
 GameObject:
   m_ObjectHideFlags: 0
