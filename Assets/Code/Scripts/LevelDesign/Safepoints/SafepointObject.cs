@@ -9,7 +9,7 @@ public class SafepointObject : MonoBehaviour
     [SerializeField] private ParticleSystem _NotActive;
     [SerializeField] private ParticleSystem _Active;
 
-    private void Awake()
+    private void Start()
     {
         Vector2 pos = transform.position;
         string currentScene = SceneManager.GetActiveScene().name;

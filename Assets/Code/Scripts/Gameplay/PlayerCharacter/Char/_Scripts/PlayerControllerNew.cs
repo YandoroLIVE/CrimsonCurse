@@ -13,6 +13,7 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField] private GameObject cameraPrefab;
     [SerializeField] private ParticleSystem m_dustParticle;
     [SerializeField] private ParticleSystem m_LeafParticle;
+    [SerializeField] private bool spawnCamera;
 
     [Header("Jumping")]
     [SerializeField] private float jumpCooldown = 0.1f;
@@ -92,7 +93,7 @@ public class PlayerControllerNew : MonoBehaviour
         {
             inst= this;
         }
-        Instantiate(cameraPrefab);
+        if(spawnCamera)Instantiate(cameraPrefab);
         if (forrestLevel)
         {
             m_LeafParticle.gameObject.SetActive(true);
