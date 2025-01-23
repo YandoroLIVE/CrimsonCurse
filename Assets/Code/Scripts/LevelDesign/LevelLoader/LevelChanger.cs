@@ -9,7 +9,7 @@ namespace HeroController
         [SerializeField] private string _targetSceneName;
         [SerializeField] private Transform _spawnPoint;
 
-        private void Start()
+        private void Awake()
         {
             if (_connection == LevelConnection.ActiveConnection && !SafepointObject._Respawned)
             {
