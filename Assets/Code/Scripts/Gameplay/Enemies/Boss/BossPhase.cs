@@ -8,7 +8,7 @@ public abstract class BossPhase : MonoBehaviour
     public (Rigidbody2D rigidbody, S_PlayerHealth health) player;
     public float arenaApearDelay = 0.5f;
     public int healthCrystalHealAmount;
-    [HideInInspector] public HealthPickup healthCrystal;
+    //[HideInInspector] public HealthPickup healthCrystal;
     //[SerializeField] private float phaseHealth = 25;
     //float health;
     public virtual bool IsFinished() 
@@ -54,9 +54,9 @@ public abstract class BossPhase : MonoBehaviour
     public virtual void EndPhase() 
     {
         gameObject.SetActive(false);
-        healthCrystal.transform.position = this.transform.position;
-        healthCrystal.healthToRestore = healthCrystalHealAmount;
-        healthCrystal.gameObject.SetActive(true);
+        //healthCrystal.transform.position = this.transform.position;
+        //healthCrystal.healthToRestore = healthCrystalHealAmount;
+        //healthCrystal.gameObject.SetActive(true);
         isDone = true;
     }
 

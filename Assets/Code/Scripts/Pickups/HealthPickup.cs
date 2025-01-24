@@ -6,6 +6,7 @@ public class HealthPickup : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(collision.name);
         S_PlayerHealth.GetInstance().Heal(healthToRestore);
         this.gameObject.SetActive(false);
     }
