@@ -186,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 1
   currentHealth: 0
+  healthAmountRestoredOnPurify: 10
   hitRange: 1
   damage: 5
   wanderRange: 1
@@ -194,7 +195,9 @@ MonoBehaviour:
   speed: 7
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
+  healAmount: 10
+  healCrystalPrefab: {fileID: 7283321117922798660, guid: 12ef7b342ecff2c439a5926818e03753, type: 3}
 --- !u!58 &6341806024241141590
 CircleCollider2D:
   m_ObjectHideFlags: 0

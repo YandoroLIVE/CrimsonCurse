@@ -18,6 +18,7 @@ public class HeadPhase : BossPhase
     [SerializeField] private List<HeadCrystalPoint> headCrystalPoints;
     private List<BossHeadCrystals> headCrystalss;
     public float crystalRespawnTime = 5f;
+    public int crystalHealAmount = 10;
     public float crystalDamage = 5f;
     public float crystalSpeed = 7f;
     private List<float> crystalDownTimers = new();

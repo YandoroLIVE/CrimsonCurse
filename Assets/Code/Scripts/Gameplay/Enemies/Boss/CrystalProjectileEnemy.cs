@@ -21,7 +21,9 @@ public class CrystalProjectileEnemy : BaseEnemy
     Vector2 direction = Vector2.zero;
     Vector3 originPoint = Vector3.zero;
     float distanceToPlayer = float.MaxValue;
-    
+    public int healAmount = 10;
+    [SerializeField] private HealthPickup healCrystalPrefab;
+    private HealthPickup healCrystal;
 
     public void Awake()
     {
@@ -29,11 +31,15 @@ public class CrystalProjectileEnemy : BaseEnemy
         rigi = GetComponent<Rigidbody2D>();
         attackRadius = GetComponentInChildren<IsPlayerInTrigger>();
         currentTargetPoint = RandomTargetPoint();
+        healCrystal = Instantiate(healCrystalPrefab);
+        healCrystal.gameObject.SetActive(false);
+        healCrystal.healthToRestore = healAmount;
     }
 
     public void OnEnable()
     {
         this.transform.position = originPoint;
+        healCrystal.gameObject.SetActive(false);
         Heal();
     }
 
@@ -102,7 +108,9 @@ public class CrystalProjectileEnemy : BaseEnemy
     public override void ReachedZeroHitpoints()
     {
         owner.CrystalDestroyed(this);
+        healCrystal.transform.position = this.transform.position;
         gameObject.SetActive(false);
+        healCrystal.gameObject.SetActive(true);
 
     }
 
