@@ -130,6 +130,7 @@ public class TailAttack : MonoBehaviour
         chilling = true;
         yield return new WaitForSeconds(chillTime);
         owner.SetVulnerable(false);
+        yield return new WaitForSeconds(owner.warnTime);
         finishedAttack = false;
         chilling = false;
         owner.InitNextAttack();

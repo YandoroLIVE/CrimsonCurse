@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public class TailPhase : BossPhase
     [SerializeField] private HeadCrystalPoint headCrystalPoint;
     [SerializeField] private BossHeadCrystals crystal;
     [SerializeField] private float shockwaveSpeed;
+    [SerializeField] public float warnTime =0.5f;
     [SerializeField] TailAttack attackObject;
     [HideInInspector] public bool vulnerable = false;
     private int currentAttackID = -1;
@@ -39,9 +41,16 @@ public class TailPhase : BossPhase
         }
         else 
         {
-            attackObject.sprite.color = Color.white;
+            attackObject.sprite.color = Color.red;
+            StartCoroutine(WarnBeforeAttack());
         }
         crystalColl.enabled =vulnerable;
+    }
+
+    IEnumerator WarnBeforeAttack() 
+    {
+        yield return new WaitForSeconds(warnTime);
+        attackObject.sprite.color = Color.white;
     }
 
     public void InitNextAttack() 
