@@ -4,12 +4,17 @@ using UnityEngine;
 public class PlayerControllerNew : MonoBehaviour
 {
     static PlayerControllerNew inst;
+
     // Serialized Fields
+    [SerializeField] private float afktimeTillIdle = 2f;
     [SerializeField] private float speed;
     [SerializeField] private bool forrestLevel;
     [SerializeField] private GameObject cameraPrefab;
     [SerializeField] private ParticleSystem m_dustParticle;
     [SerializeField] private ParticleSystem m_LeafParticle;
+    [SerializeField] private ParticleSystem m_IdleTailEntry;
+    [SerializeField] private ParticleSystem m_IdleTailLoop;
+    [SerializeField] private ParticleSystem m_IdleTailExit;
     [SerializeField] private bool spawnCamera = true;
 
     [Header("Jumping")]
@@ -65,7 +70,10 @@ public class PlayerControllerNew : MonoBehaviour
     private float defaultGravityScale;
     private int lastWalljumpDir = 0;
     static private bool blockedInput;
-
+    private float afkTime = 0f;
+    private bool afk = false;
+    private bool afkEntry = false;
+    private bool afkExit = false;
 
     private int m_onWallSide;
     private int m_playerSide = 1;
@@ -76,7 +84,8 @@ public class PlayerControllerNew : MonoBehaviour
     private static readonly string DashInput = "Dash";
 
     public static float HorizontalRaw() => Input.GetAxisRaw(HorizontalInput);
-    public static bool Jump() => Input.GetKey(KeyCode.Space);
+    public static bool Jump() => Input.GetKeyDown(KeyCode.Space);
+    public static bool SpacebarPressed() => Input.GetKey(KeyCode.Space);
     public static bool Dash() => Input.GetKeyDown(KeyCode.LeftShift);
 
     public void Awake()
@@ -125,13 +134,77 @@ public class PlayerControllerNew : MonoBehaviour
         HandleDash();
     }
 
+    IEnumerator SetAfk(float t,bool state) 
+    {
+        yield return new WaitForSeconds(t);
+        afk = state;
+    }
+
+    IEnumerator StartParticleSystemWithOffset(float t, ParticleSystem systemToPlay) 
+    {
+        yield return new WaitForSeconds(t);
+        systemToPlay.Play();
+    }
+
     private void Update()
     {
-        if(!blockedInput)
+        AfkHandling();
+
+        if (!blockedInput)
         {
             moveInput = HorizontalRaw();
             HandleJump();
             HandleDashInput();
+
+        }
+    }
+
+    private void AfkHandling()
+    {
+        if (!Input.anyKey)
+        {
+            afkTime += Time.deltaTime;
+            if (afkTime >= afktimeTillIdle)
+            {
+                if (!afk)
+                {
+                    if(!afkEntry)
+                    {
+                        afkEntry = true;
+                        m_IdleTailEntry.Play();
+                    }
+                    StartCoroutine(SetAfk(m_IdleTailEntry.main.startLifetime.constantMax, true));
+                }
+
+                else
+                {
+                    if (!m_IdleTailLoop.isPlaying)
+                    {
+                        m_IdleTailLoop.Play();
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (afk)
+            {
+                float t = m_IdleTailLoop.main.startLifetime.constantMax - m_IdleTailLoop.time;
+                StartCoroutine(SetAfk(t, false));
+                if (!afkExit)
+                {
+                    m_IdleTailLoop.Stop();
+                    afkEntry = false;
+                    afkExit = true;
+                    StartCoroutine(StartParticleSystemWithOffset(t, m_IdleTailExit));
+                }
+                afkTime = 0;
+            }
+
+            else
+            {
+                afkTime = 0;
+            }
         }
     }
 
@@ -225,7 +298,7 @@ public class PlayerControllerNew : MonoBehaviour
     {
         if (!isCurrentlyPlayable) return;
 
-        m_rb.gravityScale = Jump() ? defaultGravityScale : defaultGravityScale*fallMultiplier;
+        m_rb.gravityScale = SpacebarPressed() ? defaultGravityScale : defaultGravityScale*fallMultiplier;
         if (m_wallJumping)
         {
             m_rb.linearVelocity = Vector2.Lerp(m_rb.linearVelocity, new Vector2(moveInput * speed, m_rb.linearVelocity.y), 1.5f * Time.fixedDeltaTime);
