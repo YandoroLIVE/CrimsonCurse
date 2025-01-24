@@ -69,7 +69,7 @@ public class SafepointObject : MonoBehaviour
     {
         if(collision.tag == "Player") 
         {
-            if (Input.GetKey(KeyCode.E)) 
+            if (Input.GetKey(KeyCode.Q)) 
             {
                 ActivateSafepoint();           
             }            
