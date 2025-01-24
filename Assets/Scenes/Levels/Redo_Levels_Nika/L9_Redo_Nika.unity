@@ -627,6 +627,63 @@ Transform:
   - {fileID: 1079637501}
   m_Father: {fileID: 842048536}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &672658027
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2409050458142409487, guid: 449981c92afae1b439b1d010994bb765, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409050458142409487, guid: 449981c92afae1b439b1d010994bb765, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 17.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409050458142409487, guid: 449981c92afae1b439b1d010994bb765, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409050458142409487, guid: 449981c92afae1b439b1d010994bb765, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409050458142409487, guid: 449981c92afae1b439b1d010994bb765, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409050458142409487, guid: 449981c92afae1b439b1d010994bb765, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409050458142409487, guid: 449981c92afae1b439b1d010994bb765, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409050458142409487, guid: 449981c92afae1b439b1d010994bb765, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409050458142409487, guid: 449981c92afae1b439b1d010994bb765, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409050458142409487, guid: 449981c92afae1b439b1d010994bb765, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5743430217830916615, guid: 449981c92afae1b439b1d010994bb765, type: 3}
+      propertyPath: m_Name
+      value: Level9Lighting
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 449981c92afae1b439b1d010994bb765, type: 3}
 --- !u!1001 &678528127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -732,7 +789,7 @@ PrefabInstance:
     - {fileID: 9183440454240048455, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7045445874092172145, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
-      insertIndex: 1
+      insertIndex: -1
       addedObject: {fileID: 1800812854}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
@@ -1542,7 +1599,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2004118753
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.022448957, y: 0.022448957, z: 0}
@@ -9758,7 +9815,7 @@ PrefabInstance:
     - {fileID: 9183440454240048455, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7045445874092172145, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
-      insertIndex: 1
+      insertIndex: -1
       addedObject: {fileID: 695375981}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
@@ -10825,7 +10882,7 @@ PrefabInstance:
     - {fileID: 9183440454240048455, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7045445874092172145, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
-      insertIndex: 1
+      insertIndex: -1
       addedObject: {fileID: 2059014975}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
@@ -11026,6 +11083,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1848574165}
+  - {fileID: 672658027}
   - {fileID: 842048536}
   - {fileID: 1821188142}
   - {fileID: 1679418578}
