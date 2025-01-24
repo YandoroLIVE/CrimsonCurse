@@ -24,7 +24,10 @@ public class SneakerEnemy : BaseEnemy
     [SerializeField] private float sneakSpeedFactor = 1f;
     [SerializeField] private float lookedAtSpeedFactor = 1f;
     [SerializeField] private LayerMask wallLayer;
-    IsPlayerInTrigger attackRadius;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private float aggroRange = 5;
+    //IsPlayerInTrigger attackRadius;
     private float idleTimer;
     private bool canAttack = true;
     private bool lookedAt = false;
@@ -36,6 +39,7 @@ public class SneakerEnemy : BaseEnemy
     Vector2 direction = Vector2.zero;
     Vector3 originPoint = Vector3.zero;
     float distanceToPlayer = float.MaxValue;
+    Vector2 debugDraw;
 
     public void Awake()
     {
@@ -44,10 +48,10 @@ public class SneakerEnemy : BaseEnemy
         {
             rigi = GetComponent<Rigidbody2D>();
         }
-        if (attackRadius == null)
-        {
-            attackRadius = GetComponentInChildren<IsPlayerInTrigger>();
-        }
+        //if (attackRadius == null)
+        //{
+        //    attackRadius = GetComponentInChildren<IsPlayerInTrigger>();
+        //}
         currentTargetPoint = RandomTargetPoint();
         animator = GetComponent<Animator>();
     }
@@ -63,7 +67,7 @@ public class SneakerEnemy : BaseEnemy
     public override void Move()
     {
         IsBeingLookedAt();
-        if (attackRadius.IsPlayerInBox())
+        if (CanSeePlayer())
         {
             currentTargetPoint = _Player.transform.position;
             direction = (currentTargetPoint - transform.position).normalized;
@@ -113,6 +117,41 @@ public class SneakerEnemy : BaseEnemy
         //Move to Point
 
 
+    }
+
+    private bool CanSeePlayer()
+    {
+        bool canSee = true;
+        Vector2 dir = _Player.transform.position - this.transform.position;
+        dir = dir.normalized;
+        float distance = Vector2.Distance(transform.position, _Player.transform.position);
+        if (distance > aggroRange)
+        {
+            return canSee = false;
+        }
+        float range = distance > aggroRange ? aggroRange : distance;
+        debugDraw = dir * range;
+        var objectsHit = Physics2D.RaycastAll(this.transform.position, dir, range, wallLayer);
+        foreach (var obj in objectsHit)
+        {
+            if (!obj.collider.isTrigger)
+            {
+                return canSee = false;
+            }
+
+        }
+        objectsHit = Physics2D.RaycastAll(this.transform.position, dir, range, groundLayer);
+        foreach (var obj in objectsHit)
+        {
+            if (!obj.collider.isTrigger)
+            {
+                return canSee = false;
+            }
+
+        }
+        
+
+        return canSee;
     }
 
     private void LookAtDirection()
@@ -201,16 +240,15 @@ public class SneakerEnemy : BaseEnemy
             StartCoroutine(DelayedLookedAt());
         }
 
-        else if (!look && lookedAt) 
+        else if (!look && lookedAt)
         {
             lookedAt = false;
         }
 
-        Debug.Log(lookedAt + " | " + look);
         return look;
     }
 
-    IEnumerator DelayedLookedAt() 
+    IEnumerator DelayedLookedAt()
     {
         reactingToLook = true;
         yield return new WaitForSeconds(lookReactionDelayTime);
@@ -240,8 +278,11 @@ public class SneakerEnemy : BaseEnemy
         Gizmos.DrawWireCube(originPoint, Vector3.one * wanderRange * 2);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(currentTargetPoint, POINTMERCYAREA);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(this.transform.position, aggroRange);
+
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, transform.position + new Vector3(direction.x, direction.y));
+        Gizmos.DrawLine(this.transform.position, this.transform.position + (Vector3)debugDraw);
     }
 
 
