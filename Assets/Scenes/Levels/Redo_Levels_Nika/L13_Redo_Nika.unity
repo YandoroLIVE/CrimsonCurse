@@ -783,9 +783,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7045445874092172145, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
       insertIndex: 0
       addedObject: {fileID: 626228698}
-    - targetCorrespondingSourceObject: {fileID: 7045445874092172145, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 948357711}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
 --- !u!4 &462800885 stripped
@@ -1085,6 +1082,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Load_Secret_1
       objectReference: {fileID: 0}
+    - target: {fileID: 5869180076249386407, guid: 2978c9eb1c3c87249951712e47893aa8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 5869180076249386407, guid: 2978c9eb1c3c87249951712e47893aa8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 7641076182086301408, guid: 2978c9eb1c3c87249951712e47893aa8, type: 3}
       propertyPath: _connection
       value: 
@@ -1282,6 +1287,14 @@ PrefabInstance:
     - target: {fileID: 4178300943625496804, guid: 2978c9eb1c3c87249951712e47893aa8, type: 3}
       propertyPath: m_Name
       value: 'Load_L9_Redo_Nika '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5869180076249386407, guid: 2978c9eb1c3c87249951712e47893aa8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5869180076249386407, guid: 2978c9eb1c3c87249951712e47893aa8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.11
       objectReference: {fileID: 0}
     - target: {fileID: 7641076182086301408, guid: 2978c9eb1c3c87249951712e47893aa8, type: 3}
       propertyPath: _connection
@@ -1765,90 +1778,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7045445874092172145, guid: 0453770622b6e284ab176514e5b9c688, type: 3}
   m_PrefabInstance: {fileID: 938554851}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &948357710
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 948357711}
-  - component: {fileID: 948357712}
-  m_Layer: 0
-  m_Name: Light 2D
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &948357711
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 948357710}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.99998236, w: -0.005939274}
-  m_LocalPosition: {x: 0.3, y: -3.41, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 462800885}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180.681}
---- !u!114 &948357712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 948357710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ComponentVersion: 2
-  m_LightType: 1
-  m_BlendStyleIndex: 1
-  m_FalloffIntensity: 0.61
-  m_Color: {r: 0.8962264, g: 0.35933605, b: 0.38533893, a: 1}
-  m_Intensity: 0.3
-  m_LightVolumeIntensity: 0.95
-  m_LightVolumeEnabled: 1
-  m_ApplyToSortingLayers: 00000000ffe870595f717389
-  m_LightCookieSprite: {fileID: 0}
-  m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 0
-  m_AlphaBlendOnOverlap: 0
-  m_OverlapOperation: 0
-  m_NormalMapDistance: 6
-  m_NormalMapQuality: 0
-  m_UseNormalMap: 0
-  m_ShadowsEnabled: 1
-  m_ShadowIntensity: 1
-  m_ShadowSoftness: 0.3
-  m_ShadowSoftnessFalloffIntensity: 0.5
-  m_ShadowVolumeIntensityEnabled: 0
-  m_ShadowVolumeIntensity: 0.75
-  m_LocalBounds:
-    m_Center: {x: -0.10280001, y: -0.07154998, z: 0}
-    m_Extent: {x: 0.5395, y: 0.74654996, z: 0}
-  m_PointLightInnerAngle: 360
-  m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 7.03
-  m_ShapeLightParametricSides: 5
-  m_ShapeLightParametricAngleOffset: 0
-  m_ShapeLightParametricRadius: 1
-  m_ShapeLightFalloffSize: 0.17
-  m_ShapeLightFalloffOffset: {x: 0, y: 0}
-  m_ShapePath:
-  - {x: 0.25913587, y: -0.6450922, z: 0}
-  - {x: 0.2665154, y: 0.50426626, z: 0}
-  - {x: -0.47130015, y: 0.50218004, z: 0}
-  - {x: -0.46390402, y: -0.6485744, z: 0}
 --- !u!1001 &1031093339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3034,6 +2963,14 @@ PrefabInstance:
     - target: {fileID: 4178300943625496804, guid: 2978c9eb1c3c87249951712e47893aa8, type: 3}
       propertyPath: m_Name
       value: 'Load_L14_Redo_Nika '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5869180076249386407, guid: 2978c9eb1c3c87249951712e47893aa8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5869180076249386407, guid: 2978c9eb1c3c87249951712e47893aa8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.18
       objectReference: {fileID: 0}
     - target: {fileID: 7641076182086301408, guid: 2978c9eb1c3c87249951712e47893aa8, type: 3}
       propertyPath: _connection
