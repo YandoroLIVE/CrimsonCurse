@@ -10,6 +10,8 @@ public class FlummiFluffEnemy : BaseEnemy
     private const float JUMP_TO_PLAYER_OFFSET = 0.75f;
     private const float ATTACKANIMATION_HIT_OFFSET = 0.5f;
     private const string JUMP_ANIMATION_NAME= "FlummiFluffJump";
+    private const float JUMP_ANIMATIONSPEED_MULTIPLIER = 0.75f;
+    private const float JUMP_VELOCITY_START_DELAY = 0.136f;
 
     private Vector2 origin;
     private bool foundIdlepoint = false;
@@ -122,7 +124,7 @@ public class FlummiFluffEnemy : BaseEnemy
             }
         }
         speed = length / jumpTime;
-        return speed;
+        return speed * JUMP_ANIMATIONSPEED_MULTIPLIER;
     }
 
     IEnumerator ActivateJumpEndAnimation() 
@@ -151,9 +153,9 @@ public class FlummiFluffEnemy : BaseEnemy
         }
     }
 
-    private void InitJump() 
+    private void InitJump()
     {
-        if (attacked) 
+        if (attacked)
         {
             attacked = false;
         }
@@ -170,26 +172,31 @@ public class FlummiFluffEnemy : BaseEnemy
         Vector2 goalPos = currentTarget;
 
 
-        float velocityX = ((goalPos.x - startPos.x)/jumpTime);
+        float velocityX = ((goalPos.x - startPos.x) / jumpTime);
 
-        float velocityY = 0.5f*-Physics2D.gravity.y*jumpTime* jumpHeight; // Grüße gehen raus an horea
+        float velocityY = 0.5f * -Physics2D.gravity.y * jumpTime * jumpHeight; // Grüße gehen raus an horea
 
 
 
         float xScale = Mathf.Abs(animator.transform.localScale.x) * Mathf.Sign(-velocityX);
         animator.transform.localScale = new Vector3(xScale, animator.transform.localScale.y, animator.transform.localScale.z);
         Vector2 velocity = new Vector2(velocityX, velocityY);
-        rigid.linearVelocity = velocity;
+        StartCoroutine(SetVelocityDelayed(velocity));
         animator.SetTrigger("Jump");
         jumpVFX.Play();
         isJumping = true;
         animator.speed = jumpAnimationSpeed;
         StartCoroutine(ActivateJumpEndAnimation());
-        jumpTimer = Time.time + jumpCooldown;  
+        jumpTimer = Time.time + jumpCooldown;
 
     }
 
-    
+    IEnumerator SetVelocityDelayed(Vector2 velocity)
+    {
+        yield return new WaitForSeconds(JUMP_VELOCITY_START_DELAY);
+        rigid.linearVelocity = velocity;
+    }
+
     public override void Update()
     {
         base.Update();
