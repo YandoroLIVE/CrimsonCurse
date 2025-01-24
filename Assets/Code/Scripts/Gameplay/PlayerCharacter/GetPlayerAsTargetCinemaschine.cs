@@ -8,7 +8,11 @@ public class GetPlayerAsTargetCinemaschine : MonoBehaviour
     PolygonCollider2D coll;
     void Start()
     {
-        coll = FindAnyObjectByType<TilemapCollider2D>().gameObject.GetComponent<PolygonCollider2D>();
+        var tmp = FindAnyObjectByType<TilemapCollider2D>();
+        if (tmp != null)
+        {
+            coll = tmp.gameObject.GetComponent<PolygonCollider2D>();
+        }
         cam.Target.TrackingTarget = S_PlayerHealth.GetInstance().transform;
         cam.GetComponent<CinemachineConfiner2D>().BoundingShape2D = coll;
     }

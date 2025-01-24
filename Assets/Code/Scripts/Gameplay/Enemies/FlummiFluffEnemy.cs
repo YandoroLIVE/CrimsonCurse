@@ -9,6 +9,7 @@ public class FlummiFluffEnemy : BaseEnemy
     private const float JUMP_DISTANCE_OFFSET_TO_PLAYER = 5f;
     private const float JUMP_TO_PLAYER_OFFSET = 0.75f;
     private const float ATTACKANIMATION_HIT_OFFSET = 0.5f;
+    private const string JUMP_ANIMATION_NAME= "FlummiFluffJump";
 
     private Vector2 origin;
     private bool foundIdlepoint = false;
@@ -30,7 +31,7 @@ public class FlummiFluffEnemy : BaseEnemy
     private bool isJumping = true;
     public bool isInCave = true;
 
-    
+    private float jumpAnimationSpeed;
     private float distance = float.MaxValue;
     public float attackRange = 2f;
     public float attackCooldown = 5f;
@@ -68,6 +69,7 @@ public class FlummiFluffEnemy : BaseEnemy
         _Player.health = S_PlayerHealth.GetInstance();
         _Player.transform = _Player.health.transform;
         rigid.gravityScale = jumpHeight;
+        jumpAnimationSpeed = CalculateAnimationspeedForJump();
     }
     public override void Move()
     {
@@ -107,16 +109,30 @@ public class FlummiFluffEnemy : BaseEnemy
         }
     }
 
+    public float CalculateAnimationspeedForJump() 
+    {
+        float speed = 0;
+        float length = 0;
+        foreach (var clip in animator.runtimeAnimatorController.animationClips)
+        {
+            if(clip.name == JUMP_ANIMATION_NAME) 
+            {
+                length = clip.length;
+                break;
+            }
+        }
+        speed = length / jumpTime;
+        return speed;
+    }
+
     IEnumerator ActivateJumpEndAnimation() 
     {
-        yield return new WaitForSeconds(jumpTime- JUMPANIMATIONEND_OFFSET);
+        yield return new WaitForSeconds(jumpTime);
+        //animator.StopPlayback();
         animator.SetTrigger("EndJump");
+        //isJumping = false;
+        animator.speed = 1;
         isJumping = false;
-    }
-    IEnumerator ActivateJumpMidAnimation() 
-    {
-        yield return new WaitForSeconds(jumpTime/2);
-        animator.SetTrigger("MidJump");
     }
 
     private void ChooseIdlePoint()
@@ -163,12 +179,11 @@ public class FlummiFluffEnemy : BaseEnemy
         float xScale = Mathf.Abs(animator.transform.localScale.x) * Mathf.Sign(-velocityX);
         animator.transform.localScale = new Vector3(xScale, animator.transform.localScale.y, animator.transform.localScale.z);
         Vector2 velocity = new Vector2(velocityX, velocityY);
-        Debug.Log(Mathf.Pow(velocityY*(jumpTime/2) + -1/2* Physics2D.gravity.y*(jumpTime/2),2));
         rigid.linearVelocity = velocity;
         animator.SetTrigger("Jump");
         jumpVFX.Play();
         isJumping = true;
-        StartCoroutine(ActivateJumpMidAnimation());
+        animator.speed = jumpAnimationSpeed;
         StartCoroutine(ActivateJumpEndAnimation());
         jumpTimer = Time.time + jumpCooldown;  
 

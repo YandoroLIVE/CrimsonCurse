@@ -11,7 +11,9 @@ public class ParallaxBackground : MonoBehaviour
     void Start()
     {
         if (parallaxCamera == null)
-            parallaxCamera = Camera.main.GetComponent<ParallaxCamera>();
+            if(Camera.main != null){
+                parallaxCamera = Camera.main.GetComponent<ParallaxCamera>();
+            }
 
         if (parallaxCamera != null)
             parallaxCamera.onCameraTranslate += Move;
