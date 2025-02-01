@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 1902946799816293166}
   - component: {fileID: -3089645825415717033}
   - component: {fileID: 901974382164256339}
-  - component: {fileID: 5062178540783875685}
+  - component: {fileID: 4147790791635441601}
   m_Layer: 6
   m_Name: Player Controller
   m_TagString: Player
@@ -609,42 +609,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   afktimeTillIdle: 2
-  speed: 8
   forrestLevel: 0
-  cameraPrefab: {fileID: 4427336018264215240, guid: 2c039eca635cf064a8a1c2c49ef4c1a5, type: 3}
+  spawnCamera: 1
+  maxRunSpeed: 15
+  groundAcceleration: 10
+  groundDeceleration: 20
+  airAcceleration: 2.5
+  airDeceleration: 0.3
+  groundCheck: {fileID: 104175345194728217}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 264
+  groundDetectionRayLength: 0.02
+  headDetectionRayLength: 0.02
+  headWidth: 0.75
+  dashSpeed: 50
+  startDashTime: 0.1
+  dashCooldown: 0.2
+  jumpHeight: 5
+  jumpHeightCompensationFactor: 1.054
+  timeTillJumpApex: 0.5
+  gravityOnReleaseMultiplier: 2
+  maxFallSpeed: 25
+  timeForUpwardsCancel: 0.027
+  apexThreshold: 0.97
+  apexHangTime: 0.075
+  jumpBufferTime: 0.125
+  jumpCoyoteTime: 0.1
+  isGrounded: 1
+  moveInput: 0
+  canMove: 1
+  isDashing: 0
+  pickedUpDash: 0
+  hasWallJump: 0
+  _feetColl: {fileID: 4147790791635441601}
+  _bodyColl: {fileID: 3704471534760115240}
+  jumpEffect: {fileID: 4554583891056918215}
+  impactEffect: {fileID: 3075569594264493692}
+  dashEffect: {fileID: 1145866625423061133}
   m_dustParticle: {fileID: 5470193528990482272}
   m_LeafParticle: {fileID: 2748418905331216796}
   m_IdleTailEntry: {fileID: 6358930375058378900}
   m_IdleTailLoop: {fileID: 4731509745319779905}
   m_IdleTailExit: {fileID: 2807712276285943835}
-  spawnCamera: 1
-  jumpCooldown: 0.1
-  jumpForce: 18
-  fallMultiplier: 1
-  groundCheck: {fileID: 104175345194728217}
-  groundCheckRadius: 0.1
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 264
-  jumpEffect: {fileID: 4554583891056918215}
-  impactEffect: {fileID: 3075569594264493692}
-  dashSpeed: 30
-  startDashTime: 0.3
-  dashCooldown: 0.2
-  dashEffect: {fileID: 1145866625423061133}
-  grabRightOffset: {x: 0.42, y: 0}
-  grabLeftOffset: {x: -0.42, y: 0}
-  grabCheckRadius: 0.24
-  slideSpeed: 4
-  wallJumpForce: {x: 18, y: 18}
-  isGrounded: 0
-  moveInput: 0
-  canMove: 1
-  isDashing: 0
-  actuallyWallGrabbing: 0
-  isCurrentlyPlayable: 0
-  pickedUpDash: 0
-  hasWallJump: 0
+  cameraPrefab: {fileID: 4427336018264215240, guid: 2c039eca635cf064a8a1c2c49ef4c1a5, type: 3}
 --- !u!114 &1709451335225921395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,8 +723,8 @@ MonoBehaviour:
   projectileLifeTime: 10
   damage: 100
   attackCooldown: 0.5
---- !u!70 &5062178540783875685
-CapsuleCollider2D:
+--- !u!61 &4147790791635441601
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -749,9 +757,18 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.1036046, y: -0.48}
-  m_Size: {x: 0.72, y: 1}
-  m_Direction: 0
+  m_Offset: {x: 0.090857625, y: -0.8579424}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 2}
+    newSize: {x: 1, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.81828475, y: 0.425923}
+  m_EdgeRadius: 0
 --- !u!1 &3678316828932598218
 GameObject:
   m_ObjectHideFlags: 0
