@@ -14,11 +14,11 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField] private bool spawnCamera = true;
 
     [Header("Run Stats")]
-    [SerializeField,Range(1f,100f)] private float maxRunSpeed = 20f;
-    [SerializeField,Range(0.25f,50f)] private float groundAcceleration = 5f;
-    [SerializeField,Range(0.25f,50f)] private float groundDeceleration = 20f;
-    [SerializeField,Range(0.25f,50f)] private float airAcceleration = 5f;
-    [SerializeField,Range(0.25f,50f)] private float airDeceleration = 5f;
+    [SerializeField, Range(1f, 100f)] private float maxRunSpeed = 20f;
+    [SerializeField, Range(0.25f, 50f)] private float groundAcceleration = 5f;
+    [SerializeField, Range(0.25f, 50f)] private float groundDeceleration = 20f;
+    [SerializeField, Range(0.25f, 50f)] private float airAcceleration = 5f;
+    [SerializeField, Range(0.25f, 50f)] private float airDeceleration = 5f;
 
     [Header("Groundcheck Stats")]
     [SerializeField] private Transform groundCheck;
@@ -26,7 +26,7 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField] private float groundDetectionRayLength = 0.02f;
     [SerializeField] private float wallDetectionRayLength = 0.02f;
     [SerializeField] private float headDetectionRayLength = 0.02f;
-    [SerializeField,Range(0,1)] private float headWidth = 0.75f;
+    [SerializeField, Range(0, 1)] private float headWidth = 0.75f;
 
     [Header("Dashing")]
     [SerializeField] private float dashSpeed = 30f;
@@ -34,20 +34,22 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField] private float dashCooldown = 0.2f;
 
     [Header("Jump")]
-    [SerializeField] float jumpHeight= 4f;
-    [SerializeField,Range(1, 1.1f)] private float jumpHeightCompensationFactor = 1.054f;
+    [SerializeField] float jumpHeight = 4f;
+    [SerializeField, Range(1, 1.1f)] private float jumpHeightCompensationFactor = 1.054f;
     [SerializeField] float timeTillJumpApex = 0.35f;
-    [SerializeField,Range(0.01f, 5f)] private float gravityOnReleaseMultiplier= 2f;
+    [SerializeField, Range(0.01f, 5f)] private float gravityOnReleaseMultiplier = 2f;
     [SerializeField] float maxFallSpeed = 25f;
-    [SerializeField,Range(0.02f, 0.3f)] private float timeForUpwardsCancel= 0.027f;
-    [SerializeField,Range(0.05f, 1f)] private float apexThreshold= 0.97f;
-    [SerializeField,Range(0.01f, 1f)] private float apexHangTime= 0.075f;
-    [SerializeField,Range(0f, 1f)] private float jumpBufferTime= 0.125f;
-    [SerializeField,Range(0f, 1f)] private float jumpCoyoteTime= 0.1f;
+    [SerializeField, Range(0.02f, 0.3f)] private float timeForUpwardsCancel = 0.027f;
+    [SerializeField, Range(0.05f, 1f)] private float apexThreshold = 0.97f;
+    [SerializeField, Range(0.01f, 1f)] private float apexHangTime = 0.075f;
+    [SerializeField, Range(0f, 1f)] private float jumpBufferTime = 0.125f;
+    [SerializeField, Range(0f, 1f)] private float jumpCoyoteTime = 0.1f;
 
     [Header("Wall")]
     [SerializeField] float hangTime;
     [SerializeField] float stuckTime;
+    [SerializeField] float wallGrabCooldown = 0.1f;
+    [SerializeField, Range(0, 1)] float hangSpeedFactor;
 
     // Public Fields
     [HideInInspector] public bool grounded;
@@ -103,9 +105,11 @@ public class PlayerControllerNew : MonoBehaviour
     private float fastFallingTime;
     private float fastFallReleaseSpeed;
 
-    //
+    // wall vars
     private float wallTimer = 0;
-
+    private float stuckTimer = 0;
+    private bool canWallJump = false;
+    private bool canWallGrab = true;
     //jump apex vars
     private float apexPoint;
     private float timePastApexThreshold;
@@ -138,16 +142,16 @@ public class PlayerControllerNew : MonoBehaviour
 #else
         debug = false;
 #endif
-        if(inst != null) 
+        if (inst != null)
         {
             Destroy(this.gameObject);
         }
 
-        else 
+        else
         {
-            inst= this;
+            inst = this;
         }
-        if(spawnCamera)Instantiate(cameraPrefab);
+        if (spawnCamera) Instantiate(cameraPrefab);
         if (forrestLevel)
         {
             m_LeafParticle.gameObject.SetActive(true);
@@ -172,21 +176,23 @@ public class PlayerControllerNew : MonoBehaviour
     private void FixedUpdate()
     {
         CollisionChecks();
-        Jump();
         HandleDash();
-        if (grounded) 
+        Jump();
+        if (grounded)
         {
-            HandleMovement(groundAcceleration,groundDeceleration, new Vector2(HorizontalRaw(), 0));
+            HandleMovement(groundAcceleration, groundDeceleration, new Vector2(HorizontalRaw(), 0));
         }
-        else 
+        else
         {
-            HandleMovement(airAcceleration,airDeceleration, new Vector2(HorizontalRaw(), 0));
+            HandleMovement(airAcceleration, airDeceleration, new Vector2(HorizontalRaw(), 0));
         }
 
     }
 
     private void Update()
     {
+
+        Debug.Log(canWallJump);
         CalculateValues();
         CountTimers();
         if (!blockedInput)
@@ -195,24 +201,25 @@ public class PlayerControllerNew : MonoBehaviour
             moveInput = HorizontalRaw();
             HandleDashInput();
             JumpChecks();
+            OnWallChecks();
         }
     }
-    private void CollisionChecks() 
+    private void CollisionChecks()
     {
         IsGrounded();
         BumpedHead();
         IsOnWall();
     }
 
-    
 
-    IEnumerator SetAfk(float t,bool state) 
+
+    IEnumerator SetAfk(float t, bool state)
     {
         yield return new WaitForSeconds(t);
         afk = state;
     }
 
-    IEnumerator StartParticleSystemWithOffset(float t, ParticleSystem systemToPlay) 
+    IEnumerator StartParticleSystemWithOffset(float t, ParticleSystem systemToPlay)
     {
         yield return new WaitForSeconds(t);
         systemToPlay.Play();
@@ -228,7 +235,7 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 if (!afk)
                 {
-                    if(!afkEntry)
+                    if (!afkEntry)
                     {
                         afkEntry = true;
                         afkExit = false;
@@ -269,7 +276,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
     }
 
-    public static void DisableInput(float duration) 
+    public static void DisableInput(float duration)
     {
         blockedInput = true;
         inst.StartCoroutine(inst.GiveInputBack(duration));
@@ -279,7 +286,7 @@ public class PlayerControllerNew : MonoBehaviour
     {
         Vector2 boxCastOrigin = new Vector2(_feetColl.bounds.center.x, _feetColl.bounds.min.y);
         Vector2 boxCastSize = new Vector2(_feetColl.bounds.size.x, groundDetectionRayLength);
-        _groundHit = Physics2D.BoxCastAll(boxCastOrigin, boxCastSize, 0f, Vector2.down,groundDetectionRayLength,whatIsGround);
+        _groundHit = Physics2D.BoxCastAll(boxCastOrigin, boxCastSize, 0f, Vector2.down, groundDetectionRayLength, whatIsGround);
         bool wasGrounded = grounded;
         grounded = false;
         foreach (var collision in _groundHit)
@@ -300,24 +307,25 @@ public class PlayerControllerNew : MonoBehaviour
         {
             runParticle.Stop();
         }
-        if (debug) 
+        if (debug)
         {
             Color color;
-            if (grounded) 
+            if (grounded)
             {
                 color = Color.green;
             }
             else { color = Color.red; }
-            Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x/2,boxCastOrigin.y), Vector2.down * groundDetectionRayLength,color);
-            Debug.DrawRay(new Vector2(boxCastOrigin.x + boxCastSize.x/2,boxCastOrigin.y), Vector2.down * groundDetectionRayLength,color);
-            Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x/2,boxCastOrigin.y - groundDetectionRayLength), Vector2.right * boxCastSize.x,color);
+            Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y), Vector2.down * groundDetectionRayLength, color);
+            Debug.DrawRay(new Vector2(boxCastOrigin.x + boxCastSize.x / 2, boxCastOrigin.y), Vector2.down * groundDetectionRayLength, color);
+            Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y - groundDetectionRayLength), Vector2.right * boxCastSize.x, color);
         }
     }
 
-    
+
     private void HandleMovement(float acceleration, float deceleration, Vector2 movementInput)
     {
-        if(!isDashing){
+        if (!isDashing)
+        {
             if (movementInput != Vector2.zero)
             {
                 Vector2 targetVelocity = new Vector2(movementInput.x, 0f) * maxRunSpeed;
@@ -332,8 +340,8 @@ public class PlayerControllerNew : MonoBehaviour
                 m_rb.linearVelocityX = _moveVelocity.x;
             }
         }
-        if (!m_facingRight && m_rb.linearVelocityX > 0f) Flip();
-        else if (m_facingRight && m_rb.linearVelocityX < 0f) Flip();
+        if (!m_facingRight && moveInput > 0f) Flip();
+        else if (m_facingRight && moveInput < 0f) Flip();
     }
 
     private void HandleDash()
@@ -380,7 +388,7 @@ public class PlayerControllerNew : MonoBehaviour
 
 
 
-    IEnumerator GiveInputBack(float duration) 
+    IEnumerator GiveInputBack(float duration)
     {
         yield return new WaitForSeconds(duration);
         blockedInput = false;
@@ -393,30 +401,30 @@ public class PlayerControllerNew : MonoBehaviour
         transform.localScale = scale;
     }
 
-    private void CalculateValues() 
+    private void CalculateValues()
     {
         adjustedJumpHeight = jumpHeight * jumpHeightCompensationFactor;
-        gravity = -(2f * adjustedJumpHeight) / Mathf.Pow(timeTillJumpApex,2f);
-        initJumpVelocity = Mathf.Abs(gravity) *timeTillJumpApex;
+        gravity = -(2f * adjustedJumpHeight) / Mathf.Pow(timeTillJumpApex, 2f);
+        initJumpVelocity = Mathf.Abs(gravity) * timeTillJumpApex;
     }
 
-    private void JumpChecks() 
+    private void JumpChecks()
     {
-        if (GetJumpInput()) 
+        if (GetJumpInput())
         {
             jumpBufferTimer = jumpBufferTime;
             jumpRelesedDuringBuffer = false;
         }
-        if (GetJumpReleased()) 
+        if (GetJumpReleased())
         {
-            if(jumpBufferTimer > 0f) 
+            if (jumpBufferTimer > 0f)
             {
                 jumpRelesedDuringBuffer = true;
             }
 
-            if(inJump && yVelocity > 0f) 
+            if (inJump && yVelocity > 0f)
             {
-                if (isPastApexThreshold) 
+                if (isPastApexThreshold)
                 {
                     isPastApexThreshold = false;
                     fastFalling = true;
@@ -424,7 +432,7 @@ public class PlayerControllerNew : MonoBehaviour
                     yVelocity = 0f;
                 }
 
-                else 
+                else
                 {
                     fastFalling = true;
                     fastFallReleaseSpeed = yVelocity;
@@ -433,17 +441,27 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
 
-        if(jumpBufferTimer > 0f && !inJump && (grounded || coyoteTimer > 0f || onWall)) 
+        if (jumpBufferTimer > 0f && !inJump && (grounded || coyoteTimer > 0f || canWallJump))
         {
+            
+            
+            if (canWallJump) 
+            {
+                canWallJump = false;
+                StartCoroutine(WallGrabCooldown());
+                //float wallJumpXOffset = 10;
+                //m_rb.MovePosition(new Vector2(m_rb.position.x + (- lastWallID * wallDetectionRayLength* wallJumpXOffset), m_rb.position.y));
+            }
             InitJump();
-            if (jumpRelesedDuringBuffer) 
+            
+            if (jumpRelesedDuringBuffer)
             {
                 fastFalling = true;
                 fastFallReleaseSpeed = yVelocity;
             }
         }
 
-        if((inJump || falling) && (grounded || onWall) && yVelocity <= 0f) 
+        if ((inJump || falling) && (grounded || onWall) && yVelocity <= 0f)
         {
             inJump = false;
             falling = false;
@@ -451,15 +469,27 @@ public class PlayerControllerNew : MonoBehaviour
             fastFallingTime = 0f;
             isPastApexThreshold = false;
             lastWallID = 0;
+            wallTimer = hangTime;
             yVelocity = Physics2D.gravity.y;
         }
-        
+
+        if(onWall && yVelocity > 0f && !inJump) 
+        {
+            yVelocity = -0.01f;
+        }
 
     }
 
-    private void InitJump() 
+    IEnumerator WallGrabCooldown() 
     {
-        if (!inJump) 
+        canWallGrab = false;
+        yield return new WaitForSeconds(wallGrabCooldown);
+        canWallGrab = true;
+    }
+
+    private void InitJump()
+    {
+        if (!inJump)
         {
             inJump = true;
         }
@@ -468,230 +498,268 @@ public class PlayerControllerNew : MonoBehaviour
         yVelocity = initJumpVelocity;
     }
 
-    private void Jump() 
+    private void Jump()
     {
-        if (inJump) 
+        if (inJump)
         {
-            if (_bumpedHead) 
+            if (_bumpedHead)
             {
                 fastFalling = true;
             }
-            if (yVelocity >= 0f) 
+            if (yVelocity >= 0f)
             {
-                apexPoint = Mathf.InverseLerp(initJumpVelocity,0f,yVelocity);
-                if(apexPoint > apexThreshold) 
+                apexPoint = Mathf.InverseLerp(initJumpVelocity, 0f, yVelocity);
+                if (apexPoint > apexThreshold)
                 {
-                    if(!isPastApexThreshold)
+                    if (!isPastApexThreshold)
                     {
                         isPastApexThreshold = true;
                         timePastApexThreshold = 0;
                     }
 
-                    if (isPastApexThreshold) 
+                    if (isPastApexThreshold)
                     {
                         timePastApexThreshold += Time.fixedDeltaTime;
-                        if(timePastApexThreshold < apexHangTime) 
+                        if (timePastApexThreshold < apexHangTime)
                         {
                             yVelocity = 0f;
                         }
-                        else 
+                        else
                         {
                             yVelocity = -0.01f; // init a fall
                         }
                     }
                 }
-                else 
+                else
                 {
                     yVelocity += gravity * Time.fixedDeltaTime;
-                    if (isPastApexThreshold) 
+                    if (isPastApexThreshold)
                     {
                         isPastApexThreshold = false;
                     }
                 }
             }
-            else if (!fastFalling) 
+            else if (!fastFalling)
             {
                 yVelocity += gravity * gravityOnReleaseMultiplier * Time.fixedDeltaTime;
             }
 
-            else if(yVelocity < 0f) 
+            else if (yVelocity < 0f)
             {
-                if (!falling) 
+                if (!falling)
                 {
                     falling = true;
                 }
             }
         }
 
-        if (fastFalling) 
+        if (fastFalling)
         {
-            if(fastFallingTime >= timeForUpwardsCancel) 
+            if (fastFallingTime >= timeForUpwardsCancel)
             {
                 yVelocity += gravity * gravityOnReleaseMultiplier * Time.fixedDeltaTime;
             }
 
-            else if(fastFallingTime < timeForUpwardsCancel) 
+            else if (fastFallingTime < timeForUpwardsCancel)
             {
-                yVelocity = Mathf.Lerp(fastFallReleaseSpeed,0f,(fastFallingTime/timeForUpwardsCancel));
+                yVelocity = Mathf.Lerp(fastFallReleaseSpeed, 0f, (fastFallingTime / timeForUpwardsCancel));
             }
             fastFallingTime += Time.fixedDeltaTime;
         }
 
-        if(!grounded && !inJump && onWall) 
+        if (!grounded && !inJump && !onWall)
         {
-            if (!falling) 
+            if (!falling)
             {
                 falling = true;
             }
 
             yVelocity += gravity * Time.fixedDeltaTime;
         }
+
         float maxPositiveVelocity = 50f;
+
         yVelocity = Mathf.Clamp(yVelocity, -maxFallSpeed, maxPositiveVelocity);
 
         m_rb.linearVelocityY = yVelocity;
 
     }
 
-    private void CountTimers() 
+    private void CountTimers()
     {
         jumpBufferTimer -= Time.deltaTime;
-        if (!grounded && !onWall) 
+        if (!grounded && !canWallJump)
         {
             coyoteTimer -= Time.deltaTime;
         }
-        else 
+        else
         {
             coyoteTimer = jumpCoyoteTime;
-        }
-        if (onWall) 
-        {
-            hangTime -= Time.deltaTime;
-        }
-        else 
-        {
-            wallTimer = hangTime;
         }
     }
 
     private void IsOnWall()
     {
-        if (!hasWallJump || grounded) return;
-
-        if (onWall) 
+        if (!hasWallJump) return;
+        if (grounded)
         {
-            if(wallTimer >= hangTime - stuckTime) 
-            {
-                _moveVelocity.x = 0;
-            }
-            if(wallTimer <= 0) 
-            {
-                //drop
-            }
-            //else slide down
-
+            onWall = false;
+            canWallJump= false;
+            return;
         }
-        else if(lastWallID != 0) 
+        else
         {
-            if(lastWallID == -1) 
+            int tmp = CheckWalls();
+            if (tmp != 0 && canWallGrab)
             {
-                onWall = CheckRightWall();
-                if (onWall) 
+                if (!onWall) 
                 {
-                    lastWallID = 1;
+                    yVelocity = -0.01f;
                 }
-            }
-
-            else 
-            {
-                onWall = CheckLeftWall();
-                if (onWall)
+                onWall = true;
+                falling = false;
+                fastFalling = false;
+                inJump = false;
+                if (tmp != lastWallID)
                 {
-                    lastWallID = -1;
+                    canWallJump = true;
+                    lastWallID = tmp;
+                    wallTimer = hangTime;
+                    yVelocity = -0.01f;
                 }
-
+                yVelocity += Physics2D.gravity.y * hangSpeedFactor *Time.fixedDeltaTime;
+                
             }
+            else
+            {
+                onWall = false;
+                falling = true;
+            }
+
         }
 
-        else 
-        {
-            onWall = CheckLeftWall();
-            if (onWall) 
-            {
-                lastWallID = -1;
-            }
-            onWall = CheckRightWall();
-            if (onWall) 
-            {
-                lastWallID = 1;
-            }
-        }
 
-        
     }
 
-    private bool CheckLeftWall() 
+    private void OnWallChecks()
+    {
+        if (onWall)
+        {
+            if(Mathf.Sign(HorizontalRaw()) != lastWallID) 
+            {
+                stuckTimer -= Time.deltaTime;
+            }
+            else 
+            {
+                stuckTimer = stuckTime;
+                moveInput = 0;
+            }
+            wallTimer -= Time.deltaTime;
+            if (wallTimer <= 0 || grounded)
+            {
+                onWall = false;
+            }
+
+        }
+    }
+
+
+    private int CheckWalls()
+    {
+        if (CheckLeftWall()) return -1;
+        else if (CheckRightWall()) return 1;
+        else return 0;
+    }
+
+    private bool CheckLeftWall()
     {
         bool hitwall = false;
         Vector2 boxCastOrigin = new Vector2(_bodyColl.bounds.min.x, _bodyColl.bounds.center.y);
-        Vector2 boxCastSize = new Vector2(wallDetectionRayLength, _bodyColl.bounds.max.y);
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCastOrigin, boxCastSize,0,Vector2.left, wallDetectionRayLength,whatIsGround);
-        foreach (RaycastHit2D hit in hits) 
+        RaycastHit2D[] hits = Physics2D.RaycastAll(boxCastOrigin, Vector2.left, wallDetectionRayLength, whatIsGround);
+        foreach (RaycastHit2D hit in hits)
         {
-            if(hit.collider != null && !hit.collider.isTrigger) 
+            if (hit.collider != null && !hit.collider.isTrigger)
             {
                 hitwall = true;
                 break;
             }
         }
+
+        if (debug)
+        {
+            Color rayColor;
+            if (hitwall)
+            {
+                rayColor = Color.cyan;
+            }
+            else
+            {
+                rayColor = Color.magenta;
+            }
+
+            Debug.DrawRay(boxCastOrigin, Vector2.left, rayColor, wallDetectionRayLength);
+        }
         return hitwall;
     }
-    private bool CheckRightWall() 
+    private bool CheckRightWall()
     {
         bool hitwall = false;
         Vector2 boxCastOrigin = new Vector2(_bodyColl.bounds.max.x, _bodyColl.bounds.center.y);
-        Vector2 boxCastSize = new Vector2(wallDetectionRayLength, _bodyColl.bounds.max.y);
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(boxCastOrigin, boxCastSize,0,Vector2.right, wallDetectionRayLength,whatIsGround);
-        foreach (RaycastHit2D hit in hits) 
+        RaycastHit2D[] hits = Physics2D.RaycastAll(boxCastOrigin, Vector2.right, wallDetectionRayLength, whatIsGround);
+        foreach (RaycastHit2D hit in hits)
         {
-            if(hit.collider != null && !hit.collider.isTrigger) 
+            if (hit.collider != null && !hit.collider.isTrigger)
             {
                 hitwall = true;
                 break;
             }
+        }
+        if (debug)
+        {
+            Color rayColor;
+            if (hitwall)
+            {
+                rayColor = Color.green;
+            }
+            else
+            {
+                rayColor = Color.yellow;
+            }
+
+            Debug.DrawRay(boxCastOrigin, Vector2.right, rayColor, wallDetectionRayLength);
         }
         return hitwall;
     }
 
-    private void BumpedHead() 
+    private void BumpedHead()
     {
         Vector2 boxCastOrigin = new Vector2(_feetColl.bounds.center.x, _bodyColl.bounds.max.y);
         Vector2 boxCastSize = new Vector2(_feetColl.bounds.size.x * headWidth, headDetectionRayLength);
-        _headHit = Physics2D.BoxCastAll(boxCastOrigin,boxCastSize,0f,Vector2.up, headDetectionRayLength,whatIsGround);
+        _headHit = Physics2D.BoxCastAll(boxCastOrigin, boxCastSize, 0f, Vector2.up, headDetectionRayLength, whatIsGround);
         _bumpedHead = false;
-        foreach(RaycastHit2D cast in _headHit) 
+        foreach (RaycastHit2D cast in _headHit)
         {
-            if(cast.collider != null && !cast.collider.isTrigger) 
+            if (cast.collider != null && !cast.collider.isTrigger)
             {
                 _bumpedHead = true;
             }
         }
 
-        if (debug) 
+        if (debug)
         {
             Color rayColor;
-            if (_bumpedHead) 
+            if (_bumpedHead)
             {
                 rayColor = Color.green;
             }
-            else 
+            else
             {
                 rayColor = Color.red;
             }
 
-            Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth,boxCastOrigin.y), Vector2.up * headDetectionRayLength,rayColor);
-            Debug.DrawRay(new Vector2(boxCastOrigin.x + boxCastSize.x / 2 * headWidth,boxCastOrigin.y), Vector2.up * headDetectionRayLength,rayColor);
-            Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth,boxCastOrigin.y * headDetectionRayLength), Vector2.right * boxCastSize.x * headWidth,rayColor);
+            Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth, boxCastOrigin.y), Vector2.up * headDetectionRayLength, rayColor);
+            Debug.DrawRay(new Vector2(boxCastOrigin.x + boxCastSize.x / 2 * headWidth, boxCastOrigin.y), Vector2.up * headDetectionRayLength, rayColor);
+            Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2 * headWidth, boxCastOrigin.y * headDetectionRayLength), Vector2.right * boxCastSize.x * headWidth, rayColor);
         }
     }
 }
