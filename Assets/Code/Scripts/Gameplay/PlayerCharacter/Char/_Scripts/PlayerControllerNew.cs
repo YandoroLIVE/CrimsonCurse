@@ -1,3 +1,4 @@
+using HeroController;
 using System.Collections;
 using UnityEngine;
 
@@ -251,11 +252,16 @@ public class PlayerControllerNew : MonoBehaviour
     private void UpdateWallState()
     {
         var position = (Vector2)transform.position;
+        bool onWallBefore = m_onWall;
         Collider2D[] rightColliders = Physics2D.OverlapCircleAll(position + grabRightOffset, grabCheckRadius, whatIsGround);
         m_onRightWall = CheckIfNonTrigger(rightColliders);
         Collider2D[] leftColliders = Physics2D.OverlapCircleAll(position + grabLeftOffset, grabCheckRadius, whatIsGround);
         m_onLeftWall = CheckIfNonTrigger(leftColliders);
         m_onWall = m_onRightWall || m_onLeftWall;
+        if(m_onWall && !onWallBefore) 
+        {
+            m_rb.linearVelocityX = 0;
+        }
     }
     private bool CheckIfNonTrigger(Collider2D[] colliders)
     {
@@ -266,6 +272,14 @@ public class PlayerControllerNew : MonoBehaviour
         }
         return false;
     }
+
+
+
+
+
+
+
+
 
 
     private void CalculateSides()
@@ -363,6 +377,8 @@ public class PlayerControllerNew : MonoBehaviour
         {
             PerformWallJump(wallJumpForce);
         }
+
+        
     }
 
     IEnumerator JumpCD() 
@@ -377,7 +393,8 @@ public class PlayerControllerNew : MonoBehaviour
         m_wallJumping = true;
         if (m_playerSide == m_onWallSide) Flip();
         lastWalljumpDir = m_onWallSide;
-        m_rb.AddForce(new Vector2(-m_onWallSide * force.x, force.y), ForceMode2D.Impulse);
+        //m_rb.AddForce(new Vector2(-m_onWallSide * force.x, force.y), ForceMode2D.Impulse);
+        m_rb.linearVelocity += new Vector2(-m_onWallSide * force.x, force.y);
     }
 
     IEnumerator GiveInputBack(float duration) 
