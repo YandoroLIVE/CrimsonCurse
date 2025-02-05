@@ -7,7 +7,7 @@ public abstract class BossPhase : MonoBehaviour
     [SerializeField] GameObject arenaGameObject;
     public (Rigidbody2D rigidbody, S_PlayerHealth health) player;
     public float arenaApearDelay = 0.5f;
-    public int healthCrystalHealAmount;
+    //public int healthCrystalHealAmount;
     //[HideInInspector] public HealthPickup healthCrystal;
     //[SerializeField] private float phaseHealth = 25;
     //float health;
