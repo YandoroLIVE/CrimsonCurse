@@ -24,7 +24,6 @@ public class ChimeraPhase : BossPhase
     private void Awake()
     {
         ResetPhase();
-        Debug.Log("test");
     }
 
     public Vector2 GenerateRandomPointInRadius() 
@@ -56,15 +55,21 @@ public class ChimeraPhase : BossPhase
         if (attackTime > attackCooldown - appearTime && !appeared) 
         {
             ChoosePoint();
-            attackObject.transform.position = targetPoint;
-            attackObject.ShowFace();
+            if (attackObject != null)
+            {
+                attackObject.transform.position = targetPoint;
+                attackObject.ShowFace();
+            }
             appeared = true;
             //eyes appear
         }
         if (attackTime > attackCooldown) 
         {
             playPos = player.health.transform.position;
-            attackObject.Attack();
+            if (attackObject != null)
+            {
+                attackObject.Attack();
+            }
             if(Vector2.Distance(targetPoint, playPos) <= attackRange) 
             {
                 player.health.TakeDamage((int)damage);
