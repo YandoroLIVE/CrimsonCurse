@@ -30,7 +30,7 @@ public class SafepointObject : MonoBehaviour
 
         if(_Respawned) 
         {
-            Transform player = FindAnyObjectByType<PlayerControllerNew>().transform;
+            Transform player = FindAnyObjectByType<PlayerController>().transform;
             player.position = new Vector3(_data.position.x, _data.position.y, player.position.z);
             _Respawned = false;
         }

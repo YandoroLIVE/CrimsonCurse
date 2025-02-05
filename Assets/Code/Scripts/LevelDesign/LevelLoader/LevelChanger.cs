@@ -13,13 +13,13 @@ namespace HeroController
         {
             if (_connection == LevelConnection.ActiveConnection && !SafepointObject._Respawned)
             {
-                FindObjectOfType<PlayerControllerNew>().transform.position = _spawnPoint.position;
+                FindObjectOfType<PlayerController>().transform.position = _spawnPoint.position;
             }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            var player = other.GetComponent<PlayerControllerNew>();
+            var player = other.GetComponent<PlayerController>();
             if (player != null)
             {
                 Debug.Log("Player entered trigger");

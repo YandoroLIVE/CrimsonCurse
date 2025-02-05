@@ -8,15 +8,22 @@ namespace HeroController
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class PlayerController : MonoBehaviour, IPlayerController
     {
+        [SerializeField] private float afktimeTillIdle = 2f;
+        [SerializeField] private bool forrestLevel;
+        [SerializeField] private bool spawnCamera = true;
+
         [SerializeField] private ParticleSystem landingVFX;
         [SerializeField] private ParticleSystem jumpingVFX;
         [SerializeField] private ParticleSystem dashToLeftVFX;
         [SerializeField] private ParticleSystem dashToRightVFX;
-        [SerializeField] private ParticleSystem walkParticlesVFX;
+        [SerializeField] private ParticleSystem m_dustParticle;
+        [SerializeField] private ParticleSystem m_LeafParticle;
+        [SerializeField] private ParticleSystem m_IdleTailEntry;
+        [SerializeField] private ParticleSystem m_IdleTailLoop;
+        [SerializeField] private ParticleSystem m_IdleTailExit;
+        [SerializeField] private GameObject cameraPrefab;
 
         [SerializeField] private float wallJumpMoveLockDuration = 1f;
-        [SerializeField] private ParticleSystem wallLeft;
-        [SerializeField] private ParticleSystem wallRight;
         // Importscriptable stats
         [SerializeField] private float dashSpeed = 15f;        // Dash-Geschwindigkeit
         [SerializeField] private float dashDuration = 0.2f;    // Dauer des Dashs in Sekunden
@@ -48,6 +55,11 @@ namespace HeroController
 
 
 
+        //afk vars
+        private float afkTime = 0f;
+        private bool afk = false;
+        private bool afkEntry = false;
+        private bool afkExit = false;
 
 
 
@@ -57,6 +69,8 @@ namespace HeroController
         private FrameInput _frameInput;
         private Vector2 _frameVelocity;
         private bool _cachedQueryStartInColliders;
+        private ParticleSystem runParticle;
+
 
         #region Interface
 
@@ -77,6 +91,19 @@ namespace HeroController
             {
                 tmp.UpdateStatus();
             }
+            if (spawnCamera) Instantiate(cameraPrefab);
+            if (forrestLevel)
+            {
+                m_LeafParticle.gameObject.SetActive(true);
+                m_LeafParticle.Play();
+                runParticle = m_LeafParticle;
+            }
+            else
+            {
+                m_dustParticle.gameObject.SetActive(true);
+                m_dustParticle.Play();
+                runParticle = m_dustParticle;
+            }
             _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
         }
 
@@ -88,7 +115,8 @@ namespace HeroController
 
             _time += Time.deltaTime;
             GatherInput();
-            HandleDash(); // Dash-Logik hinzuf�gen
+            HandleDash();
+            AfkHandling();
         }
 
         private void GatherInput()
@@ -180,6 +208,7 @@ namespace HeroController
             // Ground Detection Logic
             if (!_grounded && groundHit)
             {
+                runParticle.Play();
                 _grounded = true;
                 _canDash = true;  // Reset des Dash nach Bodenberührung
                 _coyoteUsable = true;
@@ -196,6 +225,7 @@ namespace HeroController
 
             else if (_grounded && !groundHit)
             {
+                runParticle.Stop();
                 _grounded = false;
                 _frameLeftGrounded = _time;
                 GroundedChanged?.Invoke(false, 0);
@@ -209,6 +239,75 @@ namespace HeroController
 
         #endregion
 
+        #region AFK
+        IEnumerator SetAfk(float t, bool state)
+        {
+            yield return new WaitForSeconds(t);
+            afk = state;
+        }
+
+        IEnumerator StartParticleSystemWithOffset(float t, ParticleSystem systemToPlay)
+        {
+            yield return new WaitForSeconds(t);
+            systemToPlay.Play();
+        }
+
+
+        private void AfkHandling()
+        {
+            if (!Input.anyKey)
+            {
+                afkTime += Time.deltaTime;
+                if (afkTime >= afktimeTillIdle)
+                {
+                    if (!afk)
+                    {
+                        if (!afkEntry)
+                        {
+                            afkEntry = true;
+                            afkExit = false;
+                            m_IdleTailEntry.Play();
+                        }
+                        StartCoroutine(SetAfk(m_IdleTailEntry.main.startLifetime.constantMax, true));
+                    }
+
+                    else
+                    {
+                        if (!m_IdleTailLoop.isPlaying)
+                        {
+                            m_IdleTailLoop.Play();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (afk)
+                {
+                    float t = m_IdleTailLoop.main.startLifetime.constantMax - m_IdleTailLoop.time;
+                    StartCoroutine(SetAfk(t, false));
+                    if (!afkExit)
+                    {
+                        m_IdleTailLoop.Stop();
+                        afkEntry = false;
+                        afkExit = true;
+                        StartCoroutine(StartParticleSystemWithOffset(t, m_IdleTailExit));
+                    }
+                    afkTime = 0;
+                }
+
+                else
+                {
+                    afkTime = 0;
+                }
+            }
+        }
+
+
+
+
+
+        #endregion
 
         #region Jumping
 
