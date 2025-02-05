@@ -7,9 +7,10 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] GameObject optionsMenu;
     [SerializeField] GameObject mainMenu;
+    [SerializeField] string sceneToLoad;
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(sceneToLoad);
     }
 
     public void CloseGame()

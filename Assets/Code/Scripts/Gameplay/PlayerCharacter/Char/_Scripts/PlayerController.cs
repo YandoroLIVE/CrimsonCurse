@@ -111,7 +111,6 @@ namespace HeroController
 
         private void Update()
         {
-            Debug.Log(_dashTimeLeft);
 
             _time += Time.deltaTime;
             GatherInput();
