@@ -59,6 +59,11 @@ public class S_PlayerAttack : MonoBehaviour
         attackVFX.transform.position = attackPos;
         enemiesInRange = Physics2D.OverlapCircleAll(attackPos, attackRange, enemyLayer);
     }
+    public float GetCooldownPercentage()
+    {
+        return -Mathf.Clamp01(attackTimer / attackCooldown);
+    }
+
 
 
     // Angriffs-Methode

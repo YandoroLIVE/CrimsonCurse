@@ -51,7 +51,7 @@ MonoBehaviour:
   _animator: {fileID: 5602097704074695124}
   maxStunLength: 5
   _InteractableTrigger: {fileID: 3493615801913556953}
-  dissapearTime: 2
+  dissapearTime: 3
 --- !u!61 &3493615801913556953
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -501,6 +501,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   aggroRange: 5
 --- !u!58 &3829789198403365638
 CircleCollider2D:

@@ -1,10 +1,11 @@
+using HeroController;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UpgradeHandler : MonoBehaviour
 {
     bool inMenu = false;
-    private PlayerControllerNew _Player;
+    private PlayerController _Player;
     private static UpgradeHandler _Instance;
     private bool _PickedUpDash = false;
     [SerializeField] private GameObject _DashIcon;
@@ -84,7 +85,7 @@ public class UpgradeHandler : MonoBehaviour
     {
         if (_Player == null) 
         {
-            _Player = FindFirstObjectByType<PlayerControllerNew>();
+            _Player = FindFirstObjectByType<PlayerController>();
             if (_Player == null)
             {
                 Debug.Log("Player not found");

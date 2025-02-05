@@ -57,6 +57,12 @@ public class S_PlayerLongRangeAttack : MonoBehaviour
         shot.rigidBody2D.linearVelocityX = projectileSpeed * Mathf.Sign(this.transform.localScale.x);
     }
 
+    public float GetCooldownPercentage()
+    {
+        return Mathf.Clamp01(attackTimer / attackCooldown);
+    }
+
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
