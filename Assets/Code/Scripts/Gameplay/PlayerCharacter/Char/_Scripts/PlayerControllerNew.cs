@@ -340,6 +340,10 @@ public class PlayerControllerNew : MonoBehaviour
         if (!m_facingRight && moveInput > 0f) Flip();
         else if (m_facingRight && moveInput < 0f) Flip();
     }
+    public float GetCooldownPercentage()
+    {
+        return 1f - Mathf.Clamp01(m_dashCooldown / dashCooldown);
+    }
 
     private void HandleDash()
     {
