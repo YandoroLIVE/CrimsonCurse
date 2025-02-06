@@ -11353,7 +11353,7 @@ PrefabInstance:
     - target: {fileID: 513240869509764817, guid: 2c039eca635cf064a8a1c2c49ef4c1a5, type: 3}
       propertyPath: BoundingShape2D
       value: 
-      objectReference: {fileID: 1021522455}
+      objectReference: {fileID: 909451095}
     - target: {fileID: 4427336018264215240, guid: 2c039eca635cf064a8a1c2c49ef4c1a5, type: 3}
       propertyPath: m_Name
       value: ParalaxCamera
@@ -12853,7 +12853,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5711096316909525679, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: appearTime
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5711096316909525679, guid: a5f294aaffe71424d8318550fba86368, type: 3}
       propertyPath: attackRange
@@ -14108,7 +14108,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1409419637}
+    m_TransformParent: {fileID: 30525748}
     m_Modifications:
     - target: {fileID: 842481034483559067, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
       propertyPath: InitialModule.startColor.maxColor.a
@@ -14128,43 +14128,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1173457836391102000, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5.8
+      value: 7.7333317
       objectReference: {fileID: 0}
     - target: {fileID: 1173457836391102000, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5.7999988
+      value: 7.733331
       objectReference: {fileID: 0}
     - target: {fileID: 1173457836391102000, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5.7999988
+      value: 10.175436
       objectReference: {fileID: 0}
     - target: {fileID: 1173457836391102000, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.84
+      value: -3.352
       objectReference: {fileID: 0}
     - target: {fileID: 1173457836391102000, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.93
+      value: -1.3596491
       objectReference: {fileID: 0}
     - target: {fileID: 1173457836391102000, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.062837675
+      value: -0.0137775745
       objectReference: {fileID: 0}
     - target: {fileID: 1173457836391102000, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1173457836391102000, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1173457836391102000, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1173457836391102000, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1173457836391102000, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -27164,7 +27164,6 @@ Transform:
   - {fileID: 702046931}
   - {fileID: 30525748}
   - {fileID: 2079316089}
-  - {fileID: 618324275}
   m_Father: {fileID: 784894466}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1438869914 stripped
@@ -29466,11 +29465,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8202472458200506938, guid: b995a529b9d1db348b0032e5e6823e5a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.326
+      value: 6.07
       objectReference: {fileID: 0}
     - target: {fileID: 8202472458200506938, guid: b995a529b9d1db348b0032e5e6823e5a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.155
+      value: -1.12
       objectReference: {fileID: 0}
     - target: {fileID: 8202472458200506938, guid: b995a529b9d1db348b0032e5e6823e5a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -29572,6 +29571,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8202472458200506938, guid: b995a529b9d1db348b0032e5e6823e5a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 915354131}
+    - targetCorrespondingSourceObject: {fileID: 8202472458200506938, guid: b995a529b9d1db348b0032e5e6823e5a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 618324275}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b995a529b9d1db348b0032e5e6823e5a, type: 3}
 --- !u!4 &1735418454 stripped
@@ -32063,7 +32065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5592493401446076477, guid: dbf4e87c4a0bfc748ab9ee7a478a50e6, type: 3}
       propertyPath: appearTime
-      value: 1.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5592493401446076477, guid: dbf4e87c4a0bfc748ab9ee7a478a50e6, type: 3}
       propertyPath: phaseHealth
@@ -32075,7 +32077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5592493401446076477, guid: dbf4e87c4a0bfc748ab9ee7a478a50e6, type: 3}
       propertyPath: attackCooldown
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5592493401446076477, guid: dbf4e87c4a0bfc748ab9ee7a478a50e6, type: 3}
       propertyPath: arenaApearDelay
@@ -33939,7 +33941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5592493401446076477, guid: dbf4e87c4a0bfc748ab9ee7a478a50e6, type: 3}
       propertyPath: appearTime
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5592493401446076477, guid: dbf4e87c4a0bfc748ab9ee7a478a50e6, type: 3}
       propertyPath: phaseHealth
@@ -33951,7 +33953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5592493401446076477, guid: dbf4e87c4a0bfc748ab9ee7a478a50e6, type: 3}
       propertyPath: attackCooldown
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5592493401446076477, guid: dbf4e87c4a0bfc748ab9ee7a478a50e6, type: 3}
       propertyPath: arenaApearDelay
