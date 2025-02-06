@@ -6,7 +6,7 @@ public class CooldownUI : MonoBehaviour
     public Image attackCooldownBar;  // UI-Image für Angriff
     public S_PlayerAttack playerAttack;  // Referenz zum Angriffsscript
     public Image dashCooldownBar;
-    public PlayerControllerNew playerControllerNew;
+    public PlayerController playerControllerNew;
     public Image longRangeCooldownBar;
     public S_PlayerLongRangeAttack playerLongRangeAttack;
 
