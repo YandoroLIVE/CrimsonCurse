@@ -3,10 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class Spikes : MonoBehaviour
 {
+    [SerializeField] private int damage = 5000;
     private const string FIRST_LEVEL_NAME = "L1_Redo_Nika";
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        S_PlayerHealth.GetInstance().TakeDamage(5000);
+        S_PlayerHealth.GetInstance().TakeDamage(damage);
         //Return to safepoint
         //if (Safepoint.GetCurrentSafepoint() != null)
         //{
