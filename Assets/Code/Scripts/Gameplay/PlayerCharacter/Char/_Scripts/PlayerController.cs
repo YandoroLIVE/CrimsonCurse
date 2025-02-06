@@ -22,6 +22,7 @@ namespace HeroController
         [SerializeField] private ParticleSystem m_IdleTailLoop;
         [SerializeField] private ParticleSystem m_IdleTailExit;
         [SerializeField] private GameObject cameraPrefab;
+        [SerializeField] private DashEffect dashVFX;
 
         [SerializeField] private float wallJumpMoveLockDuration = 1f;
         // Importscriptable stats
@@ -65,6 +66,7 @@ namespace HeroController
 
         [SerializeField] private ScriptableStats _stats;
         private Rigidbody2D _rb;
+        private SpriteRenderer spriteRender;
         private CapsuleCollider2D _col;
         private FrameInput _frameInput;
         private Vector2 _frameVelocity;
@@ -86,6 +88,7 @@ namespace HeroController
         {
             _rb = GetComponent<Rigidbody2D>();
             _col = GetComponent<CapsuleCollider2D>();
+            spriteRender = GetComponentInChildren<SpriteRenderer>();
             UpgradeHandler tmp = UpgradeHandler.GetInstance();   
             if(tmp != null) 
             {
@@ -173,13 +176,16 @@ namespace HeroController
 
 
             // Ground and Ceiling Detection
-            bool groundHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.down, _stats.GrounderDistance, ~_stats.PlayerLayer);
-            bool ceilingHit = Physics2D.CapsuleCast(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, _stats.GrounderDistance, ~_stats.PlayerLayer);
-
+            var groundHits = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.down, _stats.GrounderDistance, ~_stats.PlayerLayer);
+            bool groundHit = false;
+            groundHit = CheckAllCollision(groundHits);
+            var ceilingHits = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, _stats.GrounderDistance, ~_stats.PlayerLayer);
+            bool ceilingHit = CheckAllCollision(ceilingHits);
             // Raycast to check for walls on both sides
-            bool wallHitRight = Physics2D.Raycast(transform.position, Vector2.right, wallCheckDistance, wallLayer);
-            bool wallHitLeft = Physics2D.Raycast(transform.position, Vector2.left, wallCheckDistance, wallLayer);
-
+            var wallHitRights = Physics2D.RaycastAll(transform.position, Vector2.right, wallCheckDistance, wallLayer);
+            bool wallHitRight = CheckAllCollision(wallHitRights);
+            var wallHitLefts = Physics2D.RaycastAll(transform.position, Vector2.left, wallCheckDistance, wallLayer);
+            bool wallHitLeft = CheckAllCollision(wallHitLefts);
             // Determine the wall direction: -1 for left, 1 for right, 0 for no wall
             if (wallHitRight)
             {
@@ -231,6 +237,21 @@ namespace HeroController
             }
 
             Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
+        }
+
+        private bool CheckAllCollision(RaycastHit2D[] groundHits)
+        {
+            bool tmp = false;
+            foreach (var hit in groundHits)
+            {
+                if (!hit.collider.isTrigger)
+                {
+                    tmp = true;
+                    break;
+                }
+            }
+
+            return tmp;
         }
 
 
@@ -419,15 +440,23 @@ namespace HeroController
             if (_frameInput.Dash && _canDash && !_isDashing && pickedUpDash)
             {
                 StartDash();
-                PlayDashVFX();
+                //PlayDashVFX();
+                if(dashVFX != null && spriteRender != null){
+                    dashVFX.Loop(spriteRender.sprite, spriteRender.transform);
+                }
             }
 
             if (_isDashing)
             {
+                if(dashVFX != null && spriteRender != null)
+                {
+                    dashVFX.Loop(spriteRender.sprite, spriteRender.transform);
+                }
                 _dashTimeLeft -= Time.fixedDeltaTime;
 
                 if (_dashTimeLeft <= 0)
                 {
+                    dashVFX.ResetCounter();
                     EndDash();
                 }
             }
