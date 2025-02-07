@@ -11,25 +11,23 @@ public class PusherEnemy : BaseEnemy
     public float attackCooldown;
     public float projectileSpeed;
     [SerializeField] EnemyPurify purifycationHandler;
+    [SerializeField] Animator animator;
     [SerializeField] IsPlayerInTrigger _AttackTrigger;
     [SerializeField] PusherProjectile _ProjectilePrefab;
+    [SerializeField] GameObject _PurifiedPusherPrefab;
     private List<PusherProjectile> projectiles = new List<PusherProjectile>();
-    private (Rigidbody2D rigidbody2D,S_PlayerHealth health) _Player = (null,null);
+    private (Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null);
     private float timer;
     private Vector2 lookDirection = new Vector2(0, -1); //Default position pusher looks at
 
 
-    private void Playeffects()
-    {
-        // play shooting animation
-    }
 
-   
+
 
     private void Awake()
     {
-        Heal();        
-        if (purifycationHandler == null) 
+        Heal();
+        if (purifycationHandler == null)
         {
             GetComponentInChildren<EnemyPurify>();
         }
@@ -42,7 +40,7 @@ public class PusherEnemy : BaseEnemy
         //pusher dos not move
     }
 
-    public override void Attack() 
+    public override void Attack()
     {
 
         if (_AttackTrigger.IsPlayerInBox())
@@ -53,13 +51,16 @@ public class PusherEnemy : BaseEnemy
                 _Player.rigidbody2D = collision.gameObject.GetComponent<Rigidbody2D>();
                 _Player.health = collision.gameObject.GetComponent<S_PlayerHealth>();
             }
-            if (timer+attackCooldown <= Time.time) 
+            if (timer + attackCooldown <= Time.time)
             {
                 timer = Time.time;
                 Shoot();
-                //Playeffects();
-                //StartCoroutine(DelayPush());
+                animator.SetBool("Attacking", true);
             }
+        }
+        else
+        {
+            animator.SetBool("Attacking", false);
         }
     }
 
@@ -70,15 +71,24 @@ public class PusherEnemy : BaseEnemy
 
     public override void ReachedZeroHitpoints()
     {
+        animator.SetBool("Attacking", false);
         purifycationHandler.healthAmountRestoredOnPurify = healthAmountRestoredOnPurify;
         purifycationHandler.SetStunned(this);
     }
-    private void Shoot() 
+
+    public override void Hurt(float damage)
+    {
+        base.Hurt(damage);
+        animator.SetTrigger("Hurt");
+        animator.SetBool("Attacking", false);
+
+    }
+    private void Shoot()
     {
         bool needMoreProjectiles = true;
-        foreach(PusherProjectile shot in projectiles) 
+        foreach (PusherProjectile shot in projectiles)
         {
-            if (!shot.gameObject.activeInHierarchy) 
+            if (!shot.gameObject.activeInHierarchy)
             {
                 needMoreProjectiles = false;
                 shot.transform.position = transform.position;
@@ -87,21 +97,35 @@ public class PusherEnemy : BaseEnemy
                 shot.SetVelocity(RotateVector2(lookDirection, rotationAngle), projectileSpeed);
                 shot.gameObject.SetActive(true);
                 break;
-                
+
             }
-        
+
         }
-        if (needMoreProjectiles) 
+        if (needMoreProjectiles)
         {
-            PusherProjectile shot = Instantiate(_ProjectilePrefab,transform);
-            shot.Init(_Player, _PushStrength,_Damage);
+            PusherProjectile shot = Instantiate(_ProjectilePrefab, transform);
+            shot.Init(_Player, _PushStrength, _Damage);
             shot.gameObject.SetActive(true);
             projectiles.Add(shot);
 
         }
     }
 
-    private Vector2 RotateVector2(Vector2 vector,float delta)
+    public override void OnPurify()
+    {
+        foreach (PusherProjectile shot in projectiles)
+        {
+            Destroy(shot);
+        }
+        projectiles.Clear();
+        
+        var tmp = Instantiate(_PurifiedPusherPrefab, this.transform.position, this.transform.rotation, null);
+        bool idleOne = Random.value >= 0.5f ? true : false;
+        tmp.GetComponent<Animator>().SetBool("IdleOne", idleOne);
+    }
+
+
+    private Vector2 RotateVector2(Vector2 vector, float delta)
     {
         delta *= Mathf.Deg2Rad;
         return new Vector2(
