@@ -1063,6 +1063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1759942431782581783}
   - component: {fileID: 6868848986412650231}
+  - component: {fileID: 3633931237403760349}
   m_Layer: 6
   m_Name: Abilities
   m_TagString: Untagged
@@ -1111,6 +1112,21 @@ MonoBehaviour:
   playerController: {fileID: 655155509145113155}
   longRangeCooldownBar: {fileID: 3982064819192234618}
   playerLongRangeAttack: {fileID: 901974382164256339}
+--- !u!114 &3633931237403760349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895412096704129830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fcea0b0b11a034489cc443d0254550, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _DashIcon: {fileID: 1787406978609199415}
+  _WalljumpIcon: {fileID: 8916544288412546947}
+  _LongrangeIcon: {fileID: 3827939149298760113}
 --- !u!1 &6867055529407097777
 GameObject:
   m_ObjectHideFlags: 0
