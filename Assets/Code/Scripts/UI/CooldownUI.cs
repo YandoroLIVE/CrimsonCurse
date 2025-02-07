@@ -1,33 +1,37 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CooldownUI : MonoBehaviour
+namespace HeroController
 {
-    public Image attackCooldownBar;  // UI-Image für Angriff
-    public S_PlayerAttack playerAttack;  // Referenz zum Angriffsscript
-    public Image dashCooldownBar;
-    public PlayerControllerNew playerControllerNew;
-    public Image longRangeCooldownBar;
-    public S_PlayerLongRangeAttack playerLongRangeAttack;
-
-    void Update()
+    public class CooldownUI : MonoBehaviour
     {
-        // Angriff Cooldown
-        if (playerAttack != null)
-        {
-            attackCooldownBar.fillAmount = playerAttack.GetCooldownPercentage(); // Setze FillAmount
-        }
+        public Image attackCooldownBar;  // UI-Image für Angriff
+        public S_PlayerAttack playerAttack;  // Referenz zum Angriffsscript
+        public Image dashCooldownBar;
+        public PlayerController playerController;
+        public Image longRangeCooldownBar;
+        public S_PlayerLongRangeAttack playerLongRangeAttack;
 
-        // Dash Cooldown
-        if (playerControllerNew != null)
+        void Update()
         {
-            dashCooldownBar.fillAmount = playerControllerNew.GetCooldownPercentage(); // Setze FillAmount
-        }
+            // Angriff Cooldown
+            if (playerAttack != null)
+            {
+                attackCooldownBar.fillAmount = playerAttack.GetCooldownPercentage(); // Setze FillAmount
+            }
 
-        // Fernkampf-Angriff Cooldown
-        if (playerLongRangeAttack != null)
-        {
-            longRangeCooldownBar.fillAmount = playerLongRangeAttack.GetCooldownPercentage(); // Setze FillAmount
+            // Dash Cooldown
+            if (playerController != null)
+            {
+                dashCooldownBar.fillAmount = playerController.GetCooldownPercentage(); // Setze FillAmount
+            }
+
+            // Fernkampf-Angriff Cooldown
+            if (playerLongRangeAttack != null)
+            {
+                longRangeCooldownBar.fillAmount = playerLongRangeAttack.GetCooldownPercentage(); // Setze FillAmount
+            }
         }
     }
+
 }
