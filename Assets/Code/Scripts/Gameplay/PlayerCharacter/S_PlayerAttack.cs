@@ -61,7 +61,7 @@ public class S_PlayerAttack : MonoBehaviour
     }
     public float GetCooldownPercentage()
     {
-        return -Mathf.Clamp01(attackTimer / attackCooldown);
+        return Mathf.Clamp01(attackTimer / attackCooldown);
     }
 
 
