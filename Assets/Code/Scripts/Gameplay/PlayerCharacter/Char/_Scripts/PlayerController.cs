@@ -435,6 +435,12 @@ namespace HeroController
 
         #endregion
         #region Dash
+
+        public float GetCooldownPercentage()
+        {
+            if (_canDash) return 1f; // Cooldown ist vollständig abgelaufen
+            return Mathf.Clamp01(1f - (_dashTimeLeft / _stats.dashCooldown));
+        }
         private void HandleDash()
         {
             if (_frameInput.Dash && _canDash && !_isDashing && pickedUpDash)
