@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class Boss : MonoBehaviour
 {
     bool isBeaten = false;
-    string winSceneName = "WinScene";
+    [SerializeField] string winSceneName = "WinScene";
     private int currentPhaseCounter = 0;
     [SerializeField] private List<BossPhase> phaseTransitions;
     (Rigidbody2D rigidbody, S_PlayerHealth health) player;
