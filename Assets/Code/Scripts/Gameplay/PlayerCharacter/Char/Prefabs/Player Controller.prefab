@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 697713893361877193}
   - component: {fileID: 2202438050047719767}
   m_Layer: 6
-  m_Name: Image (2)
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 968392810780728527}
   - component: {fileID: 5416959000534163917}
   m_Layer: 6
-  m_Name: Image (4)
+  m_Name: 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 7919868619509145655}
   - component: {fileID: 8061600093583955105}
   m_Layer: 6
-  m_Name: Image (1)
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -291,7 +291,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 499974046325750987, guid: 9225a168f92986648b2d56e388cb37fe, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -366,7 +366,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: -7336901153650959495, guid: cd07d78f7217c264e9927592e21f3350, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -514,11 +514,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4acb51c77854be42998bb61c1453a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldownBar: {fileID: 0}
+  attackCooldownBar: {fileID: 3292458285354342684}
   playerAttack: {fileID: -3089645825415717033}
-  dashCooldownBar: {fileID: 0}
-  playerControllerNew: {fileID: 0}
-  longRangeCooldownBar: {fileID: 0}
+  dashCooldownBar: {fileID: 6914079154268111244}
+  playerController: {fileID: 655155509145113155}
+  longRangeCooldownBar: {fileID: 2644365956112185276}
   playerLongRangeAttack: {fileID: 901974382164256339}
 --- !u!1 &2882746969408056549
 GameObject:
@@ -532,7 +532,7 @@ GameObject:
   - component: {fileID: 8269835737408487664}
   - component: {fileID: 6719448240262585748}
   m_Layer: 6
-  m_Name: Image
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -613,7 +613,6 @@ GameObject:
   - component: {fileID: -3089645825415717033}
   - component: {fileID: 901974382164256339}
   - component: {fileID: 6632878423514679105}
-  - component: {fileID: 48365364872644323}
   m_Layer: 6
   m_Name: Player Controller
   m_TagString: Player
@@ -913,19 +912,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.109357774, y: -0.7211709}
   m_Size: {x: 0.78128445, y: 0.78128445}
   m_Direction: 0
---- !u!114 &48365364872644323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3038803841253255279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 102fd87b6d73ad841b3976a33120dfc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitStunImage: {fileID: 0}
 --- !u!1 &3678316828932598218
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,7 +924,7 @@ GameObject:
   - component: {fileID: 8991029116672289587}
   - component: {fileID: 5862922824167114132}
   m_Layer: 6
-  m_Name: Image (3)
+  m_Name: 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -958,9 +944,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3957400843065733356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 350, y: -75}
   m_SizeDelta: {x: 100, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8991029116672289587
@@ -1154,7 +1140,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 6448230551128644859, guid: aedcac4d51f83b34baa3f554b44559bf, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1387,7 +1373,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 1453416383823583845, guid: 108868cfd36b5f94da6faf29f6c23475, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
