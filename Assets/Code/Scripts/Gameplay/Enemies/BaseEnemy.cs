@@ -37,6 +37,11 @@ public abstract class BaseEnemy : MonoBehaviour, IHurtable
         stunned = false;
     }
 
+    public virtual void OnPurify() 
+    {
+    
+    }
+
     public abstract void ReachedZeroHitpoints();
 
     public abstract void Move();

@@ -67,7 +67,7 @@ public class S_PlayerHealth : MonoBehaviour
             _CurrentHealth -= damageAmount;
             currentHealth = _CurrentHealth;
 
-            FindFirstObjectByType<HitStop>().Stop(.3f);
+            FindFirstObjectByType<HitStop>()?.Stop(.3f);
             if (_CurrentHealth <= 0)
             {
                 Die();
