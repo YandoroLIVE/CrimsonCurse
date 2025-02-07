@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class ChimeraPhase : BossPhase
@@ -15,6 +16,7 @@ public class ChimeraPhase : BossPhase
     public float attackCooldown;
     public float attackRange;
     public float phaseSpeed;
+    [SerializeField] private float attackDamageTimeOffset = 0.1f;
     [SerializeField] ChimeraAttack attackObject; //is only used for the visualization of the attack
     private float attackTime;
     private bool appeared = false;
@@ -65,15 +67,11 @@ public class ChimeraPhase : BossPhase
         }
         if (attackTime > attackCooldown) 
         {
-            playPos = player.health.transform.position;
             if (attackObject != null)
             {
                 attackObject.Attack();
             }
-            if(Vector2.Distance(targetPoint, playPos) <= attackRange) 
-            {
-                player.health.TakeDamage((int)damage);
-            }
+            StartCoroutine(ActualAttack());
             //attack at positon
             attackTime = 0;
             appeared = false;
@@ -94,7 +92,16 @@ public class ChimeraPhase : BossPhase
         }
     }
 
+    IEnumerator ActualAttack() 
+    {
+        yield return new WaitForSeconds(attackDamageTimeOffset);
+        playPos = player.health.transform.position;
 
+        if (Vector2.Distance(targetPoint, playPos) <= attackRange)
+        {
+            player.health.TakeDamage((int)damage);
+        }
+    }
     public override void ResetPhase()
     {
         base.ResetPhase();
