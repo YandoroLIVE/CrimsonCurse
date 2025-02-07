@@ -12,9 +12,22 @@ namespace HeroController
         public Image longRangeCooldownBar;
         public S_PlayerLongRangeAttack playerLongRangeAttack;
 
+        PlayerController player;
+
+
+        private void Start()
+        {
+            
+        }
         void Update()
         {
-            // Angriff Cooldown
+            GetReferences();
+            UpdateCooldownIcons();
+
+        }
+
+        private void UpdateCooldownIcons()
+        {
             if (playerAttack != null)
             {
                 attackCooldownBar.fillAmount = playerAttack.GetCooldownPercentage(); // Setze FillAmount
@@ -31,6 +44,14 @@ namespace HeroController
             {
                 longRangeCooldownBar.fillAmount = playerLongRangeAttack.GetCooldownPercentage(); // Setze FillAmount
             }
+        }
+
+        private void GetReferences()
+        {
+            player = FindObjectOfType<PlayerController>();
+            playerAttack = player.GetComponent<S_PlayerAttack>();
+            playerLongRangeAttack = player.GetComponent<S_PlayerLongRangeAttack>();
+            playerController = player.GetComponent<PlayerController>();
         }
     }
 
