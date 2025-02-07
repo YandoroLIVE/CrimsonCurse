@@ -1062,6 +1062,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1759942431782581783}
+  - component: {fileID: 6868848986412650231}
   m_Layer: 6
   m_Name: Abilities
   m_TagString: Untagged
@@ -1078,7 +1079,7 @@ RectTransform:
   m_GameObject: {fileID: 5895412096704129830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3037903, y: 1.3037903, z: 1.3037903}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3088564529127750481}
@@ -1089,9 +1090,27 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 342, y: 195}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6868848986412650231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895412096704129830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4acb51c77854be42998bb61c1453a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCooldownBar: {fileID: 2038670256072025891}
+  playerAttack: {fileID: -3089645825415717033}
+  dashCooldownBar: {fileID: 4892728603828802490}
+  playerController: {fileID: 655155509145113155}
+  longRangeCooldownBar: {fileID: 3982064819192234618}
+  playerLongRangeAttack: {fileID: 901974382164256339}
 --- !u!1 &6867055529407097777
 GameObject:
   m_ObjectHideFlags: 0
