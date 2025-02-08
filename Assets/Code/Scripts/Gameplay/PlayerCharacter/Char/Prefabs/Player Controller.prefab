@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: 901974382164256339}
   - component: {fileID: 6632878423514679105}
   - component: {fileID: 2520961166824371947}
+  - component: {fileID: 507874117736617216}
   m_Layer: 6
   m_Name: Player Controller
   m_TagString: Player
@@ -739,7 +740,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashSpectrePrefab: {fileID: 1241397481048971184, guid: 56054cf8c9f0f3a409b8371036c82c6d, type: 3}
   dashSpectreMaterial: {fileID: 2100000, guid: a69c82d38941e584b9111c24e9552217, type: 2}
-  spawnRate: 0.05
+  spawnRate: 0.0125
+--- !u!114 &507874117736617216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3038803841253255279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdda0ebc6fabfbd4b8fbfde66b1985dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3678316828932598218
 GameObject:
   m_ObjectHideFlags: 0
