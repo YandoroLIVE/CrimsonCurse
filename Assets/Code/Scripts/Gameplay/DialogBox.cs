@@ -7,6 +7,7 @@ public class DialogBox : MonoBehaviour
     [SerializeField] TextMeshProUGUI textObject;
     [SerializeField] Transform canvas;
     [SerializeField] Image speaker;
+    [SerializeField] Image textBoxBackGround;
 
     private void Awake()
     {
@@ -17,11 +18,16 @@ public class DialogBox : MonoBehaviour
         this.transform.SetParent(canvas);
         GetComponent<RectTransform>().localPosition = Vector3.zero;
     }
-    public void SetValues(Sprite speaker, string textToDisplay) 
+    public void SetValues(Sprite speaker, string textToDisplay, Sprite backGroundImage) 
     {
         if(speaker != null)
         {
             this.speaker.sprite = speaker;
+        }
+
+        if(backGroundImage != null) 
+        {
+            this.textBoxBackGround.sprite = backGroundImage;
         }
         else 
         {
