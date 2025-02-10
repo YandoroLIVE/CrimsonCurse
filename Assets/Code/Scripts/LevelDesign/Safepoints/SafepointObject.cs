@@ -8,6 +8,7 @@ public class SafepointObject : MonoBehaviour
     public static bool _Respawned;
     [SerializeField] private ParticleSystem _NotActive;
     [SerializeField] private ParticleSystem _Active;
+    [SerializeField] AudioClip safepointSoundClip;
 
     private void Start()
     {
@@ -53,8 +54,15 @@ public class SafepointObject : MonoBehaviour
 
     public void ActivateSafepoint() 
     {
+        if (_data.isActive == false)
+        {
+            AudioManager.instance.PlaySoundFXClip(safepointSoundClip, transform, .3f);
+        }
         _data.SetAsCurrentSafepoint(_data.iD);
         SetVFXForActive();
+
+        
+
     }
 
     public static void LoadCurrentSafepoint() 
