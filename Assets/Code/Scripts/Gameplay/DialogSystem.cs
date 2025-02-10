@@ -34,7 +34,7 @@ public class DialogSystem : MonoBehaviour
         ResetText();
         if (texts.Count > 0)
         {
-            boxRefrences.SetValues(texts[currentDialogID].speaker, texts[currentDialogID].text, texts[0].textBackgroundImage);
+            boxRefrences.SetValues(texts[currentDialogID].speaker, texts[currentDialogID].text, texts[currentDialogID].textBackgroundImage);
             playerRef = FindAnyObjectByType<PlayerController>();
             playerRef.inputBlocked = blockMovement;
         }
@@ -55,7 +55,7 @@ public class DialogSystem : MonoBehaviour
             playerRef = FindAnyObjectByType<PlayerController>();
 
         }
-        boxRefrences.SetValues(texts[currentDialogID].speaker, texts[currentDialogID].text, texts[0].textBackgroundImage);
+        boxRefrences.SetValues(texts[currentDialogID].speaker, texts[currentDialogID].text, texts[currentDialogID].textBackgroundImage);
         this.gameObject.SetActive(true);
         boxRefrences.gameObject.SetActive(true);
     }
@@ -87,7 +87,7 @@ public class DialogSystem : MonoBehaviour
             playerRef.inputBlocked = false;
             return;
         }
-        boxRefrences.SetValues(texts[currentDialogID].speaker, texts[currentDialogID].text, texts[0].textBackgroundImage);
+        boxRefrences.SetValues(texts[currentDialogID].speaker, texts[currentDialogID].text, texts[currentDialogID].textBackgroundImage);
 
 
     }
