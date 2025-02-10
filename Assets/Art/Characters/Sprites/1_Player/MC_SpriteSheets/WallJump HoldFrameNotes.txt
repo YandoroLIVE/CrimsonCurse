@@ -1,0 +1,22 @@
+
+#Transition from Jump to WallHold:
+9th frame of "PlayerSpriteSheet_JumpNulled"
+is 1st frame of "PlayerSpriteSheet_WallHold"
+
+
+#WallSlide:
+Frame 19 of "PlayerSpriteSheet_WallHold" is the HoldFrame when sliding down.
+
+#PlayerFall While Slide:
+if player falls while sliding down, rest of "PlayerSpriteSheet_WallHold"
+needs to be played.
+
+
+#PlayerJump while WallSlide:
+if player jumps while [Frame 19 of "PlayerSpriteSheet_WallHold" (HoldFrame)] is active,
+"PlayerSpriteSheet_JumpNulled" animation needs to be played starting from Frame 9.
+
+
+#Jump From Wall:
+Frame 9 of "PlayerSpriteSheet_JumpNulled" needs to be held as long as player is moving up.
+play "PlayerSpriteSheet_JumpNulled" from Frame 9 if Player is Falling.
