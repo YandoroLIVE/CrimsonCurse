@@ -23,12 +23,14 @@ namespace HeroController
         [SerializeField] private ParticleSystem m_IdleTailExit;
         [SerializeField] private GameObject cameraPrefab;
         [SerializeField] private DashEffect dashVFX;
+        [SerializeField] private Animator animator;
 
         [SerializeField] private float wallJumpMoveLockDuration = 1f;
         // Importscriptable stats
         [SerializeField] private float dashSpeed = 15f;        // Dash-Geschwindigkeit
         [SerializeField] private float dashDuration = 0.2f;    // Dauer des Dashs in Sekunden
         [SerializeField] private float dashCooldown = 1f;      // Zeit, bevor ein neuer Dash m�glich ist
+        public bool inputBlocked = false;
         public bool pickedUpDash = false;
         public bool hasWallJump = false;
         private bool _canDash = true;                          // Kontrolliert, ob der Dash verf�gbar ist
@@ -89,8 +91,8 @@ namespace HeroController
             _rb = GetComponent<Rigidbody2D>();
             _col = GetComponent<CapsuleCollider2D>();
             spriteRender = GetComponentInChildren<SpriteRenderer>();
-            UpgradeHandler tmp = UpgradeHandler.GetInstance();   
-            if(tmp != null) 
+            UpgradeHandler tmp = UpgradeHandler.GetInstance();
+            if (tmp != null)
             {
                 tmp.UpdateStatus();
             }
@@ -123,13 +125,28 @@ namespace HeroController
 
         private void GatherInput()
         {
-            _frameInput = new FrameInput
+            if (inputBlocked)
             {
-                Dash = Input.GetKeyDown(KeyCode.LeftShift ) || Input.GetKeyDown(KeyCode.JoystickButton1),
-                JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space),
-                JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.Space),
-                Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
-            };
+                _frameInput = new FrameInput
+                {
+                    Dash = false,
+                    JumpDown = false,
+                    JumpHeld = false,
+                    Move = Vector2.zero
+                };
+                _timeSinceJumpPressed = float.MaxValue;
+
+            }
+            else
+            {
+                _frameInput = new FrameInput
+                {
+                    Dash = Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.JoystickButton1),
+                    JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space),
+                    JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.Space),
+                    Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
+                };
+            }
 
             if (_frameInput.JumpDown)
             {
@@ -189,16 +206,19 @@ namespace HeroController
             // Determine the wall direction: -1 for left, 1 for right, 0 for no wall
             if (wallHitRight)
             {
+                animator.SetBool("OnWall",true);
                 _isTouchingWall = true;
                 _wallDirectionX = 1;
             }
             else if (wallHitLeft)
             {
+                animator.SetBool("OnWall",true);
                 _isTouchingWall = true;
                 _wallDirectionX = -1;
             }
             else
             {
+                animator.SetBool("OnWall",false);
                 _isTouchingWall = false;
                 _wallDirectionX = 0;
             }
@@ -207,6 +227,7 @@ namespace HeroController
             _isWallSliding = _isTouchingWall && !_grounded && _frameVelocity.y < 0;
             if (_isWallSliding)
             {
+                _frameLeftGrounded = _time;
                 _frameVelocity.y = -_stats.wallSlideSpeed;  // Apply wall sliding speed
             }
 
@@ -355,11 +376,13 @@ namespace HeroController
             {
                 if (_grounded || CanUseCoyote)
                 {
+                    animator.SetTrigger("Jump");
                     ExecuteJump();  // Grounded or coyote jump
-                    
+
                 }
-                else if (_isTouchingWall && !_grounded && hasWallJump)
+                else if ((_isTouchingWall  || CanUseCoyote) && !_grounded && hasWallJump)
                 {
+                    animator.SetTrigger("Jump");
                     ExecuteWallJump();  // Wall jump
                 }
 
@@ -371,7 +394,7 @@ namespace HeroController
 
         private void ExecuteJump()
         {
-            
+
             _endedJumpEarly = false;
             _bufferedJumpUsable = false;
             _coyoteUsable = false;
@@ -447,14 +470,15 @@ namespace HeroController
             {
                 StartDash();
                 //PlayDashVFX();
-                if(dashVFX != null && spriteRender != null){
+                if (dashVFX != null && spriteRender != null)
+                {
                     dashVFX.Loop(spriteRender.sprite, spriteRender.transform);
                 }
             }
 
             if (_isDashing)
             {
-                if(dashVFX != null && spriteRender != null)
+                if (dashVFX != null && spriteRender != null)
                 {
                     dashVFX.Loop(spriteRender.sprite, spriteRender.transform);
                 }
@@ -542,6 +566,14 @@ namespace HeroController
             if (!_isDashing)
             {
                 _rb.linearVelocity = _frameVelocity;  // Normale Bewegung
+                if(_frameVelocity.x > 0) 
+                {
+                    animator.SetBool("Running",true);
+                }
+                else 
+                {
+                    animator.SetBool("Running",false);
+                }
             }
             else
             {

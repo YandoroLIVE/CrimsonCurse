@@ -11,6 +11,8 @@ public class ChimeraAttack : MonoBehaviour
         //Play eyes appear anmiaton
     }
 
+    public Animator GetAnimator() { return animator; }
+
     
 
     public void Attack() 
