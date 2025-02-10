@@ -117,6 +117,8 @@ namespace HeroController
             _time += Time.deltaTime;
             GatherInput();
             AfkHandling();
+            HandleDash();
+
         }
 
         private void GatherInput()
@@ -168,7 +170,6 @@ namespace HeroController
             }
 
             CheckCollisions();
-            HandleDash();
             HandleJump();
 
             if (!_isWallJumpLocked) HandleDirection(); // Bewegung nur erlauben, wenn die Sperre aufgehoben ist
@@ -483,7 +484,7 @@ namespace HeroController
                 {
                     dashVFX.Loop(spriteRender.sprite, spriteRender.transform);
                 }
-                _dashTimeLeft -= Time.fixedDeltaTime;
+                _dashTimeLeft -= Time.deltaTime;
 
                 if (_dashTimeLeft <= 0)
                 {
