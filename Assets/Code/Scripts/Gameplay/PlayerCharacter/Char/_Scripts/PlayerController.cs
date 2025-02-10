@@ -23,6 +23,7 @@ namespace HeroController
         [SerializeField] private ParticleSystem m_IdleTailExit;
         [SerializeField] private GameObject cameraPrefab;
         [SerializeField] private DashEffect dashVFX;
+        [SerializeField] private Animator animator;
 
         [SerializeField] private float wallJumpMoveLockDuration = 1f;
         // Importscriptable stats
@@ -205,17 +206,19 @@ namespace HeroController
             // Determine the wall direction: -1 for left, 1 for right, 0 for no wall
             if (wallHitRight)
             {
+                animator.SetBool("OnWall",true);
                 _isTouchingWall = true;
                 _wallDirectionX = 1;
             }
             else if (wallHitLeft)
             {
-
+                animator.SetBool("OnWall",true);
                 _isTouchingWall = true;
                 _wallDirectionX = -1;
             }
             else
             {
+                animator.SetBool("OnWall",false);
                 _isTouchingWall = false;
                 _wallDirectionX = 0;
             }
@@ -373,11 +376,13 @@ namespace HeroController
             {
                 if (_grounded || CanUseCoyote)
                 {
+                    animator.SetTrigger("Jump");
                     ExecuteJump();  // Grounded or coyote jump
 
                 }
                 else if ((_isTouchingWall  || CanUseCoyote) && !_grounded && hasWallJump)
                 {
+                    animator.SetTrigger("Jump");
                     ExecuteWallJump();  // Wall jump
                 }
 
@@ -561,6 +566,14 @@ namespace HeroController
             if (!_isDashing)
             {
                 _rb.linearVelocity = _frameVelocity;  // Normale Bewegung
+                if(_frameVelocity.x > 0) 
+                {
+                    animator.SetBool("Running",true);
+                }
+                else 
+                {
+                    animator.SetBool("Running",false);
+                }
             }
             else
             {
