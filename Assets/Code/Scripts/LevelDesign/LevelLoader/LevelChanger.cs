@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 namespace HeroController
 {
@@ -22,14 +23,25 @@ namespace HeroController
             var player = other.GetComponent<PlayerController>();
             if (player != null)
             {
-                Debug.Log("Player entered trigger");
-                LevelConnection.ActiveConnection = _connection;
-                SceneManager.LoadScene(_targetSceneName);
+                StartCoroutine(ChangeLevelAfterDelay(0.6f));
             }
             else
             {
                 Debug.Log("Non-player object entered trigger");
             }
+        }
+
+        private IEnumerator ChangeLevelAfterDelay(float delay)
+        {
+            SceneFader myScript = FindObjectOfType<SceneFader>();
+            myScript.FadeOut(myScript.CurrentFadeType);
+
+            Debug.Log("Player entered trigger");
+
+            yield return new WaitForSeconds(delay);
+
+            LevelConnection.ActiveConnection = _connection;
+            SceneManager.LoadScene(_targetSceneName);
         }
     }
 }
