@@ -26,10 +26,7 @@ namespace HeroController
         [SerializeField] private Animator animator;
 
         [SerializeField] private float wallJumpMoveLockDuration = 1f;
-        // Importscriptable stats
-        [SerializeField] private float dashSpeed = 15f;        // Dash-Geschwindigkeit
-        [SerializeField] private float dashDuration = 0.2f;    // Dauer des Dashs in Sekunden
-        [SerializeField] private float dashCooldown = 1f;      // Zeit, bevor ein neuer Dash m�glich ist
+        // Importscriptable stats   // Zeit, bevor ein neuer Dash m�glich ist
         public bool inputBlocked = false;
         public bool pickedUpDash = false;
         public bool hasWallJump = false;
@@ -119,7 +116,6 @@ namespace HeroController
 
             _time += Time.deltaTime;
             GatherInput();
-            HandleDash();
             AfkHandling();
         }
 
@@ -210,13 +206,13 @@ namespace HeroController
                 _isTouchingWall = true;
                 _wallDirectionX = 1;
             }
-            else if (wallHitLeft)
+            if (wallHitLeft)
             {
                 animator.SetBool("OnWall",true);
                 _isTouchingWall = true;
                 _wallDirectionX = -1;
             }
-            else
+            if(!wallHitLeft && ! wallHitRight)
             {
                 animator.SetBool("OnWall",false);
                 _isTouchingWall = false;
@@ -227,6 +223,7 @@ namespace HeroController
             _isWallSliding = _isTouchingWall && !_grounded && _frameVelocity.y < 0;
             if (_isWallSliding)
             {
+                animator.SetBool("OnWall",true);
                 _frameLeftGrounded = _time;
                 _frameVelocity.y = -_stats.wallSlideSpeed;  // Apply wall sliding speed
             }
@@ -241,6 +238,7 @@ namespace HeroController
                 _bufferedJumpUsable = true;
                 _endedJumpEarly = false;
                 landingVFX.Play();
+                animator.SetBool("Grounded", true);
 
 
                 // Reset der zuletzt gesprungenen Wand
@@ -251,6 +249,7 @@ namespace HeroController
 
             else if (_grounded && !groundHit)
             {
+                animator.SetBool("Grounded", false);
                 runParticle.Stop();
                 _grounded = false;
                 _frameLeftGrounded = _time;
@@ -469,6 +468,8 @@ namespace HeroController
             if (_frameInput.Dash && _canDash && !_isDashing && pickedUpDash)
             {
                 StartDash();
+                animator.SetTrigger("Dash");
+
                 //PlayDashVFX();
                 if (dashVFX != null && spriteRender != null)
                 {
@@ -566,9 +567,9 @@ namespace HeroController
             if (!_isDashing)
             {
                 _rb.linearVelocity = _frameVelocity;  // Normale Bewegung
-                if(_frameVelocity.x > 0) 
+                if(_frameVelocity.x > 0 || _frameVelocity.x < 0) 
                 {
-                    animator.SetBool("Running",true);
+                    animator.SetBool("Running", true);
                 }
                 else 
                 {
