@@ -18,5 +18,7 @@ public class DialogPhase : BossPhase
     private void OnTriggerEnter2D(Collider2D collision)
     {
         dialog.blockMovement = true;
+        dialog.ResetText();
+        dialog.BecomeActive();
     }
 }
