@@ -607,9 +607,6 @@ MonoBehaviour:
   dashVFX: {fileID: 2520961166824371947}
   animator: {fileID: 988428131117065804}
   wallJumpMoveLockDuration: 0.2
-  dashSpeed: 25
-  dashDuration: 1.25
-  dashCooldown: 1
   inputBlocked: 0
   pickedUpDash: 0
   hasWallJump: 0
@@ -1776,12 +1773,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2971589338477312437, guid: 39d47044936bd3a43ac6091efc86cca9, type: 3}
       propertyPath: texts.Array.data[0].text
-      value: You Died. Noob
+      value: Sylvaine, you fainted. I brought you to a save place. Please don't give
+        up. We have to save him.
       objectReference: {fileID: 0}
     - target: {fileID: 2971589338477312437, guid: 39d47044936bd3a43ac6091efc86cca9, type: 3}
       propertyPath: texts.Array.data[1].text
       value: njet
       objectReference: {fileID: 0}
+    - target: {fileID: 2971589338477312437, guid: 39d47044936bd3a43ac6091efc86cca9, type: 3}
+      propertyPath: texts.Array.data[0].speaker
+      value: 
+      objectReference: {fileID: 1680421676932540514, guid: a7c0004db025b69438b09e7a64b2d59f, type: 3}
     - target: {fileID: 2971589338477312437, guid: 39d47044936bd3a43ac6091efc86cca9, type: 3}
       propertyPath: texts.Array.data[1].speaker
       value: 
