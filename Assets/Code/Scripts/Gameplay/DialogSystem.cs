@@ -8,32 +8,29 @@ public class DialogSystem : MonoBehaviour
 {
     [SerializeField] List<KeyCode> keysToAdvanceDialog;
     [SerializeField] List<DialogText> texts;
-    [SerializeField] bool showOnAwake = true;
     [SerializeField] DialogBox boxRefrences;
     private const float BUTTON_PRESS_COOLDOWN = 0.25f;
     public bool blockMovement = false;
-    bool canAdvance= true;
+    bool canAdvance = true;
     private int currentDialogID = 0;
     [HideInInspector] public bool dialogCompleted = false;
     PlayerController playerRef;
     [System.Serializable]
-    struct DialogText 
+    struct DialogText
     {
         public Sprite speaker;
         public string text;
     }
 
+    private void Awake()
+    {
+        this.gameObject.SetActive(false);
+        this.boxRefrences.gameObject.SetActive(false);
+    }
+
     private void OnEnable()
     {
         ResetText();
-        if (!showOnAwake)
-        {
-            this.gameObject.SetActive(false);
-            boxRefrences.gameObject.SetActive(false);
-            playerRef = FindAnyObjectByType<PlayerController>();
-
-
-        }
         if (texts.Count > 0)
         {
             boxRefrences.SetValues(texts[currentDialogID].speaker, texts[currentDialogID].text);
@@ -50,37 +47,38 @@ public class DialogSystem : MonoBehaviour
         }
     }
 
-    public void BecomeActive() 
+    public void BecomeActive()
     {
-        if(playerRef == null) 
+        if (playerRef == null)
         {
             playerRef = FindAnyObjectByType<PlayerController>();
 
         }
+        boxRefrences.SetValues(texts[currentDialogID].speaker, texts[currentDialogID].text);
         this.gameObject.SetActive(true);
         boxRefrences.gameObject.SetActive(true);
     }
-    public void ResetText() 
+    public void ResetText()
     {
         currentDialogID = 0;
     }
     private void Update()
     {
         playerRef.inputBlocked = blockMovement;
-        if (CheckKeys()) 
+        if (CheckKeys())
         {
             AdvanceDialog();
         }
     }
-    private void AdvanceDialog() 
+    private void AdvanceDialog()
     {
-        if (canAdvance) 
+        if (canAdvance)
         {
             StartCoroutine(InputCooldown());
             canAdvance = false;
         }
         currentDialogID++;
-        if (currentDialogID >= texts.Count) 
+        if (currentDialogID >= texts.Count)
         {
             dialogCompleted = true;
             this.gameObject.SetActive(false);
@@ -92,20 +90,20 @@ public class DialogSystem : MonoBehaviour
 
     }
 
-    IEnumerator InputCooldown() 
+    IEnumerator InputCooldown()
     {
         yield return new WaitForSeconds(BUTTON_PRESS_COOLDOWN);
         canAdvance = true;
     }
 
-    private bool CheckKeys() 
+    private bool CheckKeys()
     {
-        if(canAdvance)
+        if (canAdvance)
         {
-        foreach (var key in keysToAdvanceDialog) 
-        {
-            if (Input.GetKey(key)) return true;
-        }
+            foreach (var key in keysToAdvanceDialog)
+            {
+                if (Input.GetKey(key)) return true;
+            }
             return false;
         }
         else return false;
