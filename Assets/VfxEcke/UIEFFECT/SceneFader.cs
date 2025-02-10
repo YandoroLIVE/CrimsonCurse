@@ -130,6 +130,12 @@ public class SceneFader : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+            StartCoroutine(DelayedFadeIn());
+    }
+
+    private IEnumerator DelayedFadeIn()
+    {
+        yield return new WaitForSeconds(1f);
         FadeIn(CurrentFadeType);
     }
 

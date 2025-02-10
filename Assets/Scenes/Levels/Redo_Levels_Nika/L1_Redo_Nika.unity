@@ -607,6 +607,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3915369196756064402, guid: 7e7b9933194a04b4ab10506bef417409, type: 3}
+      propertyPath: FadeDuration
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4992640339606054984, guid: 7e7b9933194a04b4ab10506bef417409, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1786,10 +1790,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpgradeHandler
       objectReference: {fileID: 0}
-    - target: {fileID: 3701968714722755075, guid: 6422a0efffa00224eb577243e5886f61, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5826262066461880482, guid: 6422a0efffa00224eb577243e5886f61, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2433,33 +2433,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2781175188856569089, guid: 23f1766d853268d4d935f0daa5aec10b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.42495602
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781175188856569089, guid: 23f1766d853268d4d935f0daa5aec10b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.42495602
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781175188856569089, guid: 23f1766d853268d4d935f0daa5aec10b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.42495602
-      objectReference: {fileID: 0}
     - target: {fileID: 5850449695606073687, guid: 23f1766d853268d4d935f0daa5aec10b, type: 3}
       propertyPath: m_Name
       value: Minimap
       objectReference: {fileID: 0}
     - target: {fileID: 7995452765390608880, guid: 23f1766d853268d4d935f0daa5aec10b, type: 3}
-      propertyPath: highlightColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7995452765390608880, guid: 23f1766d853268d4d935f0daa5aec10b, type: 3}
-      propertyPath: highlightColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7995452765390608880, guid: 23f1766d853268d4d935f0daa5aec10b, type: 3}
-      propertyPath: highlightColor.r
-      value: 0
+      propertyPath: highlightColor.a
+      value: 0.21176471
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
