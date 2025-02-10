@@ -13,4 +13,10 @@ public class DialogPhase : BossPhase
             EndPhase();
         }
     }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        dialog.blockMovement = true;
+    }
 }

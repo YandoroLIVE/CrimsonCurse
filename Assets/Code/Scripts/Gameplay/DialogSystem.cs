@@ -30,6 +30,8 @@ public class DialogSystem : MonoBehaviour
         {
             this.gameObject.SetActive(false);
             boxRefrences.gameObject.SetActive(false);
+            playerRef = FindAnyObjectByType<PlayerController>();
+
 
         }
         if (texts.Count > 0)
@@ -58,6 +60,7 @@ public class DialogSystem : MonoBehaviour
     }
     private void AdvanceDialog() 
     {
+        playerRef.inputBlocked = blockMovement;
         if (canAdvance) 
         {
             StartCoroutine(InputCooldown());
