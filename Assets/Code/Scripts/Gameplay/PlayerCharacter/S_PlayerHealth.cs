@@ -18,6 +18,7 @@ public class S_PlayerHealth : MonoBehaviour
     [HideInInspector] public int currentHealth;
     public Color HitColor;
     [SerializeField] SpriteRenderer _Sprite;
+    [SerializeField] DialogSystem _DeathText;
     static bool oneTime = false;
 
     public static S_PlayerHealth GetInstance() 
@@ -41,6 +42,10 @@ public class S_PlayerHealth : MonoBehaviour
         _instance = this;
         if (_CurrentHealth <= 0)
         {
+            //just died
+            Debug.Log("AAAAAAAAAAAAAH");
+            _DeathText.BecomeActive();
+            SetHealth(_RespawnHealh);
             _CurrentHealth = maxHealth;
         }
         currentHealth = _CurrentHealth;
@@ -96,7 +101,6 @@ public class S_PlayerHealth : MonoBehaviour
     }
     void Die()
     {
-        SetHealth(_RespawnHealh);
         if (Safepoint.GetCurrentSafepoint() != null)
         {
             SafepointObject.LoadCurrentSafepoint();
