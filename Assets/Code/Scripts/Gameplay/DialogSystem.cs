@@ -44,11 +44,19 @@ public class DialogSystem : MonoBehaviour
 
     private void OnDisable()
     {
-        playerRef.inputBlocked = false;
+        if (playerRef != null)
+        {
+            playerRef.inputBlocked = false;
+        }
     }
 
     public void BecomeActive() 
     {
+        if(playerRef == null) 
+        {
+            playerRef = FindAnyObjectByType<PlayerController>();
+
+        }
         this.gameObject.SetActive(true);
         boxRefrences.gameObject.SetActive(true);
     }
