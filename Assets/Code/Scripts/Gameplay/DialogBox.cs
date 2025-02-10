@@ -5,11 +5,16 @@ using UnityEngine.UI;
 public class DialogBox : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI textObject;
+    [SerializeField] Transform canvas;
     [SerializeField] Image speaker;
 
     private void Awake()
     {
-        this.transform.SetParent(FindAnyObjectByType<Canvas>().transform);
+        if ( canvas == null) 
+        {
+            canvas = FindAnyObjectByType<Canvas>().transform;
+        }
+        this.transform.SetParent(canvas);
         GetComponent<RectTransform>().localPosition = Vector3.zero;
     }
     public void SetValues(Sprite speaker, string textToDisplay) 
