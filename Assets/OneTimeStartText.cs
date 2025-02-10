@@ -9,6 +9,7 @@ public class OneTimeStartText : MonoBehaviour
     {
         if (!displayed) 
         {
+            displayed = true;
             dialog.BecomeActive();
         }
     }
