@@ -29,6 +29,7 @@ namespace HeroController
         [SerializeField] private float dashSpeed = 15f;        // Dash-Geschwindigkeit
         [SerializeField] private float dashDuration = 0.2f;    // Dauer des Dashs in Sekunden
         [SerializeField] private float dashCooldown = 1f;      // Zeit, bevor ein neuer Dash m�glich ist
+        public bool inputBlocked = false;
         public bool pickedUpDash = false;
         public bool hasWallJump = false;
         private bool _canDash = true;                          // Kontrolliert, ob der Dash verf�gbar ist
@@ -89,8 +90,8 @@ namespace HeroController
             _rb = GetComponent<Rigidbody2D>();
             _col = GetComponent<CapsuleCollider2D>();
             spriteRender = GetComponentInChildren<SpriteRenderer>();
-            UpgradeHandler tmp = UpgradeHandler.GetInstance();   
-            if(tmp != null) 
+            UpgradeHandler tmp = UpgradeHandler.GetInstance();
+            if (tmp != null)
             {
                 tmp.UpdateStatus();
             }
@@ -123,13 +124,28 @@ namespace HeroController
 
         private void GatherInput()
         {
-            _frameInput = new FrameInput
+            if (inputBlocked)
             {
-                Dash = Input.GetKeyDown(KeyCode.LeftShift ) || Input.GetKeyDown(KeyCode.JoystickButton1),
-                JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space),
-                JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.Space),
-                Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
-            };
+                _frameInput = new FrameInput
+                {
+                    Dash = false,
+                    JumpDown = false,
+                    JumpHeld = false,
+                    Move = Vector2.zero
+                };
+                _timeSinceJumpPressed = float.MaxValue;
+
+            }
+            else
+            {
+                _frameInput = new FrameInput
+                {
+                    Dash = Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.JoystickButton1),
+                    JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space),
+                    JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.Space),
+                    Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
+                };
+            }
 
             if (_frameInput.JumpDown)
             {
@@ -356,7 +372,7 @@ namespace HeroController
                 if (_grounded || CanUseCoyote)
                 {
                     ExecuteJump();  // Grounded or coyote jump
-                    
+
                 }
                 else if (_isTouchingWall && !_grounded && hasWallJump)
                 {
@@ -371,7 +387,7 @@ namespace HeroController
 
         private void ExecuteJump()
         {
-            
+
             _endedJumpEarly = false;
             _bufferedJumpUsable = false;
             _coyoteUsable = false;
@@ -447,14 +463,15 @@ namespace HeroController
             {
                 StartDash();
                 //PlayDashVFX();
-                if(dashVFX != null && spriteRender != null){
+                if (dashVFX != null && spriteRender != null)
+                {
                     dashVFX.Loop(spriteRender.sprite, spriteRender.transform);
                 }
             }
 
             if (_isDashing)
             {
-                if(dashVFX != null && spriteRender != null)
+                if (dashVFX != null && spriteRender != null)
                 {
                     dashVFX.Loop(spriteRender.sprite, spriteRender.transform);
                 }
