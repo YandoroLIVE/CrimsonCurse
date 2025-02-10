@@ -210,6 +210,7 @@ namespace HeroController
             }
             else if (wallHitLeft)
             {
+
                 _isTouchingWall = true;
                 _wallDirectionX = -1;
             }
@@ -223,6 +224,7 @@ namespace HeroController
             _isWallSliding = _isTouchingWall && !_grounded && _frameVelocity.y < 0;
             if (_isWallSliding)
             {
+                _frameLeftGrounded = _time;
                 _frameVelocity.y = -_stats.wallSlideSpeed;  // Apply wall sliding speed
             }
 
@@ -374,7 +376,7 @@ namespace HeroController
                     ExecuteJump();  // Grounded or coyote jump
 
                 }
-                else if (_isTouchingWall && !_grounded && hasWallJump)
+                else if ((_isTouchingWall  || CanUseCoyote) && !_grounded && hasWallJump)
                 {
                     ExecuteWallJump();  // Wall jump
                 }
