@@ -249,6 +249,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 401558608}
+  - {fileID: 983424884}
   - {fileID: 1438068948}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4308,6 +4309,93 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6f7ffed855cf744b81b6bf730251ba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &191242674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 191242675}
+  - component: {fileID: 191242676}
+  m_Layer: 0
+  m_Name: boss-sprites-temp_0 (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &191242675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191242674}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.3, y: -1.65, z: 0}
+  m_LocalScale: {x: 1.4799999, y: 1.4799999, z: 1.4799999}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 2108827962}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &191242676
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191242674}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1667528163
+  m_SortingLayer: 11
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 8795483293680225254, guid: 80e6743341a2c1741b14c80fedf1ed0e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 1
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 9.58, y: 13.07}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1001 &192494941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20313,7 +20401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
       propertyPath: texts.Array.data[0].text
-      value: 'We made it to the Griffin Guardians layer. '
+      value: We made it to the Griffin Guardians lair.
       objectReference: {fileID: 0}
     - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
       propertyPath: texts.Array.data[1].text
@@ -20325,8 +20413,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
       propertyPath: texts.Array.data[3].text
-      value: Let's try to tire him out with a game of catch maybe? Keep running while
-        he chases you.
+      value: Carefull he is trying to attack. Let's tire him out. Don't stop running
+        while he is chasing you.
       objectReference: {fileID: 0}
     - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
       propertyPath: texts.Array.data[0].speaker
@@ -30651,93 +30739,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &977742150
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 977742151}
-  - component: {fileID: 977742152}
-  m_Layer: 0
-  m_Name: IMG_3088_0 (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &977742151
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977742150}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.001752407, y: 0.53, z: 0}
-  m_LocalScale: {x: 0.585105, y: 0.585105, z: 0.585105}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 1614527363}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &977742152
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977742150}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1498262329
-  m_SortingLayer: 4
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -40809915084512827, guid: 07ed18b9d5a146f40a8d8fe0de3f9e81, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 16.13, y: 39.52}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &980326479
 GameObject:
   m_ObjectHideFlags: 0
@@ -30820,6 +30821,93 @@ SpriteRenderer:
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 7.27, y: 17.25}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &983424883
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 983424884}
+  - component: {fileID: 983424885}
+  m_Layer: 0
+  m_Name: boss-sprites-temp_0 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &983424884
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983424883}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.76, y: -1.43, z: 0}
+  m_LocalScale: {x: 1.4799999, y: 1.4799999, z: 1.4799999}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 12584798}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &983424885
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983424883}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1248851505
+  m_SortingLayer: 1
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 8795483293680225254, guid: 80e6743341a2c1741b14c80fedf1ed0e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 9.58, y: 13.07}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -33756,6 +33844,22 @@ PrefabInstance:
     - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
       propertyPath: blockMovement
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
+      propertyPath: texts.Array.data[0].text
+      value: Are you okay? Did you get hurt? That was close.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
+      propertyPath: texts.Array.data[1].text
+      value: He doesn't look tired...
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
+      propertyPath: texts.Array.data[2].text
+      value: Kaaaaw!!!!!!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
+      propertyPath: texts.Array.data[3].text
+      value: Oh no...I think he's angry- RUN!
       objectReference: {fileID: 0}
     - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
       propertyPath: texts.Array.data[0].speaker
@@ -40665,7 +40769,6 @@ Transform:
   - {fileID: 1157243968}
   - {fileID: 90440817}
   - {fileID: 91391028}
-  - {fileID: 977742151}
   m_Father: {fileID: 848858424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1621056865 stripped
@@ -42217,6 +42320,23 @@ PrefabInstance:
     - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
       propertyPath: blockMovement
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
+      propertyPath: texts.Array.data[0].text
+      value: hah hah- Are you hurt Sylvaine?
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
+      propertyPath: texts.Array.data[1].text
+      value: I think he's slowly getting tired-
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
+      propertyPath: texts.Array.data[2].text
+      value: can you hear that? Oh no- more Crystalls are growing...and he's regaining
+        strength
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
+      propertyPath: texts.Array.data[3].text
+      value: okay- let's try this one more time. Run and try not to hit the Crystals.
       objectReference: {fileID: 0}
     - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
       propertyPath: texts.Array.data[0].speaker
@@ -44949,6 +45069,22 @@ PrefabInstance:
     - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
       propertyPath: blockMovement
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
+      propertyPath: texts.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
+      propertyPath: texts.Array.data[0].text
+      value: Looks like he is tired enough
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
+      propertyPath: texts.Array.data[1].text
+      value: Let's help him. You remember what to do?
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
+      propertyPath: texts.Array.data[2].text
+      value: 'Let''s purrify our friend here. '
       objectReference: {fileID: 0}
     - target: {fileID: 1489245502735525494, guid: 8c62cf4703677dc48b2bce6b9c280000, type: 3}
       propertyPath: texts.Array.data[0].speaker
@@ -49795,6 +49931,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 191242675}
   - {fileID: 1991580910}
   - {fileID: 1882813871}
   - {fileID: 1958793723}
