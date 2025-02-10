@@ -47,6 +47,11 @@ public class DialogSystem : MonoBehaviour
         playerRef.inputBlocked = false;
     }
 
+    public void BecomeActive() 
+    {
+        this.gameObject.SetActive(true);
+        boxRefrences.gameObject.SetActive(true);
+    }
     public void ResetText() 
     {
         currentDialogID = 0;
