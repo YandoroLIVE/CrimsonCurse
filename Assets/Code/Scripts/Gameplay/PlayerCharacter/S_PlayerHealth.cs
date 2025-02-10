@@ -43,7 +43,6 @@ public class S_PlayerHealth : MonoBehaviour
         if (_CurrentHealth <= 0)
         {
             //just died
-            Debug.Log("AAAAAAAAAAAAAH");
             _DeathText.BecomeActive();
             SetHealth(_RespawnHealh);
             _CurrentHealth = maxHealth;
