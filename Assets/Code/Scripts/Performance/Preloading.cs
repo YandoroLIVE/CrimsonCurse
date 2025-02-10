@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Preloading : MonoBehaviour
 {
     [SerializeField] private List<string> scenes;
+    [SerializeField] private string firstScene;
     private AsyncOperation sceneToPreload;
     private float progress1;
     private float progress2;
@@ -39,6 +40,6 @@ public class Preloading : MonoBehaviour
             }
 
         }
-        SceneManager.LoadScene(scenes[0]);
+        SceneManager.LoadScene(firstScene);
     }
 }
