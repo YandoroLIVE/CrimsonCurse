@@ -605,6 +605,7 @@ MonoBehaviour:
   m_IdleTailExit: {fileID: 2807712276285943835}
   cameraPrefab: {fileID: 4427336018264215240, guid: 2c039eca635cf064a8a1c2c49ef4c1a5, type: 3}
   dashVFX: {fileID: 2520961166824371947}
+  animator: {fileID: 988428131117065804}
   wallJumpMoveLockDuration: 0.2
   dashSpeed: 25
   dashDuration: 1.25
@@ -928,6 +929,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4826021563510522431}
   - component: {fileID: 7350503545055187747}
+  - component: {fileID: 988428131117065804}
   m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
@@ -1009,6 +1011,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &988428131117065804
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7736294735073742835}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 04c73c7f6e2abd345889b66307ed0cf4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8338117623953687638
 GameObject:
   m_ObjectHideFlags: 0
