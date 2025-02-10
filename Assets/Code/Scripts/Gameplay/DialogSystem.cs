@@ -53,6 +53,7 @@ public class DialogSystem : MonoBehaviour
     }
     private void Update()
     {
+        playerRef.inputBlocked = blockMovement;
         if (CheckKeys()) 
         {
             AdvanceDialog();
@@ -60,7 +61,6 @@ public class DialogSystem : MonoBehaviour
     }
     private void AdvanceDialog() 
     {
-        playerRef.inputBlocked = blockMovement;
         if (canAdvance) 
         {
             StartCoroutine(InputCooldown());
