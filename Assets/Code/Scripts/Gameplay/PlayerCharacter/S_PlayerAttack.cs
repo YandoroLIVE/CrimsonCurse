@@ -17,6 +17,7 @@ public class S_PlayerAttack : MonoBehaviour
     private Collider2D[] enemiesInRange;
     private bool comboActive = false;
     private Vector2 attackPos = Vector2.zero;
+    [SerializeField] Animator animator;
     private void Start()
     {
         attackTimer = attackCooldown;
@@ -69,6 +70,7 @@ public class S_PlayerAttack : MonoBehaviour
     // Angriffs-Methode
     void Attack()
     {
+        animator.SetTrigger("MeleeAttack");
         CheckForEnemiesInRange();
         attackVFX.Play();
         foreach (var enemyCollider in enemiesInRange)

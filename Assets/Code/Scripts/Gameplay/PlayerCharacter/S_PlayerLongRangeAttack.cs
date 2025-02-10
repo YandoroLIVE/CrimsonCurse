@@ -5,6 +5,7 @@ public class S_PlayerLongRangeAttack : MonoBehaviour
 {
     [SerializeField] private S_Projectile projectilePrefab;
     [SerializeField] Vector3 firePoint;
+    [SerializeField] Animator animator;
     public float projectileSpeed = 10f;
     public float projectileLifeTime = 10f;
     public int damage = 100;
@@ -28,6 +29,7 @@ public class S_PlayerLongRangeAttack : MonoBehaviour
 
     void LongRangeAttack()
     {
+        animator.SetTrigger("RangedAttack");
         bool needMoreProjectiles = true;
         foreach (S_Projectile shot in projectiles)
         {
