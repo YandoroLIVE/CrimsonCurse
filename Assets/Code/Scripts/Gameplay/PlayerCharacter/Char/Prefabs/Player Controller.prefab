@@ -607,9 +607,6 @@ MonoBehaviour:
   dashVFX: {fileID: 2520961166824371947}
   animator: {fileID: 988428131117065804}
   wallJumpMoveLockDuration: 0.2
-  dashSpeed: 25
-  dashDuration: 1.25
-  dashCooldown: 1
   inputBlocked: 0
   pickedUpDash: 0
   hasWallJump: 0
@@ -621,6 +618,17 @@ MonoBehaviour:
   wallJumpForce: 15
   wallJumpDirection: {x: 1, y: 1.5}
   jumpBufferTime: 0.125
+  jumpClip:
+  - {fileID: 8300000, guid: 0edb482b9be4cb848992a0ea37001035, type: 3}
+  - {fileID: 8300000, guid: 8f7a6c29cc63f274f96f97b46edabeae, type: 3}
+  - {fileID: 8300000, guid: fbf418b72d8fd944c8a3ceaa5b65ccb8, type: 3}
+  - {fileID: 8300000, guid: c244784dd53772a48b4783073d3b2ada, type: 3}
+  - {fileID: 8300000, guid: 413296f547a9d8849b32b8b6d4ef72ba, type: 3}
+  - {fileID: 8300000, guid: bace6d89a2c28c04d84c7ad6eecab86f, type: 3}
+  - {fileID: 8300000, guid: 359a8829a5bfe5a4284f397fb44af1db, type: 3}
+  - {fileID: 8300000, guid: 0da77216d7699fd4c9647ffed2ecd2a1, type: 3}
+  - {fileID: 8300000, guid: 49ca9bbe3f0f21742b81a00d57df6d9e, type: 3}
+  - {fileID: 8300000, guid: deee552a5495d814490e2fe054b677a6, type: 3}
   _stats: {fileID: 11400000, guid: 05e6a06c5af93134ab98ff12e2c27265, type: 2}
 --- !u!114 &1709451335225921395
 MonoBehaviour:
@@ -654,6 +662,8 @@ MonoBehaviour:
   HitColor: {r: 1, g: 0.6273585, b: 0.6273585, a: 1}
   _Sprite: {fileID: 7350503545055187747}
   _DeathText: {fileID: 7238117010352578890}
+  hitSFX:
+  - {fileID: 8300000, guid: 711963e9e49259e43923a3d0ab30e3af, type: 3}
 --- !u!114 &-3089645825415717033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -676,6 +686,12 @@ MonoBehaviour:
     m_Bits: 128
   attackVFX: {fileID: 9020373020287212625}
   animator: {fileID: 988428131117065804}
+  attackClip:
+  - {fileID: 8300000, guid: 2d7781dec7a1fff4386a57253b2cc355, type: 3}
+  - {fileID: 8300000, guid: 2d02f481d78697343a2bc7b0526fb74f, type: 3}
+  - {fileID: 8300000, guid: bcc72233d5b81994d80fdfff32b00e60, type: 3}
+  impactSFX:
+  - {fileID: 8300000, guid: 124aca6824ae52c498a3853017c7cbd8, type: 3}
 --- !u!114 &901974382164256339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,6 +711,7 @@ MonoBehaviour:
   projectileLifeTime: 10
   damage: 100
   attackCooldown: 0.5
+  longrangesfx: {fileID: 8300000, guid: de27beb02e280194186fd46fd23361de, type: 3}
 --- !u!70 &6632878423514679105
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -932,6 +949,7 @@ GameObject:
   - component: {fileID: 4826021563510522431}
   - component: {fileID: 7350503545055187747}
   - component: {fileID: 988428131117065804}
+  - component: {fileID: 7678048343950056013}
   m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
@@ -1035,6 +1053,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7678048343950056013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7736294735073742835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72141c0cc722234dbbb213dad2d7cb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepSFX:
+  - {fileID: 8300000, guid: f0fd54c66b2b4694984d14be7fca1830, type: 3}
+  - {fileID: 8300000, guid: c0a7d7ff4db721f42a0f03fbda35b82d, type: 3}
 --- !u!1 &8338117623953687638
 GameObject:
   m_ObjectHideFlags: 0

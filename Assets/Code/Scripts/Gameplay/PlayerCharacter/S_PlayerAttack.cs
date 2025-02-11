@@ -18,6 +18,8 @@ public class S_PlayerAttack : MonoBehaviour
     private bool comboActive = false;
     private Vector2 attackPos = Vector2.zero;
     [SerializeField] Animator animator;
+    [SerializeField] AudioClip[] attackClip;
+    [SerializeField] AudioClip[] impactSFX;
     private void Start()
     {
         attackTimer = attackCooldown;
@@ -73,6 +75,7 @@ public class S_PlayerAttack : MonoBehaviour
         animator.SetTrigger("MeleeAttack");
         CheckForEnemiesInRange();
         attackVFX.Play();
+        AudioManager.instance.PlayRandomSoundFXClip(attackClip, transform, 1f);
         foreach (var enemyCollider in enemiesInRange)
         {
             IHurtable enemy = enemyCollider.GetComponent<IHurtable>();
@@ -80,6 +83,7 @@ public class S_PlayerAttack : MonoBehaviour
             if (enemy != null)
             {
                 enemy.Hurt(damage);
+                AudioManager.instance.PlayRandomSoundFXClip(impactSFX, transform, 1f);
             }
         }
     }

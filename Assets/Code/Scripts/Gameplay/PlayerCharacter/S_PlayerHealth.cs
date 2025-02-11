@@ -19,6 +19,7 @@ public class S_PlayerHealth : MonoBehaviour
     public Color HitColor;
     [SerializeField] SpriteRenderer _Sprite;
     [SerializeField] DialogSystem _DeathText;
+    [SerializeField] AudioClip[] hitSFX;
     static bool oneTime = false;
 
     public static S_PlayerHealth GetInstance() 
@@ -55,6 +56,7 @@ public class S_PlayerHealth : MonoBehaviour
         if (_Sprite != null)
         {
             _Sprite.color = HitColor;
+            AudioManager.instance.PlayRandomSoundFXClip(hitSFX, transform, 1f);
             yield return new WaitForSeconds(HIT_BLINK_DURATION);
             _Sprite.color = Color.white;
         }

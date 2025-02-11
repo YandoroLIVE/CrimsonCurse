@@ -53,6 +53,7 @@ namespace HeroController
         [SerializeField] private float jumpBufferTime = 0.1f; // Time window to buffer jumps
         private float _timeSinceJumpPressed = Mathf.Infinity; // Time since the jump button was pressed
 
+        [SerializeField] AudioClip[] jumpClip;
 
 
         //afk vars
@@ -102,6 +103,7 @@ namespace HeroController
             }
             else
             {
+
                 m_dustParticle.gameObject.SetActive(true);
                 m_dustParticle.Play();
                 runParticle = m_dustParticle;
@@ -117,6 +119,7 @@ namespace HeroController
             _time += Time.deltaTime;
             GatherInput();
             AfkHandling();
+
         }
 
         private void GatherInput()
@@ -399,6 +402,7 @@ namespace HeroController
             _coyoteUsable = false;
             _frameVelocity.y = _stats.JumpPower;  // Standard jump force
             jumpingVFX.Play();
+            AudioManager.instance.PlayRandomSoundFXClip(jumpClip, transform, 1f);
             Jumped?.Invoke();
         }
 

@@ -12,6 +12,7 @@ public class S_PlayerLongRangeAttack : MonoBehaviour
     public float attackCooldown = 0.5f;
     private float attackTimer;
     List<S_Projectile> projectiles = new List<S_Projectile>();
+    [SerializeField] AudioClip longrangesfx;
 
     void Update()
     {
@@ -22,7 +23,7 @@ public class S_PlayerLongRangeAttack : MonoBehaviour
             {
                 attackTimer = 0;
                 LongRangeAttack();
-                
+                AudioManager.instance.PlaySoundFXClip(longrangesfx, transform, 1f);
             }
         }
     }
