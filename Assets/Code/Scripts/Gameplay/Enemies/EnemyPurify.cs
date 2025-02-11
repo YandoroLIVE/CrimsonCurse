@@ -64,8 +64,9 @@ public class EnemyPurify : MonoBehaviour
 
     IEnumerator Dissapear(float time) 
     {
-        yield return new WaitForSeconds(time);
         _targetEnemy.OnPurify();
+        yield return new WaitForSeconds(time);
+        _targetEnemy.AfterPurify();
         _targetEnemy.gameObject.SetActive(false);
     
     }

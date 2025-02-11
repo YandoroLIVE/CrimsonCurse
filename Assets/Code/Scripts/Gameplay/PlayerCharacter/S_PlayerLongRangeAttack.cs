@@ -23,7 +23,7 @@ public class S_PlayerLongRangeAttack : MonoBehaviour
             {
                 attackTimer = 0;
                 LongRangeAttack();
-                AudioManager.instance.PlaySoundFXClip(longrangesfx, transform, 1f);
+                AudioManager.instance?.PlaySoundFXClip(longrangesfx, transform, 1f);
             }
         }
     }
