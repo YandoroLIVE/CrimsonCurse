@@ -2,22 +2,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class TarotCardUI : MonoBehaviour
+public class TarotCard   : MonoBehaviour
 {
-    public RectTransform cardPanel;
-    public CanvasGroup canvasGroup;
-    public float moveDuration = 0.5f;
-    public float fadeDuration = 0.3f;
+    public RectTransform cardPanel;  // UI-Element für die Karte
+    public CanvasGroup canvasGroup;  // Für die Transparenzsteuerung
+    public float moveDuration = 0.5f; // Dauer der Bewegung
+    public float fadeDuration = 0.3f; // Dauer des Ein- und Ausblendens
     public Vector2 hiddenPos;
     public Vector2 visiblePos;
 
     private void Start()
     {
-        hiddenPos = new Vector2(0, -Screen.height / 2);
-        visiblePos = Vector2.zero;
+        hiddenPos = new Vector2(hiddenPos.x, -Screen.height / 2); // Startposition unterhalb des Bildschirms
 
         cardPanel.anchoredPosition = hiddenPos;
-        canvasGroup.alpha = 0;
+        canvasGroup.alpha = 0; // Startet unsichtbar
     }
 
     private void Update()
@@ -31,6 +30,7 @@ public class TarotCardUI : MonoBehaviour
             HideCard();
         }
     }
+
     public void ShowCard()
     {
         StopAllCoroutines();

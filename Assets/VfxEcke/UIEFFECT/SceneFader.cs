@@ -31,7 +31,7 @@ public class SceneFader : MonoBehaviour
     }
 
 
-    private void Awake()
+    private void Start()
     {
         _image = GetComponent<Image>();
         SceneManager.sceneLoaded += OnSceneLoaded;
