@@ -40,6 +40,7 @@ public class SceneFader : MonoBehaviour
         _material = _image.material;
 
         _lastEffect = _useShutters;
+        FadeIn(CurrentFadeType);
     }
 
     private void Update()
