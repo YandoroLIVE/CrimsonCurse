@@ -63,6 +63,7 @@ public class ArtGallery : MonoBehaviour
     {
         currentID = id;
         zoomedInView = true;
+        Debug.Log("Button Pressed");
         Display();
     }
 
