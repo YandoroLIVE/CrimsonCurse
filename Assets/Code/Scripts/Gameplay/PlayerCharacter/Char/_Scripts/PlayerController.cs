@@ -53,7 +53,6 @@ namespace HeroController
         [SerializeField] private float jumpBufferTime = 0.1f; // Time window to buffer jumps
         private float _timeSinceJumpPressed = Mathf.Infinity; // Time since the jump button was pressed
 
-        [SerializeField] AudioClip[] jumpClip;
 
 
         //afk vars
@@ -103,7 +102,6 @@ namespace HeroController
             }
             else
             {
-
                 m_dustParticle.gameObject.SetActive(true);
                 m_dustParticle.Play();
                 runParticle = m_dustParticle;
@@ -119,6 +117,7 @@ namespace HeroController
             _time += Time.deltaTime;
             GatherInput();
             AfkHandling();
+            HandleDash();
 
         }
 
@@ -171,7 +170,6 @@ namespace HeroController
             }
 
             CheckCollisions();
-            HandleDash();
             HandleJump();
 
             if (!_isWallJumpLocked) HandleDirection(); // Bewegung nur erlauben, wenn die Sperre aufgehoben ist
@@ -402,7 +400,6 @@ namespace HeroController
             _coyoteUsable = false;
             _frameVelocity.y = _stats.JumpPower;  // Standard jump force
             jumpingVFX.Play();
-            AudioManager.instance.PlayRandomSoundFXClip(jumpClip, transform, 1f);
             Jumped?.Invoke();
         }
 
@@ -487,7 +484,7 @@ namespace HeroController
                 {
                     dashVFX.Loop(spriteRender.sprite, spriteRender.transform);
                 }
-                _dashTimeLeft -= Time.fixedDeltaTime;
+                _dashTimeLeft -= Time.deltaTime;
 
                 if (_dashTimeLeft <= 0)
                 {

@@ -341,6 +341,7 @@ MonoBehaviour:
   textObject: {fileID: 5365593092684566345}
   canvas: {fileID: 0}
   speaker: {fileID: 671649590172101110}
+  textBoxBackGround: {fileID: 4083256370423615557}
 --- !u!222 &8628004791733750286
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -397,12 +398,16 @@ MonoBehaviour:
   keysToAdvanceDialog: 200000005d0000004a0100004b010000
   texts:
   - speaker: {fileID: 6757197183383720517, guid: 8f90a4844b40b3f40ba85f89fcb0eca6, type: 3}
+    textBackgroundImage: {fileID: 0}
     text: Pew
   - speaker: {fileID: 5416969960113725258, guid: ea25dbec1dc3bbb41b53d79b2b3658d0, type: 3}
+    textBackgroundImage: {fileID: 0}
     text: Kapow
   - speaker: {fileID: 0}
+    textBackgroundImage: {fileID: 0}
     text: njet
   - speaker: {fileID: 0}
+    textBackgroundImage: {fileID: 0}
     text: njet
   boxRefrences: {fileID: 7680587800321757274}
   blockMovement: 0
