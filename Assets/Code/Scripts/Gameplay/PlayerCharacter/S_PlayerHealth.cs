@@ -56,7 +56,7 @@ public class S_PlayerHealth : MonoBehaviour
         if (_Sprite != null)
         {
             _Sprite.color = HitColor;
-            //AudioManager.instance.PlayRandomSoundFXClip(hitSFX, transform, 1f);
+            AudioManager.instance?.PlayRandomSoundFXClip(hitSFX, transform, 1f);
             yield return new WaitForSeconds(HIT_BLINK_DURATION);
             _Sprite.color = Color.white;
         }
