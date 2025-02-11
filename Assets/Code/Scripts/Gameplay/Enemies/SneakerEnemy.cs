@@ -5,9 +5,12 @@ using UnityEngine;
 
 public class SneakerEnemy : BaseEnemy
 {
+    const float HIT_BLINK_DURATION = 0.1f;
     private const float POINTMERCYAREA = 0.25f;
     private const float ATTACKANIMATION_HIT_OFFSET = 0.5f;
     [SerializeField] private EnemyPurify purifyHandler;
+    [SerializeField] private Color hitColor;
+    [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private float hitRange;
     [SerializeField] private float contactRange = 1f;
     [SerializeField] private float contactDamage;
@@ -269,21 +272,37 @@ public class SneakerEnemy : BaseEnemy
 
     public override void Hurt(float damage)
     {
+        StopCoroutine(HitFeedBack());
+        _sprite.color = Color.white;
+        StartCoroutine(HitFeedBack());
         base.Hurt(damage);
         animator.SetTrigger("Hurt");
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(originPoint, Vector3.one * wanderRange * 2);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(currentTargetPoint, POINTMERCYAREA);
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(this.transform.position, aggroRange);
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(this.transform.position, this.transform.position + (Vector3)debugDraw);
+
+    IEnumerator HitFeedBack()
+    {
+        if (_sprite != null)
+        {
+            _sprite.color = hitColor;
+            //AudioManager.instance.PlayRandomSoundFXClip(hitSFX, transform, 1f);
+            yield return new WaitForSeconds(HIT_BLINK_DURATION);
+            _sprite.color = Color.white;
+        }
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.green;
+    //    Gizmos.DrawWireCube(originPoint, Vector3.one * wanderRange * 2);
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(currentTargetPoint, POINTMERCYAREA);
+    //    Gizmos.color = Color.cyan;
+    //    Gizmos.DrawWireSphere(this.transform.position, aggroRange);
+
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawLine(this.transform.position, this.transform.position + (Vector3)debugDraw);
+    //}
 
 
 }
