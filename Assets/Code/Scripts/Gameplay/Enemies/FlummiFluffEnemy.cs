@@ -4,6 +4,7 @@ using UnityEngine;
 public class FlummiFluffEnemy : BaseEnemy
 {
     private const float POINTMERCYAREA = 2f;
+    private const float HIT_BLINK_DURATION = 0.1f;
     private const float JUMPANIMATIONEND_OFFSET = 0.1f;
     private const float GROUNDCHECK_LENGTH = 1.25f;
     private const float JUMP_DISTANCE_OFFSET_TO_PLAYER = 5f;
@@ -40,6 +41,8 @@ public class FlummiFluffEnemy : BaseEnemy
     public float damage = 2f;
     public Animator animator;
     [SerializeField] private EnemyPurify purifyHandler;
+    [SerializeField] private Color hitColor;
+    [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] public float jumpHeight = 1f;
     private ParticleSystem jumpVFX;
     [SerializeField] private ParticleSystem caveJumpVFX;
@@ -261,10 +264,26 @@ public class FlummiFluffEnemy : BaseEnemy
     public override void Hurt(float damage)
     {
         base.Hurt(damage);
+        StopCoroutine(HitFeedBack());
+        _sprite.color = Color.white;
+        StartCoroutine(HitFeedBack());
         attacked = true;
         if (!isJumping)
         {
             animator.SetTrigger("Hurt");
+        }
+    }
+
+
+
+    IEnumerator HitFeedBack()
+    {
+        if (_sprite != null)
+        {
+            _sprite.color = hitColor;
+            //AudioManager.instance.PlayRandomSoundFXClip(hitSFX, transform, 1f);
+            yield return new WaitForSeconds(HIT_BLINK_DURATION);
+            _sprite.color = Color.white;
         }
     }
 
@@ -277,23 +296,23 @@ public class FlummiFluffEnemy : BaseEnemy
             point.x > target.x - POINTMERCYAREA;
     }
 
-    private void OnDrawGizmos()
-    {
-        if(origin == Vector2.zero) 
-        {
-            origin = transform.position;
-        }   
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(new Vector3(currentTarget.x,currentTarget.y,this.transform.position.z), POINTMERCYAREA/2);
+    //private void OnDrawGizmos()
+    //{
+    //    if(origin == Vector2.zero) 
+    //    {
+    //        origin = transform.position;
+    //    }   
+    //    Gizmos.color = Color.green;
+    //    Gizmos.DrawWireSphere(new Vector3(currentTarget.x,currentTarget.y,this.transform.position.z), POINTMERCYAREA/2);
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(new Vector3(origin.x + pointRight,origin.y,this.transform.position.z), POINTMERCYAREA/2);
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(new Vector3(origin.x + pointRight,origin.y,this.transform.position.z), POINTMERCYAREA/2);
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(new Vector3(origin.x - pointLeft, origin.y, this.transform.position.z), POINTMERCYAREA/2);
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(new Vector3(origin.x - pointLeft, origin.y, this.transform.position.z), POINTMERCYAREA/2);
 
-        Gizmos.DrawLine(transform.position, transform.position + (new Vector3(0,-1,1)* GROUNDCHECK_LENGTH * transform.localScale.y));
-    }
+    //    Gizmos.DrawLine(transform.position, transform.position + (new Vector3(0,-1,1)* GROUNDCHECK_LENGTH * transform.localScale.y));
+    //}
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision != null) 
