@@ -14,7 +14,7 @@ namespace HeroController
         {
             if (_connection == LevelConnection.ActiveConnection && !SafepointObject._Respawned)
             {
-                FindObjectOfType<PlayerController>().transform.position = _spawnPoint.position;
+                S_PlayerHealth.GetInstance().transform.position = _spawnPoint.position;
             }
         }
 
@@ -25,23 +25,20 @@ namespace HeroController
             {
                 StartCoroutine(ChangeLevelAfterDelay(0.6f));
             }
-            else
-            {
-                Debug.Log("Non-player object entered trigger");
-            }
         }
 
         private IEnumerator ChangeLevelAfterDelay(float delay)
         {
-            SceneFader myScript = FindObjectOfType<SceneFader>();
-            myScript.FadeOut(myScript.CurrentFadeType);
+            SceneFader myScript = FindAnyObjectByType<SceneFader>();
 
-            Debug.Log("Player entered trigger");
-
-            yield return new WaitForSeconds(delay);
-
+            if (myScript != null)
+            {
+                myScript.FadeOut(myScript.CurrentFadeType);
+                yield return new WaitForSeconds(delay);
+            }
             LevelConnection.ActiveConnection = _connection;
             SceneManager.LoadScene(_targetSceneName);
+            yield return null;
         }
     }
 }
