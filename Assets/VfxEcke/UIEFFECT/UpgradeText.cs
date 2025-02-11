@@ -3,33 +3,27 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public abstract class UpgradePickup : MonoBehaviour
+public abstract class UpgradeText : MonoBehaviour
 {
-    private bool _isPickup = false;
     [SerializeField] private float textAppearLength = 2f;
     [SerializeField] private GameObject textObject;
     [SerializeField] public GameObject sprite;
     [SerializeField] private string textToDisplay;
-    [SerializeField] private TarotCard pickupMessage;
 
-
-    IEnumerator DisplayText() 
+    IEnumerator DisplayText()
     {
         textObject.GetComponent<TextMeshPro>().text = textToDisplay;
         textObject.SetActive(true);
-        pickupMessage.ShowCard();
         yield return new WaitForSeconds(textAppearLength);
-        pickupMessage.HideCard();
         textObject.SetActive(false);
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!_isPickup)
         {
-            OnPickup();  
+            OnPickup();
             StartCoroutine(DisplayText());
-            _isPickup=true;
-        }  
+
+        }
     }
 
 
