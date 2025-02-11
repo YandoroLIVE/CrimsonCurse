@@ -7,6 +7,7 @@ public abstract class UpgradePickup : MonoBehaviour
 {
     private bool _isPickup = false;
     [SerializeField] private float textAppearLength = 2f;
+    [SerializeField] private float tarotAppearLength = 3f;
     [SerializeField] private GameObject textObject;
     [SerializeField] public GameObject sprite;
     [SerializeField] private string textToDisplay;
@@ -17,9 +18,7 @@ public abstract class UpgradePickup : MonoBehaviour
     {
         textObject.GetComponent<TextMeshPro>().text = textToDisplay;
         textObject.SetActive(true);
-        pickupMessage.ShowCard();
         yield return new WaitForSeconds(textAppearLength);
-        pickupMessage.HideCard();
         textObject.SetActive(false);
     }
     void OnTriggerEnter2D(Collider2D other)
@@ -28,8 +27,16 @@ public abstract class UpgradePickup : MonoBehaviour
         {
             OnPickup();  
             StartCoroutine(DisplayText());
-            _isPickup=true;
+            StartCoroutine(DisplayTarot());
+            _isPickup =true;
         }  
+    }
+
+    IEnumerator DisplayTarot()
+    {
+        pickupMessage.ShowCard();
+        yield return new WaitForSeconds(tarotAppearLength);
+        pickupMessage.HideCard();
     }
 
 
