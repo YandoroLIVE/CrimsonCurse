@@ -9,15 +9,6 @@ public class DialogBox : MonoBehaviour
     [SerializeField] Image speaker;
     [SerializeField] Image textBoxBackGround;
 
-    private void Awake()
-    {
-        if ( canvas == null) 
-        {
-            canvas = FindAnyObjectByType<Canvas>().transform;
-        }
-        this.transform.SetParent(canvas);
-        GetComponent<RectTransform>().localPosition = Vector3.zero;
-    }
     public void SetValues(Sprite speaker, string textToDisplay, Sprite backGroundImage) 
     {
         if(speaker != null)
