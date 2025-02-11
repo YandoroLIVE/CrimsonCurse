@@ -185,7 +185,7 @@ namespace HeroController
 
         private void CheckCollisions()
         {
-            Physics2D.queriesStartInColliders = false;
+            //Physics2D.queriesStartInColliders = false;
 
 
 
@@ -196,9 +196,9 @@ namespace HeroController
             var ceilingHits = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, _stats.GrounderDistance, ~_stats.PlayerLayer);
             bool ceilingHit = CheckAllCollision(ceilingHits);
             // Raycast to check for walls on both sides
-            var wallHitRights = Physics2D.RaycastAll(transform.position, Vector2.right, wallCheckDistance, wallLayer);
+            var wallHitRights = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.right, wallCheckDistance,wallLayer);
             bool wallHitRight = CheckAllCollision(wallHitRights);
-            var wallHitLefts = Physics2D.RaycastAll(transform.position, Vector2.left, wallCheckDistance, wallLayer);
+            var wallHitLefts = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.left, wallCheckDistance, wallLayer);
             bool wallHitLeft = CheckAllCollision(wallHitLefts);
             // Determine the wall direction: -1 for left, 1 for right, 0 for no wall
             if (wallHitRight)
@@ -213,7 +213,7 @@ namespace HeroController
                 _isTouchingWall = true;
                 _wallDirectionX = -1;
             }
-            if(!wallHitLeft && ! wallHitRight)
+            if(!wallHitLeft && !wallHitRight)
             {
                 animator.SetBool("OnWall",false);
                 _isTouchingWall = false;
@@ -260,19 +260,16 @@ namespace HeroController
             Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
         }
 
-        private bool CheckAllCollision(RaycastHit2D[] groundHits)
+        private bool CheckAllCollision(RaycastHit2D[] hits)
         {
-            bool tmp = false;
-            foreach (var hit in groundHits)
+            foreach (RaycastHit2D hit in hits)
             {
-                if (!hit.collider.isTrigger)
+                if (hit.collider.isTrigger == false)
                 {
-                    tmp = true;
-                    break;
+                    return true;
                 }
             }
-
-            return tmp;
+            return false;
         }
 
 
@@ -449,6 +446,10 @@ namespace HeroController
                 // Drehe den Charakter basierend auf der Richtung
                 Vector3 scale = transform.localScale;
                 scale.x = Mathf.Sign(_frameInput.Move.x) * Mathf.Abs(scale.x); // Behalte die ursprüngliche Größe bei
+                if (_isWallSliding) // look in direction of wall if grabbing on it 
+                {
+                    scale.x = _wallDirectionX;
+                }
                 transform.localScale = scale;
             }
         }
