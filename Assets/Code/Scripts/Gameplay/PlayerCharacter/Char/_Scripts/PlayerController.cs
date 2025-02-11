@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace HeroController
@@ -191,10 +190,10 @@ namespace HeroController
 
 
             // Ground and Ceiling Detection
-            var groundHits = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.down, _stats.GrounderDistance, ~_stats.PlayerLayer);
+            var groundHits = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.down, _stats.GrounderDistance, wallLayer);
             bool groundHit = false;
             groundHit = CheckAllCollision(groundHits);
-            var ceilingHits = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, _stats.GrounderDistance, ~_stats.PlayerLayer);
+            var ceilingHits = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, _stats.GrounderDistance, wallLayer);
             bool ceilingHit = CheckAllCollision(ceilingHits);
             // Raycast to check for walls on both sides
             var wallHitRights = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.right, wallCheckDistance,wallLayer);
@@ -433,6 +432,13 @@ namespace HeroController
         {
             if (_isWallJumpLocked && Mathf.Sign(_frameInput.Move.x) == _lastWallJumpDirection)
             {
+                if (_isWallSliding) // look in direction of wall if grabbing on it 
+                {
+                    Vector3 scale = transform.localScale;
+                    scale.x = Mathf.Abs(scale.x) * _wallDirectionX;
+                    transform.localScale = scale;
+
+                }
                 return; // Blockiere Bewegung in Richtung der Wand, von der gesprungen wurde
             }
 
@@ -440,6 +446,15 @@ namespace HeroController
             {
                 var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
                 _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, 0, deceleration * Time.fixedDeltaTime);
+                Vector3 scale = transform.localScale;
+                scale.x = Mathf.Sign(_frameVelocity.x) * Mathf.Abs(scale.x);
+                if (_isWallSliding) // look in direction of wall if grabbing on it 
+                {
+
+                    scale.x = Mathf.Abs(scale.x) * _wallDirectionX;
+
+                }
+                transform.localScale = scale;
             }
             else
             {
@@ -450,7 +465,8 @@ namespace HeroController
                 scale.x = Mathf.Sign(_frameInput.Move.x) * Mathf.Abs(scale.x); // Behalte die ursprüngliche Größe bei
                 if (_isWallSliding) // look in direction of wall if grabbing on it 
                 {
-                    scale.x = _wallDirectionX;
+
+                    scale.x = Mathf.Abs(scale.x)*_wallDirectionX;
                 }
                 transform.localScale = scale;
             }

@@ -1968,41 +1968,72 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1683801942686022699, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683801942686022699, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683801942686022699, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683801942686022699, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -450
+      objectReference: {fileID: 0}
+    - target: {fileID: 1683801942686022699, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -150
+      objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: blockMovement
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.size
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[0].text
-      value: 'Hello Sylvaine. I am the Fox Guardian. We are here in the forest of
-        the Griffin Guardian. '
+      value: 'Look Sylvaine we made it to the teritory of one of my closest friends,
+        the Griffin. I know this is a hard burden I am putting on your shoulders. '
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[1].text
-      value: He has been taken over by the Crimson Curse and with him the entire
-        forest. We need to help him and all the creatures living here. Heal them
-        from this terrible curse.
+      value: 'But we have to lift this curse, which is slowly consuming and draining
+        all energy of this land and it''s inhabitants more and more as time passes. '
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[2].text
-      value: You can Run and Jump around a bit. There should be shards of my Power
-        around here somewhere.
+      value: Hopefully he hasn't been taken over by the Crimson Curse yet. We need
+        to help him and all the creatures living here. Heal them from this terrible
+        curse.
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[3].text
-      value: You can weaken creatures with the Melee (Press E)
+      value: It seems the curse is already spreading more in this forest than in
+        ours.
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[4].text
-      value: When they are stunned you have to Purrify them (Press Q). But you have
-        to do this before the Curse takes over again.
+      value: You can Run and Jump around a bit. There should be shards of my power
+        around here somewhere.
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[5].text
+      value: You can use the last bit of power I have left in me, to weaken creatures
+        with the Melee (Press E)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.data[6].text
+      value: When they are stunned you have to Purrify them (Press Q). But you have
+        to do this before the curse takes over again.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.data[7].text
       value: I think this was all let's go explore and find a way to the Griffin.
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
@@ -2020,7 +2051,7 @@ PrefabInstance:
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[3].speaker
       value: 
-      objectReference: {fileID: 1680421676932540514, guid: a7c0004db025b69438b09e7a64b2d59f, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[4].speaker
       value: 
@@ -2029,6 +2060,18 @@ PrefabInstance:
       propertyPath: texts.Array.data[5].speaker
       value: 
       objectReference: {fileID: 1680421676932540514, guid: a7c0004db025b69438b09e7a64b2d59f, type: 3}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.data[6].speaker
+      value: 
+      objectReference: {fileID: 1680421676932540514, guid: a7c0004db025b69438b09e7a64b2d59f, type: 3}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.data[7].speaker
+      value: 
+      objectReference: {fileID: 1680421676932540514, guid: a7c0004db025b69438b09e7a64b2d59f, type: 3}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: keysToAdvanceDialog.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[0].textBackgroundImage
       value: 
@@ -2053,6 +2096,14 @@ PrefabInstance:
       propertyPath: texts.Array.data[5].textBackgroundImage
       value: 
       objectReference: {fileID: 1052788816626246525, guid: 617f66085a14ffb4590e126ac5c5280e, type: 3}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.data[6].textBackgroundImage
+      value: 
+      objectReference: {fileID: 1052788816626246525, guid: 617f66085a14ffb4590e126ac5c5280e, type: 3}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.data[7].textBackgroundImage
+      value: 
+      objectReference: {fileID: 1052788816626246525, guid: 617f66085a14ffb4590e126ac5c5280e, type: 3}
     - target: {fileID: 3468011258392905433, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: m_Size.x
       value: 3.373784
@@ -2072,6 +2123,38 @@ PrefabInstance:
     - target: {fileID: 4661348792982330038, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: m_Name
       value: OneTimeText
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744105249885778029, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744105249885778029, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484955487338197880, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7879
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484955487338197880, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7879
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484955487338197880, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7879
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484955487338197880, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -220
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484955487338197880, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 750
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484955487338197880, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7562238500512760996, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15698,6 +15781,87 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1173457836391102000, guid: af6303a67c2594240b58945de3e6ea29, type: 3}
   m_PrefabInstance: {fileID: 378456419}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1722782604
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1513359591978573993, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1513359591978573993, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 1513359591978573993, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1513359591978573993, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1513359591978573993, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1513359591978573993, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1513359591978573993, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1513359591978573993, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1513359591978573993, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1513359591978573993, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6213562290197918666, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_Name
+      value: FogLayers
+      objectReference: {fileID: 0}
+    - target: {fileID: 6213562290197918666, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751488051581934420, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.3254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751488051581934420, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.4811321
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751488051581934420, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.47194067
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751488051581934420, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.41985583
+      objectReference: {fileID: 0}
+    - target: {fileID: 7200468005732708596, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ad17e9f6219327e4ca01d3b3a051bef0, type: 3}
 --- !u!1001 &1734753357
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17372,7 +17536,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -5824215502375166979, guid: bb8ea7fcea2486943aba3cf04aa1ac0e, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -17628,3 +17792,4 @@ SceneRoots:
   - {fileID: 24775363}
   - {fileID: 1325079236}
   - {fileID: 405301187}
+  - {fileID: 1722782604}

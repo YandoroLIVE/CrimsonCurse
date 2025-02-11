@@ -36,7 +36,10 @@ public class DialogSystem : MonoBehaviour
         {
             boxRefrences.SetValues(texts[currentDialogID].speaker, texts[currentDialogID].text, texts[currentDialogID].textBackgroundImage);
             playerRef = FindAnyObjectByType<PlayerController>();
-            playerRef.inputBlocked = blockMovement;
+            if (playerRef != null)
+            {
+                playerRef.inputBlocked = blockMovement;
+            }
         }
     }
 
@@ -65,7 +68,10 @@ public class DialogSystem : MonoBehaviour
     }
     private void Update()
     {
-        playerRef.inputBlocked = blockMovement;
+        if (playerRef != null)
+        {
+            playerRef.inputBlocked = blockMovement;
+        }
         if (CheckKeys())
         {
             AdvanceDialog();
