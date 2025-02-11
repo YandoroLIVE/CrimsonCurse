@@ -28,7 +28,6 @@ public class HealthDisplay : MonoBehaviour
 
         if (visibleCrystals > lastVisibleCrystals)
         {
-            AudioManager.instance?.PlaySoundFXClip(addSFX, transform, volume);
         }
         else if (visibleCrystals < lastVisibleCrystals)
         {

@@ -53,7 +53,7 @@ public class FlummiFluffEnemy : BaseEnemy
     (Transform transform, S_PlayerHealth health) _Player = (null, null);
     [SerializeField] AudioClip jumpImpactSFX;
     [SerializeField] AudioClip hurtSFX;
-    [SerializeField] AudioClip attackSFX;
+    [SerializeField] AudioClip[] attackSFX;
     [SerializeField] AudioClip jumpSFX;
     public override void Start()
     {
@@ -256,7 +256,7 @@ public class FlummiFluffEnemy : BaseEnemy
                 attackTimer = Time.time+ attackCooldown;
                 StartCoroutine(Hit());
                 animator.SetTrigger("Attack");
-                AudioManager.instance?.PlaySoundFXClip(attackSFX, transform, .5f);
+                AudioManager.instance?.PlayRandomSoundFXClip(attackSFX, transform, .5f);
 
 
             }

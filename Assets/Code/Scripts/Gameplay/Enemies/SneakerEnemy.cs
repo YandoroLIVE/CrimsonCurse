@@ -30,6 +30,8 @@ public class SneakerEnemy : BaseEnemy
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float aggroRange = 5;
+    [SerializeField] AudioClip[] attackSFX;
+    [SerializeField] AudioClip hurtSFX;
     //IsPlayerInTrigger attackRadius;
     private float idleTimer;
     private bool canAttack = true;
@@ -108,7 +110,7 @@ public class SneakerEnemy : BaseEnemy
         {
             idleTimer = Time.time;
             currentTargetPoint = RandomTargetPoint();
-
+            
         }
         else
         {
@@ -191,6 +193,7 @@ public class SneakerEnemy : BaseEnemy
             StartCoroutine(Hit());
             animator.SetTrigger("Attack");
             attackTimer = 0;
+            AudioManager.instance?.PlayRandomSoundFXClip(attackSFX, transform, 1f);
             LookAtPlayer();
         }
         if (distanceToPlayer <= contactRange && Time.deltaTime >= contactTimer)
@@ -222,6 +225,7 @@ public class SneakerEnemy : BaseEnemy
 
     public override void Heal()
     {
+
         base.Heal();
         rigi.gravityScale = 0;
     }
@@ -272,6 +276,7 @@ public class SneakerEnemy : BaseEnemy
 
     public override void Hurt(float damage)
     {
+
         StopCoroutine(HitFeedBack());
         _sprite.color = Color.white;
         StartCoroutine(HitFeedBack());
@@ -285,7 +290,7 @@ public class SneakerEnemy : BaseEnemy
         if (_sprite != null)
         {
             _sprite.color = hitColor;
-            //AudioManager.instance.PlayRandomSoundFXClip(hitSFX, transform, 1f);
+            AudioManager.instance.PlaySoundFXClip(hurtSFX, transform, 1f);
             yield return new WaitForSeconds(HIT_BLINK_DURATION);
             _sprite.color = Color.white;
         }

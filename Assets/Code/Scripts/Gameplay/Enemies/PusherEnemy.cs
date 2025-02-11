@@ -19,6 +19,8 @@ public class PusherEnemy : BaseEnemy
     [SerializeField] PusherProjectile _ProjectilePrefab;
     [SerializeField] GameObject _NoPassCollider;
     [SerializeField] GameObject _PurifiedPusherPrefab;
+    [SerializeField] AudioClip[] hitSFX;
+    [SerializeField] AudioClip attackSFX;
     private List<PusherProjectile> projectiles = new List<PusherProjectile>();
     private (Rigidbody2D rigidbody2D, S_PlayerHealth health) _Player = (null, null);
     private float timer;
@@ -97,7 +99,7 @@ public class PusherEnemy : BaseEnemy
         if (_sprite != null)
         {
             _sprite.color = hitColor;
-            //AudioManager.instance.PlayRandomSoundFXClip(hitSFX, transform, 1f);
+            AudioManager.instance?.PlayRandomSoundFXClip(hitSFX, transform, 1f);
             yield return new WaitForSeconds(HIT_BLINK_DURATION);
             _sprite.color = Color.white;
         }
@@ -110,6 +112,7 @@ public class PusherEnemy : BaseEnemy
         {
             if (!shot.gameObject.activeInHierarchy)
             {
+                AudioManager.instance?.PlaySoundFXClip(attackSFX, transform, 1f);
                 needMoreProjectiles = false;
                 shot.transform.position = transform.position;
                 shot.Init(_Player, _PushStrength, _Damage);

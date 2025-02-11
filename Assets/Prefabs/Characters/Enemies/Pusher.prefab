@@ -302,6 +302,11 @@ MonoBehaviour:
   _ProjectilePrefab: {fileID: 5191747447720885443, guid: e0243169252c9e2468bd99e1b9b420ce, type: 3}
   _NoPassCollider: {fileID: 3552875743360663744}
   _PurifiedPusherPrefab: {fileID: 589014084419299580, guid: 8039e344458969d4690170ba0797d31e, type: 3}
+  hitSFX:
+  - {fileID: 8300000, guid: df4eb95b28e987a4c956855ec2fe866c, type: 3}
+  - {fileID: 8300000, guid: 1c37e8aedf81ee14a89705696cbb8b84, type: 3}
+  - {fileID: 8300000, guid: 695ca5ecdc8838f4299f9bd320db9533, type: 3}
+  attackSFX: {fileID: 8300000, guid: c415877db6b1cc646991b315af2447cc, type: 3}
 --- !u!61 &2694215275897440879
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -666,6 +671,7 @@ MonoBehaviour:
   maxStunLength: 5
   _InteractableTrigger: {fileID: 881441782556126186}
   dissapearTime: 3
+  purifySound: {fileID: 8300000, guid: 3628773f4f53c4843b5db2e0e108a0eb, type: 3}
 --- !u!61 &881441782556126186
 BoxCollider2D:
   m_ObjectHideFlags: 0

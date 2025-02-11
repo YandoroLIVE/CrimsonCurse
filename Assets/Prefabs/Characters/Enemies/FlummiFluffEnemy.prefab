@@ -404,7 +404,8 @@ MonoBehaviour:
   _animator: {fileID: 5146345799764889243}
   maxStunLength: 5
   _InteractableTrigger: {fileID: 7148613848151730178}
-  dissapearTime: 4
+  dissapearTime: 3
+  purifySound: {fileID: 8300000, guid: 3628773f4f53c4843b5db2e0e108a0eb, type: 3}
 --- !u!61 &7148613848151730178
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -788,9 +789,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   aggroRange: {fileID: 6497421186289050082}
-  jumpImpactSFX: {fileID: 0}
-  hurtSFX: {fileID: 0}
-  attackSFX: {fileID: 0}
+  jumpImpactSFX: {fileID: 8300000, guid: 8a03a012c2efaa6418bbdaa8169cf35b, type: 3}
+  hurtSFX: {fileID: 8300000, guid: 5e524fa6754eb5249aec64eb117130eb, type: 3}
+  attackSFX:
+  - {fileID: 8300000, guid: ab33d6148f439024383ee8b0fb42fa13, type: 3}
+  - {fileID: 8300000, guid: 04bd229d7f7bd8c4e93d5ad1aef08eb8, type: 3}
   jumpSFX: {fileID: 8300000, guid: b4eb42595dc42e6428bea421ef260566, type: 3}
 --- !u!50 &1975960231427871758
 Rigidbody2D:

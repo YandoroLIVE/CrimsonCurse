@@ -56,7 +56,7 @@ public class SafepointObject : MonoBehaviour
     {
         if (_data.isActive == false)
         {
-            AudioManager.instance?.PlaySoundFXClip(safepointSoundClip, transform, .3f);
+            AudioManager.instance?.PlaySoundFXClip(safepointSoundClip, transform, .6f);
         }
         _data.SetAsCurrentSafepoint(_data.iD);
         SetVFXForActive();

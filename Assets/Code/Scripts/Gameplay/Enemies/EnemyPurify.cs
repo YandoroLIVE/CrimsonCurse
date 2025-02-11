@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class EnemyPurify : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class EnemyPurify : MonoBehaviour
     public float dissapearTime = 2f;
     bool canInteract;
     bool purified;
+    [SerializeField] AudioClip purifySound;
     void Awake()
     {
         this.enabled = false;
@@ -53,6 +55,7 @@ public class EnemyPurify : MonoBehaviour
         this.enabled = false;
         S_PlayerHealth.GetInstance().Heal(healthAmountRestoredOnPurify);
         _purifyVFX.Play();
+        AudioManager.instance?.PlaySoundFXClip(purifySound, transform, 1f);
         if (_animator != null) 
         { 
             _animator.SetBool("Purify",true);

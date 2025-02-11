@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1488863359915327412, guid: df03ff742588c6c4b9a8ba3c8c8912ba, type: 3}
+  m_Sprite: {fileID: -8491155834905762217, guid: 3bb8d373ad17dab409518743e338f757, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -103,11 +103,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPanel: {fileID: 6304496552193164676}
   canvasGroup: {fileID: 4630785606903470638}
-  extraCanvasGroup: {fileID: 0}
   moveDuration: 0.5
   fadeDuration: 0.3
-  extraImageFadeDelay: 0.2
-  extraImageFadeDuration: 0.3
+  hiddenPos: {x: -350, y: 0}
+  visiblePos: {x: -350, y: 0}
+  tarotPickup: {fileID: 8300000, guid: c56bd7201189c754fae054f2f4a7fc63, type: 3}
+  tarotSFX: {fileID: 8300000, guid: c9a3cd356661586458a00a02a3a5f3d4, type: 3}
 --- !u!1 &7894127027879663281
 GameObject:
   m_ObjectHideFlags: 0
