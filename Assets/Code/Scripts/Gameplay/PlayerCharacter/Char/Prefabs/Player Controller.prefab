@@ -387,6 +387,9 @@ MonoBehaviour:
   - {fileID: 2202438050047719767}
   - {fileID: 5862922824167114132}
   - {fileID: 5416959000534163917}
+  addSFX: {fileID: 8300000, guid: 36a6dfeadd242c54a8dd334d6a66e7ec, type: 3}
+  removeSFX: {fileID: 8300000, guid: 85c987d56d3f4884f8ac50a6f50b501e, type: 3}
+  volume: 1
 --- !u!1 &2882746969408056549
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   afktimeTillIdle: 2
-  forrestLevel: 0
+  forrestLevel: 1
   spawnCamera: 1
   landingVFX: {fileID: 3075569594264493692}
   jumpingVFX: {fileID: 4554583891056918215}
@@ -606,6 +609,18 @@ MonoBehaviour:
   cameraPrefab: {fileID: 4427336018264215240, guid: 2c039eca635cf064a8a1c2c49ef4c1a5, type: 3}
   dashVFX: {fileID: 2520961166824371947}
   animator: {fileID: 988428131117065804}
+  jumpSFX:
+  - {fileID: 8300000, guid: 0edb482b9be4cb848992a0ea37001035, type: 3}
+  - {fileID: 8300000, guid: 8f7a6c29cc63f274f96f97b46edabeae, type: 3}
+  - {fileID: 8300000, guid: fbf418b72d8fd944c8a3ceaa5b65ccb8, type: 3}
+  - {fileID: 8300000, guid: c244784dd53772a48b4783073d3b2ada, type: 3}
+  - {fileID: 8300000, guid: 413296f547a9d8849b32b8b6d4ef72ba, type: 3}
+  - {fileID: 8300000, guid: bace6d89a2c28c04d84c7ad6eecab86f, type: 3}
+  - {fileID: 8300000, guid: 359a8829a5bfe5a4284f397fb44af1db, type: 3}
+  - {fileID: 8300000, guid: 0da77216d7699fd4c9647ffed2ecd2a1, type: 3}
+  - {fileID: 8300000, guid: 49ca9bbe3f0f21742b81a00d57df6d9e, type: 3}
+  - {fileID: 8300000, guid: deee552a5495d814490e2fe054b677a6, type: 3}
+  walljumpSFX: {fileID: 8300000, guid: 3966c717070df8e4c880ac2d5bd97e3b, type: 3}
   wallJumpMoveLockDuration: 0.2
   inputBlocked: 0
   pickedUpDash: 0
@@ -644,7 +659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
-  _StartHealth: 30
+  _StartHealth: 50
   _RespawnHealh: 50
   invincibilityTime: 0.25
   currentHealth: 50

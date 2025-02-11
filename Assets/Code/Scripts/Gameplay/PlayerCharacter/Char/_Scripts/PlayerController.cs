@@ -24,7 +24,8 @@ namespace HeroController
         [SerializeField] private GameObject cameraPrefab;
         [SerializeField] private DashEffect dashVFX;
         [SerializeField] private Animator animator;
-
+        [SerializeField] private AudioClip[] jumpSFX;
+        [SerializeField] private AudioClip walljumpSFX;
         [SerializeField] private float wallJumpMoveLockDuration = 1f;
         // Importscriptable stats   // Zeit, bevor ein neuer Dash m�glich ist
         public bool inputBlocked = false;
@@ -398,6 +399,7 @@ namespace HeroController
             _frameVelocity.y = _stats.JumpPower;  // Standard jump force
             jumpingVFX.Play();
             Jumped?.Invoke();
+            AudioManager.instance?.PlayRandomSoundFXClip(jumpSFX, transform, 1f);
         }
 
         private void ExecuteWallJump()
@@ -411,7 +413,7 @@ namespace HeroController
             // Setze die Bewegungssperre
             _isWallJumpLocked = true;
             _timeSinceWallJump = 0f;
-
+            AudioManager.instance?.PlaySoundFXClip(walljumpSFX, transform, 1f);
             // Walljump-Bewegung
             float jumpDirectionX = -_wallDirectionX;
             _frameVelocity = new Vector2(jumpDirectionX * wallJumpDirection.x * wallJumpForce, wallJumpDirection.y * wallJumpForce);
