@@ -3,7 +3,7 @@ using UnityEngine.Audio;
 public class ArtPickup : MonoBehaviour
 {
     [SerializeField] private int artID = 0;
-    [SerializeField] private AudioSource unlockSFX;
+    [SerializeField] private AudioClip unlockSFX;
     private void Awake()
     {
 
