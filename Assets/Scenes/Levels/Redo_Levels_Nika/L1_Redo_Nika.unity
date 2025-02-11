@@ -1968,47 +1968,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1683801942686022699, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 1683801942686022699, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 1683801942686022699, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 1683801942686022699, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -450
-      objectReference: {fileID: 0}
-    - target: {fileID: 1683801942686022699, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: blockMovement
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[0].text
-      value: Here we are the Forest of the Griffin Guardian.
+      value: 'Hello Sylvaine. I am the Fox Guardian. We are here in the forest of
+        the Griffin Guardian. '
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[1].text
+      value: He has been taken over by the Crimson Curse and with him the entire
+        forest. We need to help him and all the creatures living here. Heal them
+        from this terrible curse.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.data[2].text
       value: You can Run and Jump around a bit. There should be shards of my Power
         around here somewhere.
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
-      propertyPath: texts.Array.data[2].text
-      value: You can weaken creatures with the Melee (Press E) and when they are
-        stunned you have to Purrify them (Press Q). But you have to do this before
-        the Curse takes over again.
+      propertyPath: texts.Array.data[3].text
+      value: You can weaken creatures with the Melee (Press E)
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
-      propertyPath: texts.Array.data[3].text
+      propertyPath: texts.Array.data[4].text
+      value: When they are stunned you have to Purrify them (Press Q). But you have
+        to do this before the Curse takes over again.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.data[5].text
       value: I think this was all let's go explore and find a way to the Griffin.
       objectReference: {fileID: 0}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
@@ -2028,6 +2022,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1680421676932540514, guid: a7c0004db025b69438b09e7a64b2d59f, type: 3}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.data[4].speaker
+      value: 
+      objectReference: {fileID: 1680421676932540514, guid: a7c0004db025b69438b09e7a64b2d59f, type: 3}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.data[5].speaker
+      value: 
+      objectReference: {fileID: 1680421676932540514, guid: a7c0004db025b69438b09e7a64b2d59f, type: 3}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[0].textBackgroundImage
       value: 
       objectReference: {fileID: 1052788816626246525, guid: 617f66085a14ffb4590e126ac5c5280e, type: 3}
@@ -2041,6 +2043,14 @@ PrefabInstance:
       objectReference: {fileID: 1052788816626246525, guid: 617f66085a14ffb4590e126ac5c5280e, type: 3}
     - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: texts.Array.data[3].textBackgroundImage
+      value: 
+      objectReference: {fileID: 1052788816626246525, guid: 617f66085a14ffb4590e126ac5c5280e, type: 3}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.data[4].textBackgroundImage
+      value: 
+      objectReference: {fileID: 1052788816626246525, guid: 617f66085a14ffb4590e126ac5c5280e, type: 3}
+    - target: {fileID: 2103280751836119737, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: texts.Array.data[5].textBackgroundImage
       value: 
       objectReference: {fileID: 1052788816626246525, guid: 617f66085a14ffb4590e126ac5c5280e, type: 3}
     - target: {fileID: 3468011258392905433, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
@@ -2062,6 +2072,34 @@ PrefabInstance:
     - target: {fileID: 4661348792982330038, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: m_Name
       value: OneTimeText
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744105249885778029, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744105249885778029, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744105249885778029, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744105249885778029, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744105249885778029, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744105249885778029, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744105249885778029, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 7562238500512760996, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2102,10 +2140,6 @@ PrefabInstance:
     - target: {fileID: 7562238500512760996, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9113882721517319237, guid: a943a0f1ea7a059479257c0782342bab, type: 3}
-      propertyPath: m_VerticalAlignment
-      value: 512
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8884,7 +8918,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7350503545055187747, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_SortingLayer
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7350503545055187747, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_SortingOrder
