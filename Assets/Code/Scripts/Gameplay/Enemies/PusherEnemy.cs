@@ -6,12 +6,15 @@ using System.Collections.Generic;
 [System.Serializable]
 public class PusherEnemy : BaseEnemy
 {
+    private const float HIT_BLINK_DURATION = 0.1f;
     [SerializeField] float _PushStrength;
     [SerializeField] float _Damage;
     public float attackCooldown;
     public float projectileSpeed;
     [SerializeField] EnemyPurify purifycationHandler;
     [SerializeField] Animator animator;
+    [SerializeField] Color hitColor;
+    [SerializeField] SpriteRenderer _sprite;
     [SerializeField] IsPlayerInTrigger _AttackTrigger;
     [SerializeField] PusherProjectile _ProjectilePrefab;
     [SerializeField] GameObject _NoPassCollider;
@@ -80,10 +83,26 @@ public class PusherEnemy : BaseEnemy
     public override void Hurt(float damage)
     {
         base.Hurt(damage);
+        StopCoroutine(HitFeedBack());
+        _sprite.color = Color.white;
+        StartCoroutine(HitFeedBack());
         animator.SetTrigger("Hurt");
         animator.SetBool("Attacking", false);
 
     }
+
+
+    IEnumerator HitFeedBack()
+    {
+        if (_sprite != null)
+        {
+            _sprite.color = hitColor;
+            //AudioManager.instance.PlayRandomSoundFXClip(hitSFX, transform, 1f);
+            yield return new WaitForSeconds(HIT_BLINK_DURATION);
+            _sprite.color = Color.white;
+        }
+    }
+
     private void Shoot()
     {
         bool needMoreProjectiles = true;
