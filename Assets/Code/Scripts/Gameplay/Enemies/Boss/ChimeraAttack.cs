@@ -18,6 +18,7 @@ public class ChimeraAttack : MonoBehaviour
     public void Attack() 
     {
         //attack animation
+        
         animator.SetTrigger(animatorAttackTriggerName);
     }
 }
