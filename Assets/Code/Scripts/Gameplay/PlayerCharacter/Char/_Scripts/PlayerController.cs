@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace HeroController
 {
@@ -448,13 +446,15 @@ namespace HeroController
             {
                 var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
                 _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, 0, deceleration * Time.fixedDeltaTime);
+                Vector3 scale = transform.localScale;
+                scale.x = Mathf.Sign(_frameVelocity.x) * Mathf.Abs(scale.x);
                 if (_isWallSliding) // look in direction of wall if grabbing on it 
                 {
-                    Vector3 scale = transform.localScale;
+
                     scale.x = Mathf.Abs(scale.x) * _wallDirectionX;
-                    transform.localScale = scale;
 
                 }
+                transform.localScale = scale;
             }
             else
             {

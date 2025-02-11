@@ -100,7 +100,7 @@ public class ArtGallery : MonoBehaviour
 
     public void Display() 
     {
-
+        CheckStatus();
         
         if (zoomedInView) 
         {
@@ -117,7 +117,7 @@ public class ArtGallery : MonoBehaviour
     {
         multyviewParent.SetActive(false);
         singleviewParent.SetActive(true);
-
+        CheckStatus();
         bool unlocked = unlockedImages[currentID];
         zoomedInImageDisplay.sprite = unlocked ? imagesToDisplay[currentID].image : lockedImageSprite;
         imageDescription.text = unlocked ? imagesToDisplay[currentID].description : imageDescriptionForlocked;
