@@ -29,7 +29,6 @@ public class S_PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-
         _instance = this;
     }
 
@@ -37,6 +36,7 @@ public class S_PlayerHealth : MonoBehaviour
     {
         if (!oneTime) 
         {
+            _instance = this;
             _CurrentHealth = _StartHealth;
             oneTime = true;
         }

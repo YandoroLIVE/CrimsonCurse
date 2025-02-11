@@ -1,6 +1,7 @@
 using UnityEngine;
 
 public class WalljumpUpgrade : UpgradePickup
+    
 {
     public void Awake()
     {
@@ -13,5 +14,6 @@ public class WalljumpUpgrade : UpgradePickup
     {
         UpgradeHandler.ActivateWallJump();
         this.sprite.SetActive(false);
+        
     }
 }
