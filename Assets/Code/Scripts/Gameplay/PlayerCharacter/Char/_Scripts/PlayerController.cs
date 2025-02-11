@@ -196,26 +196,26 @@ namespace HeroController
             var ceilingHits = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.up, _stats.GrounderDistance, wallLayer);
             bool ceilingHit = CheckAllCollision(ceilingHits);
             // Raycast to check for walls on both sides
-            var wallHitRights = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.right, wallCheckDistance,wallLayer);
+            var wallHitRights = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.right, wallCheckDistance, wallLayer);
             bool wallHitRight = CheckAllCollision(wallHitRights);
             var wallHitLefts = Physics2D.CapsuleCastAll(_col.bounds.center, _col.size, _col.direction, 0, Vector2.left, wallCheckDistance, wallLayer);
             bool wallHitLeft = CheckAllCollision(wallHitLefts);
             // Determine the wall direction: -1 for left, 1 for right, 0 for no wall
             if (wallHitRight)
             {
-                animator.SetBool("OnWall",true);
+                animator.SetBool("OnWall", true);
                 _isTouchingWall = true;
                 _wallDirectionX = 1;
             }
             if (wallHitLeft)
             {
-                animator.SetBool("OnWall",true);
+                animator.SetBool("OnWall", true);
                 _isTouchingWall = true;
                 _wallDirectionX = -1;
             }
-            if(!wallHitLeft && !wallHitRight)
+            if (!wallHitLeft && !wallHitRight)
             {
-                animator.SetBool("OnWall",false);
+                animator.SetBool("OnWall", false);
                 _isTouchingWall = false;
                 _wallDirectionX = 0;
             }
@@ -224,7 +224,7 @@ namespace HeroController
             _isWallSliding = _isTouchingWall && !_grounded && _frameVelocity.y < 0;
             if (_isWallSliding)
             {
-                animator.SetBool("OnWall",true);
+                animator.SetBool("OnWall", true);
                 _frameLeftGrounded = _time;
                 _frameVelocity.y = -_stats.wallSlideSpeed;  // Apply wall sliding speed
             }
@@ -377,7 +377,7 @@ namespace HeroController
                     ExecuteJump();  // Grounded or coyote jump
 
                 }
-                else if ((_isTouchingWall  || CanUseCoyote) && !_grounded && hasWallJump)
+                else if ((_isTouchingWall || CanUseCoyote) && !_grounded && hasWallJump)
                 {
                     animator.SetTrigger("Jump");
                     ExecuteWallJump();  // Wall jump
@@ -447,7 +447,8 @@ namespace HeroController
                 var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
                 _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, 0, deceleration * Time.fixedDeltaTime);
                 Vector3 scale = transform.localScale;
-                scale.x = Mathf.Sign(_frameVelocity.x) * Mathf.Abs(scale.x);
+                if (_frameVelocity.x != 0)
+                    scale.x = Mathf.Sign(_frameVelocity.x) * Mathf.Abs(scale.x);
                 if (_isWallSliding) // look in direction of wall if grabbing on it 
                 {
 
@@ -466,7 +467,7 @@ namespace HeroController
                 if (_isWallSliding) // look in direction of wall if grabbing on it 
                 {
 
-                    scale.x = Mathf.Abs(scale.x)*_wallDirectionX;
+                    scale.x = Mathf.Abs(scale.x) * _wallDirectionX;
                 }
                 transform.localScale = scale;
             }
@@ -587,13 +588,13 @@ namespace HeroController
             if (!_isDashing)
             {
                 _rb.linearVelocity = _frameVelocity;  // Normale Bewegung
-                if(_frameVelocity.x > 0 || _frameVelocity.x < 0) 
+                if (_frameVelocity.x > 0 || _frameVelocity.x < 0)
                 {
                     animator.SetBool("Running", true);
                 }
-                else 
+                else
                 {
-                    animator.SetBool("Running",false);
+                    animator.SetBool("Running", false);
                 }
             }
             else
