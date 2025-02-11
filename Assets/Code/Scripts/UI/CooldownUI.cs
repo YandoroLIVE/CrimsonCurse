@@ -17,11 +17,11 @@ namespace HeroController
 
         private void Start()
         {
-            
+            GetReferences();
         }
         void Update()
         {
-            GetReferences();
+            
             UpdateCooldownIcons();
 
         }
