@@ -34,6 +34,7 @@ public class ArtGallery : MonoBehaviour
         {
             PlayerPrefs.SetInt(ARTPICKUP_PLAYERPREFS_NAME + i,0);
         }
+        CheckStatus();
     }
 
     public void BackToMainMenu() 
