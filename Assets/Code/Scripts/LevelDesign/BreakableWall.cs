@@ -8,6 +8,10 @@ public class BreakableWall : MonoBehaviour, IHurtable
     [SerializeField, Range(0, BREAKABLE_WALL_AMOUNT - 1)] int wallID;
     [SerializeField] private float health = 200;
     [SerializeField] private ParticleSystem damageVFX;
+    [SerializeField] AudioClip breakSFX;
+    [SerializeField] float volumeBreak;
+    [SerializeField] AudioClip hitSFX;
+    [SerializeField] float volumeHit;
     void Start()
     {
         if (brokenWalls.Count == 0)
@@ -27,13 +31,20 @@ public class BreakableWall : MonoBehaviour, IHurtable
     public void Hurt(float damage) 
     {
         health -= damage;
-        damageVFX?.Play();
-        if(health <= 0) 
+        if (health <= 0)
         {
-            brokenWalls[wallID] = true; 
+            brokenWalls[wallID] = true;
             damageVFX.transform.SetParent(null);
             this.gameObject.SetActive(false);
+            AudioManager.instance?.PlaySoundFXClip(breakSFX, transform, volumeBreak);
         }
+        else
+        {
+            damageVFX?.Play();
+            AudioManager.instance?.PlaySoundFXClip(hitSFX, transform, volumeHit);
+        }
+        
+        
     }
 
 }

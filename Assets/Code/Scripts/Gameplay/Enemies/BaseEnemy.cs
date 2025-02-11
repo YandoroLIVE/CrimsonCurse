@@ -39,7 +39,9 @@ public abstract class BaseEnemy : MonoBehaviour, IHurtable
 
     public virtual void OnPurify() 
     {
-    
+    }
+    public virtual void AfterPurify() 
+    {
     }
 
     public abstract void ReachedZeroHitpoints();
