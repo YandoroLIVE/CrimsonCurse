@@ -289,7 +289,7 @@ public class SneakerEnemy : BaseEnemy
         if (_sprite != null)
         {
             _sprite.color = hitColor;
-            AudioManager.instance.PlaySoundFXClip(hurtSFX, transform, 1f);
+            AudioManager.instance?.PlaySoundFXClip(hurtSFX, transform, 1f);
             yield return new WaitForSeconds(HIT_BLINK_DURATION);
             _sprite.color = Color.white;
         }

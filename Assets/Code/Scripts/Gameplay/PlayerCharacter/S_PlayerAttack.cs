@@ -75,7 +75,7 @@ public class S_PlayerAttack : MonoBehaviour
         animator.SetTrigger("MeleeAttack");
         CheckForEnemiesInRange();
         attackVFX.Play();
-        AudioManager.instance.PlayRandomSoundFXClip(attackClip, transform, 1f);
+        AudioManager.instance?.PlayRandomSoundFXClip(attackClip, transform, 1f);
         foreach (var enemyCollider in enemiesInRange)
         {
             IHurtable enemy = enemyCollider.GetComponent<IHurtable>();
