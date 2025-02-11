@@ -7,7 +7,7 @@ public class ActivateDialogComplete : MonoBehaviour
 
     private void Update()
     {
-        if(!dialogSystem.dialogCompleted && !dialogSystem.isActiveAndEnabled) 
+        if(!dialogSystem.dialogCompleted && !dialogSystem.gameObject.activeInHierarchy) 
         {
             dialogSystem.gameObject.SetActive(true);
         }
