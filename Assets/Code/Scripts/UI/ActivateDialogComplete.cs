@@ -9,7 +9,7 @@ public class ActivateDialogComplete : MonoBehaviour
     {
         if(!dialogSystem.dialogCompleted && !dialogSystem.gameObject.activeInHierarchy) 
         {
-            dialogSystem.gameObject.SetActive(true);
+            dialogSystem.BecomeActive();
         }
         if (dialogSystem.dialogCompleted) 
         {
