@@ -28,7 +28,7 @@ public class MusicManager : MonoBehaviour
     private void Start()
     {
         SetMusicForLevel();
-        SetMusicForBoss();
+       
     }
 
     private void OnDestroy()
@@ -45,6 +45,7 @@ public class MusicManager : MonoBehaviour
             SetMusicForLevel();
             isCurrentForestLevel = newIsForestLevel;
         }
+        SetMusicForBoss();
     }
 
     private void SetMusicForLevel()
@@ -76,7 +77,7 @@ public class MusicManager : MonoBehaviour
 
     public void SetMusicForBoss()
     {
-        if(SceneManager.GetActiveScene().name == "L_14_Redo_Boss_Level")
+        if(SceneManager.GetActiveScene().buildIndex == 14)
         {
             soundFXObject.Stop();
             soundFXObject.clip = bossSong;
