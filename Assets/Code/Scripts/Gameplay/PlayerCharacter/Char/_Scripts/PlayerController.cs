@@ -326,7 +326,7 @@ namespace HeroController
                     StartCoroutine(SetAfk(t, false));
                     if (!afkExit)
                     {
-                        m_IdleTailLoop.Stop();
+                        m_IdleTailLoop.Clear();
                         afkEntry = false;
                         afkExit = true;
                         StartCoroutine(StartParticleSystemWithOffset(t, m_IdleTailExit));
