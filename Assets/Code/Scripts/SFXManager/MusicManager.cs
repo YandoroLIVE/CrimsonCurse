@@ -26,30 +26,25 @@ public class MusicManager : MonoBehaviour
 
     private void Start()
     {
-        // Initialer Musikcheck beim Start des Spiels
         SetMusicForLevel();
     }
 
     private void OnDestroy()
     {
-        // Event-Listener beim Zerstören des Objekts entfernen
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    // Diese Methode wird nach jedem Szenenwechsel aufgerufen
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         bool newIsForestLevel = GetPlayer();
 
-        // Musik nur ändern, wenn sich der Leveltyp geändert hat
         if (newIsForestLevel != isCurrentForestLevel)
         {
             SetMusicForLevel();
-            isCurrentForestLevel = newIsForestLevel; // Aktuellen Leveltyp speichern
+            isCurrentForestLevel = newIsForestLevel;
         }
     }
 
-    // Musik basierend auf dem Leveltyp setzen
     private void SetMusicForLevel()
     {
         bool isForestLevel = GetPlayer();
@@ -68,7 +63,8 @@ public class MusicManager : MonoBehaviour
 
     bool GetPlayer()
     {
-        var playerController = S_PlayerHealth.GetInstance().GetComponent<PlayerController>();
+        var playerController = S_PlayerHealth.GetInstance()?.GetComponent<PlayerController>();
+
         if (playerController != null)
         {
             return playerController.forrestLevel;

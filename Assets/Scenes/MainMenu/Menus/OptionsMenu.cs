@@ -1,147 +1,106 @@
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class OptionsMenu : MonoBehaviour
 {
+    [Header("UI Elements")]
     public TMP_Dropdown resolutionDropdown;
-    public TMP_Dropdown fullscreenDropdown;
-    public Toggle vSyncToggle;
-    public Slider maxFPSSlider;
-    public TextMeshProUGUI maxFPSText;
-    public GameObject mainMenu;
-    public GameObject optionsMenu;
+    public TMP_Dropdown windowModeDropdown;
+    public Slider fpsSlider;
+    public TMP_Text fpsText; // Textfeld für FPS-Anzeige
     public Button applyButton;
-    public Button cancelButton;
+    public Button backButton;
+
+    [Header("Menu Panels")]
+    public GameObject optionsMenu;
+    public GameObject mainMenu;
+
     private Resolution[] resolutions;
+    private int selectedResolutionIndex;
 
     void Start()
     {
 
-        InitializeResolutionOptions();
-        InitializeFullscreenOptions();
-        InitializeVSyncToggle();
-        InitializeMaxFPSSlider();
-        SetupNavigation();
+        SetupResolutionDropdown();
+        SetupWindowModeDropdown();
+        SetupFPSLimiter();
+
+        applyButton.onClick.AddListener(ApplySettings);
+        backButton.onClick.AddListener(BackToMainMenu);
+        fpsSlider.onValueChanged.AddListener(UpdateFPSText); // Aktualisiert FPS-Anzeige
     }
 
-    void InitializeResolutionOptions()
+    void SetupResolutionDropdown()
     {
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
 
-        List<string> options = new List<string>();
-        int currentResolutionIndex = 0;
+        HashSet<string> addedResolutions = new HashSet<string>();
+        selectedResolutionIndex = 0;
 
         for (int i = 0; i < resolutions.Length; i++)
         {
-            float aspectRatio = (float)resolutions[i].width / resolutions[i].height;
-            if (Mathf.Approximately(aspectRatio, 16f / 9f))
-            {
-                string option = resolutions[i].width + " x " + resolutions[i].height;
-                options.Add(option);
+            int width = resolutions[i].width;
+            int height = resolutions[i].height;
+            float aspectRatio = (float)width / height;
 
-                if (resolutions[i].width == Screen.currentResolution.width &&
-                    resolutions[i].height == Screen.currentResolution.height)
+            string resolutionText = width + "x" + height;
+            if (Mathf.Approximately(aspectRatio, 16f / 9f) && !addedResolutions.Contains(resolutionText))
+            {
+                resolutionDropdown.options.Add(new TMP_Dropdown.OptionData(resolutionText));
+                addedResolutions.Add(resolutionText);
+
+                if (width == Screen.currentResolution.width && height == Screen.currentResolution.height)
                 {
-                    currentResolutionIndex = options.Count - 1;
+                    selectedResolutionIndex = resolutionDropdown.options.Count - 1;
                 }
             }
         }
 
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.value = selectedResolutionIndex;
         resolutionDropdown.RefreshShownValue();
     }
 
-    void InitializeFullscreenOptions()
+    void SetupWindowModeDropdown()
     {
+        windowModeDropdown.ClearOptions();
+        windowModeDropdown.options.Add(new TMP_Dropdown.OptionData("Fullscreen"));
+        windowModeDropdown.options.Add(new TMP_Dropdown.OptionData("Windowed"));
 
-        List<Resolution> validResolutions = new List<Resolution>
-    {
-        new Resolution { width = 1280, height = 720 },
-        new Resolution { width = 1920, height = 1080 },
-        new Resolution { width = 2560, height = 1440 },
-        new Resolution { width = 3840, height = 2160 }
-    };
-
-        resolutionDropdown.ClearOptions();
-        List<string> options = new List<string>();
-        int currentResolutionIndex = 0;
-
-        for (int i = 0; i < validResolutions.Count; i++)
-        {
-            Resolution res = validResolutions[i];
-            string option = res.width + " x " + res.height;
-            options.Add(option);
-
-            if (res.width == Screen.currentResolution.width && res.height == Screen.currentResolution.height)
-            {
-                currentResolutionIndex = i;
-            }
-        }
-
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
+        windowModeDropdown.value = Screen.fullScreen ? 0 : 1;
+        windowModeDropdown.RefreshShownValue();
     }
 
-    void InitializeVSyncToggle()
+    void SetupFPSLimiter()
     {
-        vSyncToggle.isOn = QualitySettings.vSyncCount > 0;
+        fpsSlider.minValue = 30;
+        fpsSlider.maxValue = 120;
+        fpsSlider.value = Application.targetFrameRate > 0 ? Application.targetFrameRate : 60;
+        UpdateFPSText(fpsSlider.value); // Initiale Anzeige setzen
     }
 
-    void InitializeMaxFPSSlider()
+    void UpdateFPSText(float value)
     {
-        maxFPSSlider.minValue = 30;
-        maxFPSSlider.maxValue = 240;
-        maxFPSSlider.value = Application.targetFrameRate > 0 ? Application.targetFrameRate : 60;
-        maxFPSText.text = ((int)maxFPSSlider.value).ToString();
-        maxFPSSlider.onValueChanged.AddListener(value => SetMaxFPS((int)value));
-    }
-
-    void SetupNavigation()
-    {
-        EventSystem.current.SetSelectedGameObject(resolutionDropdown.gameObject);
-    }
-
-    public void SetVSync(bool isOn)
-    {
-        QualitySettings.vSyncCount = isOn ? 1 : 0;
-    }
-
-    public void SetMaxFPS(int value)
-    {
-        Application.targetFrameRate = value;
-        maxFPSText.text = value.ToString();
+        fpsText.text = Mathf.RoundToInt(value) + " FPS"; // Zeigt FPS als ganze Zahl an
     }
 
     public void ApplySettings()
     {
-        Resolution resolution = resolutions[resolutionDropdown.value];
-        Screen.SetResolution(resolution.width, resolution.height, GetFullScreenMode());
-        Debug.Log($"Resolution set to: {resolution.width}x{resolution.height}, FullscreenMode: {GetFullScreenMode()}");
+        string[] res = resolutionDropdown.options[resolutionDropdown.value].text.Split('x');
+        int width = int.Parse(res[0]);
+        int height = int.Parse(res[1]);
+        Screen.SetResolution(width, height, Screen.fullScreen);
 
-        QualitySettings.vSyncCount = vSyncToggle.isOn ? 1 : 0;
-        Application.targetFrameRate = (int)maxFPSSlider.value;
+        Screen.fullScreen = windowModeDropdown.value == 0;
+
+        Application.targetFrameRate = Mathf.RoundToInt(fpsSlider.value);
     }
 
-    private FullScreenMode GetFullScreenMode()
+    public void BackToMainMenu()
     {
-        switch (fullscreenDropdown.value)
-        {
-            case 1: return FullScreenMode.FullScreenWindow;
-            case 2: return FullScreenMode.MaximizedWindow;
-            default: return FullScreenMode.Windowed;
-        }
-    }
-
-    public void CancelButton()
-    {
-        mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(mainMenu);
+        mainMenu.SetActive(true);
     }
 }
