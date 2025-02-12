@@ -51,10 +51,16 @@ namespace HeroController
 
         private void GetReferences()
         {
-            player = FindObjectOfType<PlayerController>();
-            playerAttack = player.GetComponent<S_PlayerAttack>();
-            playerLongRangeAttack = player.GetComponent<S_PlayerLongRangeAttack>();
-            playerController = player.GetComponent<PlayerController>();
+            if(S_PlayerHealth.GetInstance() != null)
+            {
+                player = S_PlayerHealth.GetInstance().GetComponent<PlayerController>();
+                if (player != null)
+                {
+                    playerAttack = player.GetComponent<S_PlayerAttack>();
+                    playerLongRangeAttack = player.GetComponent<S_PlayerLongRangeAttack>();
+                    playerController = player.GetComponent<PlayerController>();
+                }
+            }
         }
     }
 
