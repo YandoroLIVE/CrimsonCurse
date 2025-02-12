@@ -85,6 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textAppearLength: 2
+  tarotAppearLength: 3
   textObject: {fileID: 6441309046796612864}
   sprite: {fileID: 1486541562093288989}
   textToDisplay: Press F to fire
@@ -449,6 +450,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4525060046314215003, guid: bcb34b24efa41d54aa4bde4f68fe9961, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1488863359915327412, guid: df03ff742588c6c4b9a8ba3c8c8912ba, type: 3}
     - target: {fileID: 7894127027879663281, guid: bcb34b24efa41d54aa4bde4f68fe9961, type: 3}
       propertyPath: m_Name
       value: UpgradeMessage
