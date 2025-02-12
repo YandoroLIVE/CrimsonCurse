@@ -607,13 +607,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 308930509944203524, guid: 7e7b9933194a04b4ab10506bef417409, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2045721212656435555, guid: 7e7b9933194a04b4ab10506bef417409, type: 3}
       propertyPath: m_Color.a
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3915369196756064402, guid: 7e7b9933194a04b4ab10506bef417409, type: 3}
       propertyPath: FadeDuration
-      value: 0
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4992640339606054984, guid: 7e7b9933194a04b4ab10506bef417409, type: 3}
       propertyPath: m_Pivot.x
@@ -1801,6 +1805,10 @@ PrefabInstance:
     - target: {fileID: 3701968714722755075, guid: 6422a0efffa00224eb577243e5886f61, type: 3}
       propertyPath: m_Name
       value: UpgradeHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 3701968714722755075, guid: 6422a0efffa00224eb577243e5886f61, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5826262066461880482, guid: 6422a0efffa00224eb577243e5886f61, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8985,7 +8993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7350503545055187747, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_SortingLayer
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7350503545055187747, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_SortingOrder

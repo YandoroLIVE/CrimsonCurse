@@ -26,6 +26,8 @@ public class ChimeraPhase : BossPhase
     private bool exhausted = false;
     private Vector2 targetPoint;
     private Vector2 playPos;
+    [SerializeField] AudioClip attackClip;
+    [SerializeField] AudioClip crystalSpawn;
 
     private void Awake()
     {
@@ -76,6 +78,8 @@ public class ChimeraPhase : BossPhase
             if (attackObject != null)
             {
                 attackObject.Attack();
+                AudioManager.instance?.PlaySoundFXClip(attackClip, transform, 1f);
+                
             }
             StartCoroutine(ActualAttack());
             //attack at positon
@@ -113,6 +117,7 @@ public class ChimeraPhase : BossPhase
         {
             playPos = player.health.transform.position;
             attackDurationTimer -= Time.deltaTime;
+
             if (Vector2.Distance(targetPoint, playPos) <= attackRange)
             {
                 player.health.TakeDamage((int)damage);

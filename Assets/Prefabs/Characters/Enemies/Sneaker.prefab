@@ -52,6 +52,7 @@ MonoBehaviour:
   maxStunLength: 5
   _InteractableTrigger: {fileID: 3493615801913556953}
   dissapearTime: 3
+  purifySound: {fileID: 8300000, guid: 3628773f4f53c4843b5db2e0e108a0eb, type: 3}
 --- !u!61 &3493615801913556953
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -507,6 +508,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   aggroRange: 13.08
+  attackSFX:
+  - {fileID: 0}
+  hurtSFX: {fileID: 8300000, guid: 979e43eb536e30a458f16abd88f151ea, type: 3}
 --- !u!58 &3829789198403365638
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -750,6 +754,18 @@ PrefabInstance:
     - target: {fileID: 5799482428349347047, guid: ee25d32bf27fc4940bb7af2c5acba80f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874779204337858708, guid: ee25d32bf27fc4940bb7af2c5acba80f, type: 3}
+      propertyPath: m_SortingLayer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874779204337858708, guid: ee25d32bf27fc4940bb7af2c5acba80f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874779204337858708, guid: ee25d32bf27fc4940bb7af2c5acba80f, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1667528163
       objectReference: {fileID: 0}
     - target: {fileID: 5874779204337858708, guid: ee25d32bf27fc4940bb7af2c5acba80f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

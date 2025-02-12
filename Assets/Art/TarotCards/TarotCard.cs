@@ -10,6 +10,8 @@ public class TarotCard   : MonoBehaviour
     public float fadeDuration = 0.3f; // Dauer des Ein- und Ausblendens
     public Vector2 hiddenPos;
     public Vector2 visiblePos;
+    [SerializeField] private AudioClip tarotPickup;
+    [SerializeField] private AudioClip tarotSFX;
 
     private void Start()
     {
@@ -19,22 +21,11 @@ public class TarotCard   : MonoBehaviour
         canvasGroup.alpha = 0; // Startet unsichtbar
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            ShowCard();
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            HideCard();
-        }
-    }
-
     public void ShowCard()
     {
         StopAllCoroutines();
         StartCoroutine(FadeAndMove(hiddenPos, visiblePos, 1));
+        AudioManager.instance?.PlaySoundFXClip(tarotSFX, transform, 1f);
     }
 
     public void HideCard()
@@ -49,6 +40,9 @@ public class TarotCard   : MonoBehaviour
         float totalTime = Mathf.Max(moveDuration, fadeDuration);
         Vector2 startAnchoredPos = cardPanel.anchoredPosition;
         float startAlpha = canvasGroup.alpha;
+        AudioManager.instance?.PlaySoundFXClip(tarotPickup, transform, 1f);
+        
+
 
         while (elapsedTime < totalTime)
         {

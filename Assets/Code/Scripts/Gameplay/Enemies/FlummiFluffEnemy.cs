@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class FlummiFluffEnemy : BaseEnemy
 {
@@ -50,6 +51,10 @@ public class FlummiFluffEnemy : BaseEnemy
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private IsPlayerInTrigger aggroRange;
     (Transform transform, S_PlayerHealth health) _Player = (null, null);
+    [SerializeField] AudioClip jumpImpactSFX;
+    [SerializeField] AudioClip hurtSFX;
+    [SerializeField] AudioClip[] attackSFX;
+    [SerializeField] AudioClip jumpSFX;
     public override void Start()
     {
         Heal();
@@ -180,7 +185,7 @@ public class FlummiFluffEnemy : BaseEnemy
         float velocityY = 0.5f * -Physics2D.gravity.y * jumpTime * jumpHeight; // Grüße gehen raus an horea
 
 
-
+        AudioManager.instance?.PlaySoundFXClip(jumpSFX, transform, .2f);
         float xScale = Mathf.Abs(animator.transform.localScale.x) * Mathf.Sign(-velocityX);
         animator.transform.localScale = new Vector3(xScale, animator.transform.localScale.y, animator.transform.localScale.z);
         Vector2 velocity = new Vector2(velocityX, velocityY);
@@ -251,7 +256,9 @@ public class FlummiFluffEnemy : BaseEnemy
                 attackTimer = Time.time+ attackCooldown;
                 StartCoroutine(Hit());
                 animator.SetTrigger("Attack");
-                
+                AudioManager.instance?.PlayRandomSoundFXClip(attackSFX, transform, .5f);
+
+
             }
             if (distance <= contactDamageRange && _Player.health != null && Time.time >= contactTimer && !IsStunned())
             {
@@ -268,6 +275,7 @@ public class FlummiFluffEnemy : BaseEnemy
         _sprite.color = Color.white;
         StartCoroutine(HitFeedBack());
         attacked = true;
+        AudioManager.instance?.PlaySoundFXClip(hurtSFX, transform, .5f);
         if (!isJumping)
         {
             animator.SetTrigger("Hurt");

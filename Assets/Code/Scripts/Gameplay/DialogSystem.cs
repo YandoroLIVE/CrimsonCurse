@@ -29,6 +29,11 @@ public class DialogSystem : MonoBehaviour
         this.boxRefrences.gameObject.SetActive(false);
     }
 
+    public int GetCurrentDialogID() 
+    {
+        return currentDialogID;
+    }
+
     private void OnEnable()
     {
         ResetText();
@@ -108,10 +113,10 @@ public class DialogSystem : MonoBehaviour
     {
         if (canAdvance)
         {
-            foreach (var key in keysToAdvanceDialog)
-            {
-                if (Input.GetKey(key)) return true;
-            }
+            //foreach (var key in keysToAdvanceDialog)
+            //{
+            if (Input.anyKeyDown) return true;
+            //}
             return false;
         }
         else return false;

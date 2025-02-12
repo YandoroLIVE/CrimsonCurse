@@ -1,9 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PurifyPhase : BossPhase
 {
-    [SerializeField] KeyCode buttonToPressForPurify = KeyCode.Q;
+    [SerializeField] List<KeyCode> buttonsToPressForPurify;
     [SerializeField] ParticleSystem purifyVFX;
     float purifyTime = 0;
     bool canPurify = false;
@@ -26,10 +27,13 @@ public class PurifyPhase : BossPhase
 
     public void Update()
     {
-        if (Input.GetKey(buttonToPressForPurify) && !purify) 
+        foreach(var key in buttonsToPressForPurify) 
         {
-            purify = true;
-            Purify();
+            if (Input.GetKey(key) && !purify) 
+            {
+                purify = true;
+                Purify();
+            }
         }
     }
 

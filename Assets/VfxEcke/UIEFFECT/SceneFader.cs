@@ -40,6 +40,7 @@ public class SceneFader : MonoBehaviour
         _material = _image.material;
 
         _lastEffect = _useShutters;
+        FadeIn(CurrentFadeType);
     }
 
     private void Update()
@@ -130,7 +131,10 @@ public class SceneFader : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if(S_PlayerHealth.GetInstance() != null)
+        {
             StartCoroutine(DelayedFadeIn());
+        }
     }
 
     private IEnumerator DelayedFadeIn()

@@ -1,11 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class EnemyPurify : MonoBehaviour
 {
     public int healthAmountRestoredOnPurify = 10;
     public static KeyCode purifyKeyboardInput = KeyCode.Q;
-    public static KeyCode purifyControllerInput = KeyCode.Joystick1Button4;
+    public static KeyCode purifyControllerInput = KeyCode.Joystick1Button1;
     private BaseEnemy _targetEnemy;
     [SerializeField] ParticleSystem _purifyVFX;
     [SerializeField] ParticleSystem _stunnedVFX;
@@ -16,6 +17,7 @@ public class EnemyPurify : MonoBehaviour
     public float dissapearTime = 2f;
     bool canInteract;
     bool purified;
+    [SerializeField] AudioClip purifySound;
     void Awake()
     {
         this.enabled = false;
@@ -53,6 +55,7 @@ public class EnemyPurify : MonoBehaviour
         this.enabled = false;
         S_PlayerHealth.GetInstance().Heal(healthAmountRestoredOnPurify);
         _purifyVFX.Play();
+        AudioManager.instance?.PlaySoundFXClip(purifySound, transform, 1f);
         if (_animator != null) 
         { 
             _animator.SetBool("Purify",true);
