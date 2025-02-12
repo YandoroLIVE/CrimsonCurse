@@ -273,13 +273,13 @@ public class SneakerEnemy : BaseEnemy
             point.y > target.y - POINTMERCYAREA;
     }
 
-    public override void Hurt(float damage)
+    public override void Hurt(float damage, int attackID)
     {
 
         StopCoroutine(HitFeedBack());
         _sprite.color = Color.white;
         StartCoroutine(HitFeedBack());
-        base.Hurt(damage);
+        base.Hurt(damage, attackID);
         animator.SetTrigger("Hurt");
     }
 

@@ -268,9 +268,9 @@ public class FlummiFluffEnemy : BaseEnemy
 
         }
     }
-    public override void Hurt(float damage)
+    public override void Hurt(float damage, int attackID)
     {
-        base.Hurt(damage);
+        base.Hurt(damage, attackID);
         StopCoroutine(HitFeedBack());
         _sprite.color = Color.white;
         StartCoroutine(HitFeedBack());

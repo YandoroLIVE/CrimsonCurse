@@ -82,7 +82,7 @@ public class S_PlayerAttack : MonoBehaviour
 
             if (enemy != null)
             {
-                enemy.Hurt(damage);
+                enemy.Hurt(damage,0);
                 AudioManager.instance?.PlayRandomSoundFXClip(impactSFX, transform, 1f);
             }
         }

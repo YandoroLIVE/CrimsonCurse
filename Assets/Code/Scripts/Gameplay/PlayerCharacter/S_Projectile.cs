@@ -18,7 +18,7 @@ public class S_Projectile : MonoBehaviour
 
     private void OnImpact(Collider2D collsion) 
     {
-        collsion.GetComponent<IHurtable>().Hurt(_Damage);
+        collsion.GetComponent<IHurtable>().Hurt(_Damage,1);
         ActiveVFX.Clear();
         ActiveVFX.Stop();
         rigidBody2D.linearVelocity = Vector2.zero;
