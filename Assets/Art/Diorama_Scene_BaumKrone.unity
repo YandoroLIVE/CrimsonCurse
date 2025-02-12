@@ -9459,6 +9459,10 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 655155509145113155, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: spawnCamera
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2843345012753654412, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.63703156
@@ -12683,7 +12687,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 16
-      m_TileSpriteIndex: 4
+      m_TileSpriteIndex: 16
       m_TileMatrixIndex: 0
       m_TileColorIndex: 6
       m_TileObjectToInstantiateIndex: 65535
@@ -13113,7 +13117,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 23
-      m_TileSpriteIndex: 2
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 6
       m_TileObjectToInstantiateIndex: 65535
@@ -15324,12 +15328,12 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 2
     m_Data: {fileID: -1766941155, guid: f7e2073087db91749bf1c06d71cbe738, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 1815262706, guid: b5f4426919955074fa53d8dc3a1ab27a, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 48
     m_Data: {fileID: -2092984181, guid: f7e2073087db91749bf1c06d71cbe738, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -527419824, guid: b5f4426919955074fa53d8dc3a1ab27a, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 19
@@ -15350,10 +15354,10 @@ Tilemap:
     m_Data: {fileID: 2121164454, guid: f7e2073087db91749bf1c06d71cbe738, type: 3}
   - m_RefCount: 267
     m_Data: {fileID: 1967841812, guid: b5f4426919955074fa53d8dc3a1ab27a, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 1815262706, guid: b5f4426919955074fa53d8dc3a1ab27a, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: -527419824, guid: b5f4426919955074fa53d8dc3a1ab27a, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -6378680634660388819, guid: f7e2073087db91749bf1c06d71cbe738, type: 3}
   m_TileMatrixArray:

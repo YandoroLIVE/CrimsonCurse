@@ -9033,6 +9033,10 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 655155509145113155, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
+      propertyPath: spawnCamera
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2843345012753654412, guid: 508f7f5de315b4049a2c320135cc7240, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.63703156
@@ -11822,7 +11826,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 23
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 4294967295
       m_TileMatrixIndex: 0
       m_TileColorIndex: 6
       m_TileObjectToInstantiateIndex: 65535
@@ -11882,7 +11886,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 23
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 4294967295
       m_TileMatrixIndex: 0
       m_TileColorIndex: 6
       m_TileObjectToInstantiateIndex: 65535
@@ -11992,7 +11996,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 16
-      m_TileSpriteIndex: 9
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 6
       m_TileObjectToInstantiateIndex: 65535
@@ -14347,8 +14351,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: -527419824, guid: b5f4426919955074fa53d8dc3a1ab27a, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 16
     m_Data: {fileID: -1786274996, guid: f7e2073087db91749bf1c06d71cbe738, type: 3}
   - m_RefCount: 17
@@ -14363,8 +14367,8 @@ Tilemap:
     m_Data: {fileID: -569930981, guid: f7e2073087db91749bf1c06d71cbe738, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 2
-    m_Data: {fileID: 383304436, guid: 4608f5a4b25f71045b2032bf2224706f, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: -527419824, guid: b5f4426919955074fa53d8dc3a1ab27a, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 378
     m_Data:
