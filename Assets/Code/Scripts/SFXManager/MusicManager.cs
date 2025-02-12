@@ -77,11 +77,17 @@ public class MusicManager : MonoBehaviour
 
     public void SetMusicForBoss()
     {
-        if(SceneManager.GetActiveScene().buildIndex == 14)
+        if (SceneManager.GetActiveScene().buildIndex == 14)
         {
             soundFXObject.Stop();
             soundFXObject.clip = bossSong;
             soundFXObject.Play();
+        }
+        else if (S_PlayerHealth.GetInstance() == null) 
+        {
+            soundFXObject.clip = defaultSong;
+            soundFXObject.Play();
+
         }
     }
 }
