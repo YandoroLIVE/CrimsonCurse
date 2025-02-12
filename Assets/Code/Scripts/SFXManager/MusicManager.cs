@@ -9,6 +9,7 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private AudioSource soundFXObject;
     [SerializeField] private AudioClip forestSong;   // Song für den Forest-Level
     [SerializeField] private AudioClip defaultSong;  // Standard-Song für andere Levels
+    [SerializeField] private AudioClip bossSong;
 
     private bool isCurrentForestLevel;  // Speichert den aktuellen Leveltyp
 
@@ -27,6 +28,7 @@ public class MusicManager : MonoBehaviour
     private void Start()
     {
         SetMusicForLevel();
+        SetMusicForBoss();
     }
 
     private void OnDestroy()
@@ -70,5 +72,15 @@ public class MusicManager : MonoBehaviour
             return playerController.forrestLevel;
         }
         return false;
+    }
+
+    public void SetMusicForBoss()
+    {
+        if(SceneManager.GetActiveScene().name == "L_14_Redo_Boss_Level")
+        {
+            soundFXObject.Stop();
+            soundFXObject.clip = bossSong;
+            soundFXObject.Play();
+        }
     }
 }

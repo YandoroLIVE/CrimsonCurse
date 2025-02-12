@@ -14,7 +14,7 @@ public class ArtPickup : MonoBehaviour
 
         if(PlayerPrefs.GetInt(ArtGallery.ARTPICKUP_PLAYERPREFS_NAME + artID) > 0) 
         {
-            AudioManager.instance?.PlaySoundFXClip(unlockSFX, transform, 1f);
+            
             this.gameObject.SetActive(false);
             
         }
@@ -22,10 +22,12 @@ public class ArtPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        AudioManager.instance?.PlaySoundFXClip(unlockSFX, transform, 1f);
         PlayerPrefs.SetInt(ArtGallery.ARTPICKUP_PLAYERPREFS_NAME + artID, 1);
         objectToSetActive.SetActive(true);
         objectToSetInActive.SetActive(false);
         coll.enabled = false;
+        StartCoroutine(DisableAfterTime());
     }
 
     IEnumerator DisableAfterTime() 
