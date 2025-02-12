@@ -19,6 +19,7 @@ public class OptionsMenu : MonoBehaviour
 
     void Start()
     {
+
         InitializeResolutionOptions();
         InitializeFullscreenOptions();
         InitializeVSyncToggle();
@@ -57,14 +58,34 @@ public class OptionsMenu : MonoBehaviour
 
     void InitializeFullscreenOptions()
     {
-        List<string> options = new List<string> { "Windowed", "Fullscreen", "Borderless" };
-        fullscreenDropdown.ClearOptions();
-        fullscreenDropdown.AddOptions(options);
 
-        fullscreenDropdown.value = Screen.fullScreenMode == FullScreenMode.FullScreenWindow ? 1 :
-                                   Screen.fullScreenMode == FullScreenMode.MaximizedWindow ? 2 : 0;
+        List<Resolution> validResolutions = new List<Resolution>
+    {
+        new Resolution { width = 1280, height = 720 },
+        new Resolution { width = 1920, height = 1080 },
+        new Resolution { width = 2560, height = 1440 },
+        new Resolution { width = 3840, height = 2160 }
+    };
 
-        fullscreenDropdown.RefreshShownValue();
+        resolutionDropdown.ClearOptions();
+        List<string> options = new List<string>();
+        int currentResolutionIndex = 0;
+
+        for (int i = 0; i < validResolutions.Count; i++)
+        {
+            Resolution res = validResolutions[i];
+            string option = res.width + " x " + res.height;
+            options.Add(option);
+
+            if (res.width == Screen.currentResolution.width && res.height == Screen.currentResolution.height)
+            {
+                currentResolutionIndex = i;
+            }
+        }
+
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.RefreshShownValue();
     }
 
     void InitializeVSyncToggle()
@@ -101,6 +122,7 @@ public class OptionsMenu : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionDropdown.value];
         Screen.SetResolution(resolution.width, resolution.height, GetFullScreenMode());
+        Debug.Log($"Resolution set to: {resolution.width}x{resolution.height}, FullscreenMode: {GetFullScreenMode()}");
 
         QualitySettings.vSyncCount = vSyncToggle.isOn ? 1 : 0;
         Application.targetFrameRate = (int)maxFPSSlider.value;
