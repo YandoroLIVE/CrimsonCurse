@@ -89,13 +89,19 @@ public class UpgradeHandler : MonoBehaviour
             if (_Player == null)
             {
                 Debug.Log("Player not found");
+                transform.GetChild(0).gameObject.SetActive(false);
                 return;
+            }
+            else 
+            {
+            
+                transform.GetChild(0).gameObject.SetActive(true);
             }
         }
         
         _Player.pickedUpDash = _PickedUpDash;
-        _DashIcon.SetActive(_PickedUpDash);
         _Player.hasWallJump = _PickedUpWalljump;
+        _DashIcon.SetActive(_PickedUpDash);
         _WalljumpIcon.SetActive(_PickedUpWalljump);
         _LongrangeIcon.SetActive(_PickedUpLongrange);
 

@@ -131,7 +131,10 @@ public class SceneFader : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if(S_PlayerHealth.GetInstance() != null)
+        {
             StartCoroutine(DelayedFadeIn());
+        }
     }
 
     private IEnumerator DelayedFadeIn()

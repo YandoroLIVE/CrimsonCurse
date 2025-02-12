@@ -46,6 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDone: 0
+  arenaGameObject: {fileID: 0}
+  arenaApearDelay: 0.5
+  objectsToSpawn: []
+  objectSpawnTime: 0.25
   phaseHealth: 100
   damage: 5
   appearRadius: 5
@@ -53,7 +57,10 @@ MonoBehaviour:
   attackCooldown: 5
   attackRange: 1
   phaseSpeed: 1
+  attackDuration: 0.1
   attackObject: {fileID: 8546567640491959766}
+  attackClip: {fileID: 0}
+  crystalSpawn: {fileID: 0}
 --- !u!1 &6572121154953405621
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +133,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
