@@ -81,14 +81,17 @@ public class PusherEnemy : BaseEnemy
         purifycationHandler.SetStunned(this);
     }
 
-    public override void Hurt(float damage)
+    public override void Hurt(float damage, int attackID)
     {
-        base.Hurt(damage);
-        StopCoroutine(HitFeedBack());
-        _sprite.color = Color.white;
-        StartCoroutine(HitFeedBack());
-        animator.SetTrigger("Hurt");
-        animator.SetBool("Attacking", false);
+        if (attackID == 1)
+        {
+            base.Hurt(damage, attackID);
+            StopCoroutine(HitFeedBack());
+            _sprite.color = Color.white;
+            StartCoroutine(HitFeedBack());
+            animator.SetTrigger("Hurt");
+            animator.SetBool("Attacking", false);
+        }
 
     }
 

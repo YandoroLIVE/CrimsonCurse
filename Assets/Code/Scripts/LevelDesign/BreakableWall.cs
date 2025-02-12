@@ -28,7 +28,7 @@ public class BreakableWall : MonoBehaviour, IHurtable
         }
     }
 
-    public void Hurt(float damage) 
+    public void Hurt(float damage, int attackID) 
     {
         health -= damage;
         if (health <= 0)

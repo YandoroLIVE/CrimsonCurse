@@ -21,7 +21,7 @@ public abstract class BaseEnemy : MonoBehaviour, IHurtable
         Attack();
     }
 
-    public virtual void Hurt(float damage) 
+    public virtual void Hurt(float damage, int attackID) 
     {
         currentHealth -= damage;
         if(currentHealth <= 0 && !stunned) 

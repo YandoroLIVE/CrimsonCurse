@@ -21,7 +21,7 @@ public class WingPhaseCrystal : MonoBehaviour, IHurtable
         currentHealth = maxHealth;
     }
 
-    public void Hurt(float damage) 
+    public void Hurt(float damage, int attackID) 
     {
         currentHealth -= damage;
         if (currentHealth <= 0) 

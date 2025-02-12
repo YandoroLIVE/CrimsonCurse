@@ -6,7 +6,7 @@ public class EnemyPurify : MonoBehaviour
 {
     public int healthAmountRestoredOnPurify = 10;
     public static KeyCode purifyKeyboardInput = KeyCode.Q;
-    public static KeyCode purifyControllerInput = KeyCode.Joystick1Button1;
+    public static KeyCode purifyControllerInput = KeyCode.Joystick1Button4;
     private BaseEnemy _targetEnemy;
     [SerializeField] ParticleSystem _purifyVFX;
     [SerializeField] ParticleSystem _stunnedVFX;
