@@ -8,7 +8,7 @@ namespace HeroController
     public class PlayerController : MonoBehaviour, IPlayerController
     {
         [SerializeField] private float afktimeTillIdle = 2f;
-        [SerializeField] private bool forrestLevel;
+        [SerializeField] public bool forrestLevel;
         [SerializeField] private bool spawnCamera = true;
 
         [SerializeField] private ParticleSystem landingVFX;

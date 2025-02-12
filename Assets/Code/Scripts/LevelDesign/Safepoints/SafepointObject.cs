@@ -77,7 +77,7 @@ public class SafepointObject : MonoBehaviour
     {
         if(collision.tag == "Player") 
         {
-            if (Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.Joystick1Button4)) 
+            if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.Joystick1Button4)) 
             {
                 ActivateSafepoint();           
             }            
