@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 namespace HeroController
 {
     public class CooldownUI : MonoBehaviour
@@ -15,15 +15,18 @@ namespace HeroController
         PlayerController player;
 
 
+        void OnSceneLoaded()
+        {
+            GetReferences();
+        }
         private void Start()
         {
             GetReferences();
         }
         void Update()
         {
-            
             UpdateCooldownIcons();
-
+            GetReferences();
         }
 
         private void UpdateCooldownIcons()
