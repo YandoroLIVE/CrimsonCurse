@@ -6,15 +6,15 @@ public class MixerManager : MonoBehaviour
 
     public void SetMasterVolume(float level)
     {
-
+        audioMixer.SetFloat("MasterVolume", level);
     }
 
     public void SetSoundFXVolume(float level)
     {
-
+        audioMixer.SetFloat("SoundEffectsVolume", level);
     }
     public void SetMusicVolume(float level)
     {
-
+        audioMixer.SetFloat("MusicVolume", level);
     }
 }

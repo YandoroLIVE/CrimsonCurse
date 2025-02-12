@@ -1,14 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class OptionsMenu : MonoBehaviour
 {
-    public Dropdown resolutionDropdown;
-    public Dropdown fullscreenDropdown;
+    public TMP_Dropdown resolutionDropdown;
+    public TMP_Dropdown fullscreenDropdown;
     public Toggle vSyncToggle;
+    public Slider maxFPSSlider;
+    public TextMeshProUGUI maxFPSText;
     public GameObject mainMenu;
     public GameObject optionsMenu;
+    public Button applyButton;
+    public Button cancelButton;
     private Resolution[] resolutions;
 
     void Start()
@@ -16,6 +22,8 @@ public class OptionsMenu : MonoBehaviour
         InitializeResolutionOptions();
         InitializeFullscreenOptions();
         InitializeVSyncToggle();
+        InitializeMaxFPSSlider();
+        SetupNavigation();
     }
 
     void InitializeResolutionOptions()
@@ -28,13 +36,17 @@ public class OptionsMenu : MonoBehaviour
 
         for (int i = 0; i < resolutions.Length; i++)
         {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
+            float aspectRatio = (float)resolutions[i].width / resolutions[i].height;
+            if (Mathf.Approximately(aspectRatio, 16f / 9f))
             {
-                currentResolutionIndex = i;
+                string option = resolutions[i].width + " x " + resolutions[i].height;
+                options.Add(option);
+
+                if (resolutions[i].width == Screen.currentResolution.width &&
+                    resolutions[i].height == Screen.currentResolution.height)
+                {
+                    currentResolutionIndex = options.Count - 1;
+                }
             }
         }
 
@@ -49,7 +61,6 @@ public class OptionsMenu : MonoBehaviour
         fullscreenDropdown.ClearOptions();
         fullscreenDropdown.AddOptions(options);
 
-        // Set dropdown value based on current screen mode
         fullscreenDropdown.value = Screen.fullScreenMode == FullScreenMode.FullScreenWindow ? 1 :
                                    Screen.fullScreenMode == FullScreenMode.MaximizedWindow ? 2 : 0;
 
@@ -61,19 +72,38 @@ public class OptionsMenu : MonoBehaviour
         vSyncToggle.isOn = QualitySettings.vSyncCount > 0;
     }
 
+    void InitializeMaxFPSSlider()
+    {
+        maxFPSSlider.minValue = 30;
+        maxFPSSlider.maxValue = 240;
+        maxFPSSlider.value = Application.targetFrameRate > 0 ? Application.targetFrameRate : 60;
+        maxFPSText.text = ((int)maxFPSSlider.value).ToString();
+        maxFPSSlider.onValueChanged.AddListener(value => SetMaxFPS((int)value));
+    }
+
+    void SetupNavigation()
+    {
+        EventSystem.current.SetSelectedGameObject(resolutionDropdown.gameObject);
+    }
+
     public void SetVSync(bool isOn)
     {
         QualitySettings.vSyncCount = isOn ? 1 : 0;
     }
 
+    public void SetMaxFPS(int value)
+    {
+        Application.targetFrameRate = value;
+        maxFPSText.text = value.ToString();
+    }
+
     public void ApplySettings()
     {
-        // Set Resolution
         Resolution resolution = resolutions[resolutionDropdown.value];
         Screen.SetResolution(resolution.width, resolution.height, GetFullScreenMode());
 
-        // Set VSync
         QualitySettings.vSyncCount = vSyncToggle.isOn ? 1 : 0;
+        Application.targetFrameRate = (int)maxFPSSlider.value;
     }
 
     private FullScreenMode GetFullScreenMode()
@@ -90,5 +120,6 @@ public class OptionsMenu : MonoBehaviour
     {
         mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(mainMenu);
     }
 }
